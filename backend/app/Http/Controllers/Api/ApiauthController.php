@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class ApiauthController extends Controller
 {
-    public function postRegister(Request $request){
+    public function postRegister(Request $request)
+    {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -20,6 +21,22 @@ class ApiauthController extends Controller
             'token' => $token,
             'user' => $user,
             'message' => 'Đăng ký thành công',
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'error' => 'sai email hoặc mật khẩu'
+            ]);
+        }
+        $token = $user->createToken('access token')->plainTextToken;
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+            'message' => 'Đăng nhập thành công',
         ]);
     }
 }
