@@ -23,3 +23,4 @@ use App\Http\Controllers\ApiProductController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();});
 Route::post('/postRegister', [ApiauthController::class, 'postRegister']);
+Route::post('/login', [ApiauthController::class, 'login']);
