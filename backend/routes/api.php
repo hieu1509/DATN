@@ -24,3 +24,4 @@ use App\Http\Controllers\ApiProductController;
 //     return $request->user();});
 Route::post('/postRegister', [ApiauthController::class, 'postRegister']);
 Route::post('/login', [ApiauthController::class, 'login']);
+Route::put('/{id}/update', [ApiauthController::class, 'update']);
