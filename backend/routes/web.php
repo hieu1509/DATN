@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ApiauthController;
 use Illuminate\Support\Facades\Route;
 
 /*

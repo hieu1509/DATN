@@ -39,4 +39,23 @@ class ApiauthController extends Controller
             'message' => 'Đăng nhập thành công',
         ]);
     }
+
+    public function update(Request $request, string $id)
+    {
+        $user = User::findOrFail($id);
+        $param = $request->except('_token', '_method');
+        // dd($param);
+       $check= $user->update($param);
+    if($check){
+        return response()->json([
+            'message' => 'Cập nhật tài khoản thành công',
+            'user' => $user,
+        ], 200);  
+    }else{
+        return response()->json([
+            'message' => 'Cập nhật tài khoản không thành công',
+            'user' => $user,
+        ], 404);  
+    } 
+    }
 }
