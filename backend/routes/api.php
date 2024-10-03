@@ -25,3 +25,6 @@ use App\Http\Controllers\ApiProductController;
 Route::post('/postRegister', [ApiauthController::class, 'postRegister']);
 Route::post('/login', [ApiauthController::class, 'login']);
 Route::put('/{id}/update', [ApiauthController::class, 'update']);
+Route::post('/checkforgotpassword', [ApiauthController::class, 'check_forgot_password']);
+Route::post('/resetpassword/{token}', [ApiauthController::class, 'check_reset_password']);
+
