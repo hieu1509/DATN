@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\ApiauthController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\RamController;
+use App\Http\Controllers\StorageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,6 +54,20 @@ Route::prefix('admins')
             Route::put('/{id}/update', [RamController::class, 'update'])->name('update');
 
             Route::delete('/{id}/destroy', [RamController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('storages')
+        ->as('storages.')
+        ->group(function(){
+            Route::get('/', [StorageController::class, 'index'])->name('index');
+
+            Route::get('/create', [StorageController::class, 'create'])->name('create');
+            Route::post('/store', [StorageController::class, 'store'])->name('store');
+
+            Route::get('/{id}/edit', [StorageController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
+
+            Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
         });
     });
 
