@@ -130,10 +130,10 @@
                                 <div class="collapse menu-dropdown" id="sidebarFolder3">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="/folder3Option1" class="nav-link" data-key="t-option1"> Storage List</a>
+                                            <a href="{{route('admins.storages.index')}}" class="nav-link" data-key="t-option1"> Storage List</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/folder3Option2" class="nav-link" data-key="t-option2"> Add Storage</a>
+                                            <a href="{{route('admins.storages.create')}}" class="nav-link" data-key="t-option2"> Add Storage</a>
                                         </li>
                                     </ul>
                                 </div>
