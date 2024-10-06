@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Chip extends Model
 {
     use HasFactory;
+    protected $table = "chips";
+
+    protected $fillable = [
+        'id',
+        'name',
+        'created_at',
+        'updated_at',
+    ];
 }
