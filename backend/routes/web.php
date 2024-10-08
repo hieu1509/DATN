@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
+
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 

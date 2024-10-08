@@ -17,3 +17,4 @@ class Ram extends Model
         'updated_at',
     ];
 }
+
