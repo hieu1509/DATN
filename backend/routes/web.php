@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\api\ApiauthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('admin/pages/categories', CategoryController::class);
+Route::resource('subcategories', SubcategoryController::class);
 
 Route::prefix('admins')
     ->as('admins.')
@@ -70,4 +74,3 @@ Route::prefix('admins')
             Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
         });
     });
-

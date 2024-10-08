@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\api\ApiauthController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\SubcategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +30,5 @@ Route::put('/{id}/update', [ApiauthController::class, 'update']);
 Route::post('/checkforgotpassword', [ApiauthController::class, 'check_forgot_password']);
 Route::post('/resetpassword/{token}', [ApiauthController::class, 'check_reset_password']);
 
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('subcategories', SubcategoryController::class);

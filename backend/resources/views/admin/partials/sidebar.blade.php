@@ -43,26 +43,43 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
-                        <i class=" ri-book-3-line"></i> <span data-key="t-apps">Categories</span>
+                        <i class=" ri-book-3-line"></i> <span data-key="t-apps">Danh mục</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="/listCategories" class="nav-link" data-key="t-chat">Category List </a>
+                                <a href="{{ route('categories.index') }}" class="nav-link" data-key="t-chat">Danh sách danh mục </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/addCategories" class="nav-link" data-key="t-api-key">Add Category</a>
+                                <a href="{{ route('categories.create') }}" class="nav-link" data-key="t-api-key">Thêm danh mục</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarPages1" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarPages1" data-bs-parent="#accordionExample">
+                    <a class="nav-link menu-link" href="#sidebarApp" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApp">
+                        <i class=" ri-book-3-line"></i> <span data-key="t-apps">Danh mục con</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarApp">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('subcategories.index') }}" class="nav-link" data-key="t-chat">Danh sách danh mục con</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('subcategories.create') }}" class="nav-link" data-key="t-api-key">Thêm danh mục con</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarPages">
                         <i data-feather="package"></i><span data-key="t-Pages">Products</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarPages1" data-bs-parent="#accordionExample">
+                    <div class="collapse menu-dropdown" id="sidebarPages">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="/listProduct" class="nav-link" data-key="t-chat"> Product List </a>
@@ -142,17 +159,13 @@
                     </div>
                 </li>
 
-
-
-
-
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/customers" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Customers</span>
                     </a>
                 </li>
-
+                
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/comments" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
