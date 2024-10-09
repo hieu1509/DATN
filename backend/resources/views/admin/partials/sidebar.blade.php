@@ -35,7 +35,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admins.') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarDashboards">
-                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Tổng quan</span>
                     </a>
 
                 </li> <!-- end Dashboard Menu -->
@@ -43,7 +43,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
-                        <i class=" ri-book-3-line"></i> <span data-key="t-apps">Danh mục</span>
+                        <i class="  ri-book-mark-line"></i> <span data-key="t-apps">Danh mục</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
@@ -60,7 +60,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApp" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApp">
-                        <i class=" ri-book-3-line"></i> <span data-key="t-apps">Danh mục con</span>
+                        <i class="  ri-book-line"></i> <span data-key="t-apps">Danh mục con</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApp">
                         <ul class="nav nav-sm flex-column">
@@ -94,7 +94,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages2" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages2" data-bs-parent="#accordionExample">
-                        <i data-feather="package"></i><span data-key="t-Pages">Biến thể</span>
+                        <i class="  ri-file-copy-line"></i><span data-key="t-Pages">Biến thể</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarPages2" data-bs-parent="#accordionExample">
                         <ul class="nav nav-sm flex-column">
@@ -108,10 +108,10 @@
                                 <div class="collapse menu-dropdown" id="sidebarOtherProducts">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{route('admins.chips.index')}}" class="nav-link" data-key="t-option1"> Chip List</a>
+                                            <a href="{{route('admins.chips.index')}}" class="nav-link" data-key="t-option1"> Danh sách Chip</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{route('admins.chips.create')}}" class="nav-link" data-key="t-option2"> Add Chip</a>
+                                            <a href="{{route('admins.chips.create')}}" class="nav-link" data-key="t-option2"> Thêm Chip</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -126,10 +126,10 @@
                                 <div class="collapse menu-dropdown" id="sidebarFolder2">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{route('admins.rams.index')}}" class="nav-link" data-key="t-option1"> Ram List </a>
+                                            <a href="{{route('admins.rams.index')}}" class="nav-link" data-key="t-option1"> Danh sách Ram </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{route('admins.rams.create')}}" class="nav-link" data-key="t-option2"> Add Ram</a>
+                                            <a href="{{route('admins.rams.create')}}" class="nav-link" data-key="t-option2"> Thêm Ram</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -144,10 +144,10 @@
                                 <div class="collapse menu-dropdown" id="sidebarFolder3">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{route('admins.storages.index')}}" class="nav-link" data-key="t-option1"> Storage List</a>
+                                            <a href="{{route('admins.storages.index')}}" class="nav-link" data-key="t-option1"> Danh sách Storage </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{route('admins.storages.create')}}" class="nav-link" data-key="t-option2"> Add Storage</a>
+                                            <a href="{{route('admins.storages.create')}}" class="nav-link" data-key="t-option2"> Thêm Storage</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -157,28 +157,44 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/customers" role="button"
+                    <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarForms">
+                        <i class="   ri-coupon-2-line"></i> <span data-key="t-apps">Khuyến mại</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarForms">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="/promotion/list" class="nav-link" data-key="t-chat">Danh sách khuyến mại </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/promotion/add" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="/customer" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Khách hàng</span>
                     </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/comments" role="button"
+                    <a class="nav-link menu-link" href="/comment" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class=" ri-chat-3-line"></i> <span data-key="t-authentication">Bình luận</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/orders" role="button"
+                    <a class="nav-link menu-link" href="/order" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-shopping-cart-line"></i> <span data-key="t-authentication">Đơn hàng</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/statistics" role="button"
+                    <a class="nav-link menu-link" href="/statistic" role="button"
                         aria-expanded="false" aria-controls="sidebarCharts">
                         <i class="ri-pie-chart-line"></i> <span data-key="t-charts"> Thống kê </span>
                     </a>
