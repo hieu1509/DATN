@@ -8,7 +8,6 @@ use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductController;
 
 
