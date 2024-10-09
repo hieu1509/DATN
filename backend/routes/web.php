@@ -1,13 +1,12 @@
 <?php
 
-<<<<<<< Updated upstream
+
 use App\Http\Controllers\api\ApiauthController;
-=======
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
->>>>>>> Stashed changes
+use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductController;
@@ -27,8 +26,6 @@ use App\Http\Controllers\ProductController;
 Route::get('/', function () {
     return view('welcome');
 });
-<<<<<<< Updated upstream
-=======
 
 Route::resource('admin/pages/categories', CategoryController::class);
 Route::resource('subcategories', SubcategoryController::class);
@@ -98,4 +95,3 @@ Route::prefix('admins')
             Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
         });
     });
->>>>>>> Stashed changes

@@ -38,4 +38,5 @@ class ProductVariant extends Model
     {
         return $this->belongsTo(Storage::class, 'storage_id');
     }
+
 }
