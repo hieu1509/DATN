@@ -13,7 +13,7 @@ class ChipController extends Controller
     public function __construct()
     {
         $this->view = [];
-    }
+    }   
     /**
      * Display a listing of the resource.
      */

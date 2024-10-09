@@ -1,45 +1,18 @@
 @extends('admin.layout')
 
 @section('content')
-
-    <head>
-        <meta charset="utf-8" />
-        <title>Products | Velzon - Admin & Dashboard Template</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesbrand" name="author" />
-
-        <!-- nouisliderribute css -->
-        <link rel="stylesheet" href="{{ asset('velzon/assets/libs/nouislider/nouislider.min.css') }}">
-
-        <!-- gridjs css -->
-        <link rel="stylesheet" href="{{ asset('velzon/assets/libs/gridjs/theme/mermaid.min.css') }}">
-
-        <!-- Layout config Js -->
-        <script src="{{ asset('velzon/assets/js/layout.js') }}"></script>
-        <!-- Bootstrap Css -->
-        <link href="{{ asset('velzon/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href="{{ asset('velzon/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href="{{ asset('velzon/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- custom Css-->
-        <link href="{{ asset('velzon/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-
-    </head>
     <div class="page-content">
         <div class="container-fluid">
-
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Products List</h4>
+                        <h4 class="mb-sm-0">Danh sách sản phẩm</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Products</a></li>
-                                <li class="breadcrumb-item active">Products List</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Sản phẩm</a></li>
+                                <li class="breadcrumb-item active">Danh sách sản phẩm</li>
                             </ol>
                         </div>
 
@@ -47,6 +20,16 @@
                 </div>
             </div>
             <!-- end page title -->
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('danger'))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                </div>
+            @endif
 
             <div class="row">
                 <div class="col-xl-3 col-lg-4">
@@ -153,8 +136,7 @@
                                 <div class="formCost d-flex gap-2 align-items-center mt-3">
                                     <input class="form-control form-control-sm" type="text" id="minCost"
                                         value="0" /> <span class="fw-semibold text-muted">to</span> <input
-                                        class="form-control form-control-sm" type="text" id="maxCost"
-                                        value="1000" />
+                                        class="form-control form-control-sm" type="text" id="maxCost" value="1000" />
                                 </div>
                             </div>
 
@@ -357,9 +339,9 @@
                                 <div class="row g-4">
                                     <div class="col-sm-auto">
                                         <div>
-                                            <a href="/addProduct" class="btn btn-success"
-                                                id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Add
-                                                Product</a>
+                                            <a href="{{ route('admins.products.create') }}" class="btn btn-success"
+                                                id="addproduct-btn"><i class="ri-add-line align-bottom me-1"></i> Thêm sản
+                                                phẩm</a>
                                         </div>
                                     </div>
                                     <div class="col-sm">
@@ -373,72 +355,129 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link active fw-semibold" data-bs-toggle="tab"
-                                                    href="#productnav-all" role="tab">
-                                                    All <span
-                                                        class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link fw-semibold" data-bs-toggle="tab"
-                                                    href="#productnav-published" role="tab">
-                                                    Published <span
-                                                        class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link fw-semibold" data-bs-toggle="tab"
-                                                    href="#productnav-draft" role="tab">
-                                                    Draft
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div id="selection-element">
-                                            <div class="my-n1 d-flex align-items-center text-muted">
-                                                Select <div id="select-content" class="text-body fw-semibold px-1"></div>
-                                                Result <button type="button" class="btn btn-link link-danger p-0 ms-3"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#removeItemModal">Remove</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- end card header -->
                             <div class="card-body">
+                                <table id="example"
+                                    class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th data-ordering="false">ID</th>
+                                            <th data-ordering="false">IMG</th>
+                                            <th data-ordering="false">Tên SP</th>
+                                            <th data-ordering="false">Danh mục</th>
+                                            <th data-ordering="false">Giá</th>
+                                            <th data-ordering="false">Giá KM</th>
+                                            <th>Lượt xem</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Trạng thái</th>
+                                            <th>Chức năng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data as $index => $item)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>
+                                                    @if ($item->image)
+                                                        <img src="{{ Storage::url($item->image) }}"
+                                                            alt="{{ $item->name }}" style="width: 100px; height: auto;">
+                                                    @else
+                                                        <span>Không có ảnh</span>
+                                                    @endif
+                                                </td>
+                                                <td><a href="#!">{{ $item->name }}</a></td>
+                                                <td>{{ $item->subCategory->name }}</td>
+                                                <td>
+                                                    @php
+                                                        // Lấy tất cả các giá của biến thể sản phẩm
+                                                        $prices = $item->variants->pluck('listed_price')->toArray();
 
-                                <div class="tab-content text-muted">
-                                    <div class="tab-pane active" id="productnav-all" role="tabpanel">
-                                        <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
-                                    </div>
-                                    <!-- end tab pane -->
+                                                        // Nếu có biến thể thì tính khoảng giá
+                                                        if (!empty($prices)) {
+                                                            $minPrice = min($prices); // Lấy giá thấp nhất
+                                                            $maxPrice = max($prices); // Lấy giá cao nhất
+                                                            echo number_format($minPrice, 0, ',', '.') .
+                                                                ' - ' .
+                                                                number_format($maxPrice, 0, ',', '.') .
+                                                                '';
+                                                        } else {
+                                                            echo 'Chưa có giá';
+                                                        }
+                                                    @endphp
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        // Lấy tất cả các giá của biến thể sản phẩm
+                                                        $prices = $item->variants->pluck('sale_price')->toArray();
 
-                                    <div class="tab-pane" id="productnav-published" role="tabpanel">
-                                        <div id="table-product-list-published" class="table-card gridjs-border-none">
-                                        </div>
-                                    </div>
-                                    <!-- end tab pane -->
+                                                        // Nếu có biến thể thì tính khoảng giá
+                                                        if (!empty($prices)) {
+                                                            $minPrice = min($prices); // Lấy giá thấp nhất
+                                                            $maxPrice = max($prices); // Lấy giá cao nhất
+                                                            echo number_format($minPrice, 0, ',', '.') .
+                                                                ' - ' .
+                                                                number_format($maxPrice, 0, ',', '.') .
+                                                                '';
+                                                        } else {
+                                                            echo 'Chưa có giá';
+                                                        }
+                                                    @endphp
+                                                </td>
+                                                <td>{{ $item->view }}</td>
+                                                <td>{{ $item->created_at->format('d/m/Y') }}</td>
+                                                <td> <!-- Hiển thị trạng thái -->
+                                                    @if ($item->is_show_home == 1)
+                                                        <span class="badge bg-success-subtle text-success">Hoạt Động</span>
+                                                    @else
+                                                        <span class="badge bg-danger-subtle text-danger">Ẩn</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown d-inline-block">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown"
+                                                            type="button" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a href="#!" class="dropdown-item"><i
+                                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                    View</a>
+                                                            </li>
+                                                            <li><a href="{{ route('admins.products.edit', $item->id) }}"
+                                                                    class="dropdown-item edit-item-btn"><i
+                                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                                    Sửa</a></li>
+                                                            <li>
+                                                                <form
+                                                                    action="{{ route('admins.products.destroy', $item->id) }}"
+                                                                    method="POST" style="display:inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <a class="dropdown-item remove-item-btn">
+                                                                        <i
+                                                                            class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                                        <button type="submit"
+                                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
+                                                                            style="background: none; border: none;cursor: pointer; text-decoration: noine;">
+                                                                            Xóa
+                                                                        </button>
 
-                                    <div class="tab-pane" id="productnav-draft" role="tabpanel">
-                                        <div class="py-4 text-center">
-                                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
-                                                colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px">
-                                            </lord-icon>
-                                            <h5 class="mt-4">Sorry! No Result Found</h5>
-                                        </div>
-                                    </div>
-                                    <!-- end tab pane -->
-                                </div>
+                                                                    </a>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                                 <!-- end tab content -->
-
+                                <div>
+                                    {{ $data->links() }}
+                                </div>
                             </div>
                             <!-- end card body -->
                         </div>
@@ -452,24 +491,4 @@
         </div>
         <!-- container-fluid -->
     </div>
-    <!-- nouisliderribute js -->
-    <script src="{{ asset('velzon/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('velzon/assets/libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('velzon/assets/libs/node-waves/waves.min.js') }}"></script>
-    <script src="{{ asset('velzon/assets/libs/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('velzon/assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
-    <script src="{{ asset('velzon/assets/js/plugins.js') }}"></script>
-
-    <!-- nouisliderribute js -->
-    <script src="{{ asset('velzon/assets/libs/nouislider/nouislider.min.js') }}"></script>
-    <script src="{{ asset('velzon/assets/libs/wnumb/wNumb.min.js') }}"></script>
-
-    <!-- gridjs js -->
-    <script src="{{ asset('velzon/assets/libs/gridjs/gridjs.umd.js') }}"></script>
-    <script src="https://unpkg.com/gridjs/plugins/selection/dist/selection.umd.js"></script>
-    <!-- ecommerce product list -->
-    <script src="{{ asset('velzon/assets/js/pages/ecommerce-product-list.init.js') }}"></script>
-
-    <!-- App js -->
-    <script src="{{ asset('velzon/assets/js/app.js') }}"></script>
 @endsection

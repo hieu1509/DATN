@@ -16,5 +16,10 @@ class Ram extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class, 'ram_id');
+    }
 }
 

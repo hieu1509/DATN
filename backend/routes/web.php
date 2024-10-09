@@ -1,12 +1,16 @@
 <?php
 
+
+use App\Http\Controllers\api\ApiauthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
-
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +34,23 @@ Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
         Route::get('/', function(){
-            return view('admins.dashboard');
+            return view('admin.pages.dashboard');
+        });
+
+        Route::prefix('products')
+        ->as('products.')
+        ->group(function() {
+            Route::get('/', [ProductController::class, 'index'])->name('index');
+
+            Route::get('/create', [ProductController::class, 'create'])->name('create');
+            Route::post('/store', [ProductController::class, 'store'])->name('store');
+
+            Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [ProductController::class, 'update'])->name('update');
+
+            Route::delete('/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
+
+            Route::get('/{id}', [ProductController::class, 'show'])->name('show');
         });
 
         Route::prefix('chips')
