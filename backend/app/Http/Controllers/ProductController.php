@@ -52,7 +52,7 @@ class ProductController extends Controller
                 'sub_category_id' => $request->sub_category_id,
                 'name' => $request->name,
                 'description' => $request->description,
-                'content' => $request->content,
+                'content' => $request->getContent(),
                 'view' => 0,
                 'is_hot' => $request->is_hot,
                 'is_sale' => $request->is_sale,
@@ -105,10 +105,17 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product = Product::with('productImages')->find($id); // Lấy sản phẩm cùng với hình ảnh
+    
+        if (!$product) {
+            return redirect()->route('admins.products.index')->with('error', 'Sản phẩm không tồn tại.');
+        }
+    
+        return view('admin.pages.products.detail', compact('product'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
