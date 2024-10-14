@@ -7,6 +7,7 @@ use App\Http\Controllers\ChipController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\Api\ProductController as ApiProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -21,6 +22,17 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Danh sách sản phẩm
+Route::get('products', [ApiProductController::class, 'index']);
+// Danh sách sản phẩm hot
+Route::get('products/hot', [ApiProductController::class, 'hotProducts']);
+// Danh sách sản phẩm đang sale
+Route::get('products/sale', [ApiProductController::class, 'saleProducts']);
+// Chi tiết sản phẩm
+Route::get('products/{id}', [ApiProductController::class, 'show']);
+// Lọc sản phẩm
+Route::get('products/filter', [ApiProductController::class, 'filter']);
 
 Route::get('/', function () {
     return view('welcome');
