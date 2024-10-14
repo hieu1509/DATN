@@ -435,40 +435,40 @@
                                                 </td>
                                                 <td>
                                                     <div class="dropdown d-inline-block">
-                                                        <button class="btn btn-soft-secondary btn-sm dropdown"
-                                                            type="button" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="ri-more-fill align-middle"></i>
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a href="#!" class="dropdown-item"><i
-                                                                        class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                    View</a>
-                                                            </li>
-                                                            <li><a href="{{ route('admins.products.edit', $item->id) }}"
-                                                                    class="dropdown-item edit-item-btn"><i
-                                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                                    Sửa</a></li>
+                                                            <!-- Nút Xem Chi Tiết -->
                                                             <li>
-                                                                <form
-                                                                    action="{{ route('admins.products.destroy', $item->id) }}"
-                                                                    method="POST" style="display:inline;">
+                                                                <a href="{{ route('admins.products.show', $item->id) }}" class="dropdown-item">
+                                                                    <i class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                    Xem chi tiết
+                                                                </a>
+                                                            </li>
+                                                            <!-- Nút Sửa -->
+                                                            <li>
+                                                                <a href="{{ route('admins.products.edit', $item->id) }}" class="dropdown-item edit-item-btn">
+                                                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                                    Sửa
+                                                                </a>
+                                                            </li>
+                                                            <!-- Nút Xóa -->
+                                                            <li>
+                                                                <form action="{{ route('admins.products.destroy', $item->id) }}" method="POST" style="display:inline;">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <a class="dropdown-item remove-item-btn">
-                                                                        <i
-                                                                            class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                        <button type="submit"
-                                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"
-                                                                            style="background: none; border: none;cursor: pointer; text-decoration: noine;">
+                                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                                        <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" style="background: none; border: none; cursor: pointer; text-decoration: none;">
                                                                             Xóa
                                                                         </button>
-
                                                                     </a>
                                                                 </form>
                                                             </li>
                                                         </ul>
                                                     </div>
+                                                    
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -157,67 +157,6 @@
                 </li>
 
                 <li class="nav-item">
-<<<<<<< Updated upstream
-                    <a class="nav-link menu-link" href="#sidebarPages2" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarPages2" data-bs-parent="#accordionExample">
-                        <i data-feather="package"></i><span data-key="t-Pages">Variant</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarPages2" data-bs-parent="#accordionExample">
-                        <ul class="nav nav-sm flex-column">
-
-                            <!-- Chip -->
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="#sidebarOtherProducts" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarOtherProducts">
-                                    <span data-key="t-Pages">Chips</span>
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarOtherProducts">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{route('admins.chips.index')}}" class="nav-link" data-key="t-option1"> Chip List</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{route('admins.chips.create')}}" class="nav-link" data-key="t-option2"> Add Chip</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <!-- Ram -->
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="#sidebarFolder2" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarFolder2">
-                                    <span data-key="t-Pages">Rams</span>
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarFolder2">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{route('admins.rams.index')}}" class="nav-link" data-key="t-option1"> Ram List </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{route('admins.rams.create')}}" class="nav-link" data-key="t-option2"> Add Ram</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <!-- Storage -->
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="#sidebarFolder3" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarFolder3">
-                                    <span data-key="t-Pages">Storages</span>
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarFolder3">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{route('admins.storages.index')}}" class="nav-link" data-key="t-option1"> Storage List</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{route('admins.storages.create')}}" class="nav-link" data-key="t-option2"> Add Storage</a>
-                                        </li>
-                                    </ul>
-                                </div>
-=======
                     <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarForms">
                         <i class="   ri-coupon-2-line"></i> <span data-key="t-apps">Khuyến mại</span>
@@ -229,19 +168,12 @@
                             </li>
                             <li class="nav-item">
                                 <a href="/promotion/add" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
->>>>>>> Stashed changes
                             </li>
                         </ul>
                     </div>
                 </li>
-<<<<<<< Updated upstream
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="/customers" role="button"
-=======
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/customer" role="button"
->>>>>>> Stashed changes
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Khách hàng</span>
                     </a>
