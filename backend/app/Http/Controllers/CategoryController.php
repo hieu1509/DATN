@@ -23,7 +23,7 @@ class CategoryController extends Controller
 
     // Lưu danh mục mới vào database
     public function store(Request $request)
-    {
+    { 
         // Validate dữ liệu
         $request->validate([
             'name' => 'required|string|max:255',
