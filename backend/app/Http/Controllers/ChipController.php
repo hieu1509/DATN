@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChipRequest;
 use App\Http\Requests\UpdateChipRequest;
 use App\Models\Chip;
+use App\Models\Ram;
+use App\Models\Storage;
 use Illuminate\Http\Request;
 
 class ChipController extends Controller
@@ -20,7 +22,9 @@ class ChipController extends Controller
     public function index()
     {
         $chip = Chip::query()->paginate(5);
-        return view('admin.pages.chips.index', compact('chip'));
+        $ram = Ram::query()->paginate(5);
+        $storage = Storage::query()->paginate(5);
+        return view('admin.pages.chips.index', compact('chip', 'ram', 'storage'));
     }
 
     /**
@@ -40,7 +44,7 @@ class ChipController extends Controller
         if($request->isMethod('POST')){
             Chip::create($param);
         }
-        return redirect()->back()->with('success','Chip được thêm thành công');
+        return redirect()->route('admins.chips.index')->with('success','Chip được thêm thành công');
     }
 
     /**
@@ -68,7 +72,7 @@ class ChipController extends Controller
         $chip = Chip::query()->findOrFail($id);
         $param = $request->except('_token','_method');
         $chip->update($param);
-        return redirect()->back()->with('success','Chip được sửa thành công');
+        return redirect()->route('admins.chips.index')->with('success','Chip được sửa thành công');
     }
 
     /**
