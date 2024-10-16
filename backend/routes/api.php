@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\ApiauthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\SubcategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,3 +33,6 @@ Route::post('/resetpassword/{token}', [ApiauthController::class, 'check_reset_pa
 
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('subcategories', SubcategoryController::class);
+Route::apiResource('promotions', PromotionController::class);
+// Route tùy chỉnh để áp dụng khuyến mãi
+Route::post('/promotions/apply', [PromotionController::class, 'applyPromotion']);

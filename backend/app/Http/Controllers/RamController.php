@@ -40,6 +40,8 @@ class RamController extends Controller
         if($request->isMethod('POST')){
             Ram::create($param);
         }
+
+
         return redirect()->route('admins.chips.index')->with('success','Ram được thêm thành công');
     }
 
@@ -68,7 +70,10 @@ class RamController extends Controller
         $ram = Ram::query()->findOrFail($id);
         $param = $request->except('_token','_method');
         $ram->update($param);
+
+
         return redirect()->route('admins.chips.index')->with('success','Ram được sửa thành công');
+
     }
 
     /**
