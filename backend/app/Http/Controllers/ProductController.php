@@ -12,6 +12,7 @@ use App\Models\Ram;
 use App\Models\Storage;
 use App\Models\SubCategory;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -42,12 +43,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         DB::beginTransaction();
-
+    
         try {
-           
+            // Tạo sản phẩm mới
             $product = Product::create([
                 'sub_category_id' => $request->sub_category_id,
                 'name' => $request->name,
@@ -58,18 +59,17 @@ class ProductController extends Controller
                 'is_sale' => $request->is_sale,
                 'is_show_home' => $request->is_show_home,
             ]);
-
-            
+    
+            // Xử lý ảnh đại diện
             if ($request->hasFile('image')) {
-                
                 $imagePath = $request->file('image')->store('public/product');
                 $product->update(['image' => $imagePath]);
             }
-
-            
+    
+            // Xử lý ảnh phụ
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $index => $image) {
-                    $imagePath = $image->store('products', 'public'); 
+                    $imagePath = $image->store('products', 'public');
                     ProductImage::create([
                         'product_id' => $product->id,
                         'image_url' => $imagePath,
@@ -79,20 +79,20 @@ class ProductController extends Controller
                     ]);
                 }
             }
-
-           
+    
+            // Xử lý biến thể sản phẩm
             foreach ($request->chip_id as $index => $chipId) {
                 ProductVariant::create([
                     'product_id' => $product->id,
                     'chip_id' => $chipId,
-                    'ram_id' => $request->ram_id[$index], 
-                    'storage_id' => $request->storage_id[$index], 
-                    'listed_price' => $request->listed_price[$index], 
-                    'sale_price' => $request->sale_price[$index], 
-                    'quantity' => $request->quantity[$index], 
+                    'ram_id' => $request->ram_id[$index],
+                    'storage_id' => $request->storage_id[$index],
+                    'listed_price' => $request->listed_price[$index],
+                    'sale_price' => $request->sale_price[$index],
+                    'quantity' => $request->quantity[$index],
                 ]);
             }
-
+    
             DB::commit();
             return redirect()->route('admins.products.index')->with('success', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
@@ -100,8 +100,7 @@ class ProductController extends Controller
             return back()->withErrors(['error' => 'Đã có lỗi xảy ra!']);
         }
     }
-
-
+    
     /**
      * Display the specified resource.
      */
@@ -130,39 +129,20 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         DB::beginTransaction();
     
         try {
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'content' => 'required|string',
-                'description' => 'required|string',
-                'listed_price' => 'required|array',
-                'sale_price' => 'required|array',
-                'quantity' => 'required|array',
-                'chip_id' => 'required|array',
-                'ram_id' => 'required|array',
-                'storage_id' => 'required|array',
-                'is_show_home' => 'required|boolean',
-                'sub_category_id' => 'required|exists:sub_categories,id',
-                'image' => 'nullable|image|max:2048',
-                'images' => 'nullable|array', 
-            ]);
-    
             $product = Product::findOrFail($id);
-    
-            $product->update($validatedData);
+            $product->update($request->validated());
     
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('public/product');
                 $product->update(['image' => $imagePath]);
             }
     
-          
             if ($request->hasFile('images')) {
-               
                 ProductImage::where('product_id', $product->id)->delete();
                 foreach ($request->file('images') as $index => $image) {
                     $imagePath = $image->store('products');
@@ -175,28 +155,19 @@ class ProductController extends Controller
                     ]);
                 }
             }
-            
+    
             ProductVariant::where('product_id', $product->id)->delete();
     
-            if (count($request->chip_id) === count($request->ram_id) &&
-                count($request->ram_id) === count($request->storage_id) &&
-                count($request->storage_id) === count($request->listed_price) &&
-                count($request->listed_price) === count($request->sale_price) &&
-                count($request->sale_price) === count($request->quantity)) {
-    
-                foreach ($request->chip_id as $index => $chipId) {
-                    ProductVariant::create([
-                        'product_id' => $product->id,
-                        'chip_id' => $chipId,
-                        'ram_id' => $request->ram_id[$index],
-                        'storage_id' => $request->storage_id[$index],
-                        'listed_price' => $request->listed_price[$index],
-                        'sale_price' => $request->sale_price[$index],
-                        'quantity' => $request->quantity[$index],
-                    ]);
-                }
-            } else {
-                return redirect()->back()->withErrors(['message' => 'Dữ liệu biến thể không hợp lệ.']);
+            foreach ($request->chip_id as $index => $chipId) {
+                ProductVariant::create([
+                    'product_id' => $product->id,
+                    'chip_id' => $chipId,
+                    'ram_id' => $request->ram_id[$index],
+                    'storage_id' => $request->storage_id[$index],
+                    'listed_price' => $request->listed_price[$index],
+                    'sale_price' => $request->sale_price[$index],
+                    'quantity' => $request->quantity[$index],
+                ]);
             }
     
             DB::commit();
@@ -206,6 +177,7 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['message' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.
