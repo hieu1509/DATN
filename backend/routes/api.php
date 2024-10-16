@@ -34,3 +34,5 @@ Route::post('/resetpassword/{token}', [ApiauthController::class, 'check_reset_pa
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('subcategories', SubcategoryController::class);
 Route::apiResource('promotions', PromotionController::class);
+// Route tùy chỉnh để áp dụng khuyến mãi
+Route::post('/promotions/apply', [PromotionController::class, 'applyPromotion']);
