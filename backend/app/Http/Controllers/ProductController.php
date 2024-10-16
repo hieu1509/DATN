@@ -62,7 +62,7 @@ class ProductController extends Controller
     
             // Xử lý ảnh đại diện
             if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('public/product');
+                $imagePath = $request->file('image')->store('product');
                 $product->update(['image' => $imagePath]);
             }
     
