@@ -44,7 +44,10 @@ class StorageController extends Controller
         if($request->isMethod('POST')){
             Storage::create($param);
         }
-        return redirect()->back()->with('success','Storage được thêm thành công');
+
+
+        return redirect()->route('admins.chips.index')->with('success','Storage được thêm thành công');
+
     }
 
     /**
@@ -76,7 +79,10 @@ class StorageController extends Controller
         $storage = storage::query()->findOrFail($id);
         $param = $request->except('_token','_method');
         $storage->update($param);
-        return redirect()->back()->with('success','storage được sửa thành công');
+
+
+        return redirect()->route('admins.chips.index')->with('success','storage được sửa thành công');
+
     }
 
     /**

@@ -4,6 +4,7 @@
 use App\Http\Controllers\api\ApiauthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\SubcategoryController;
@@ -106,8 +107,7 @@ Route::prefix('admins')
             Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
         });
     });
-<<<<<<< Updated upstream
-=======
+
     Route::resource('promotions', PromotionController::class);
 
 
@@ -116,4 +116,5 @@ Route::prefix('admins')
     Route::get('/test', function () {
         return view('user/pages/cart');
     });
->>>>>>> Stashed changes
+
+    Route::resource('promotions', PromotionController::class);
