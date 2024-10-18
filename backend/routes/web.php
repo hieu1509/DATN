@@ -107,4 +107,14 @@ Route::prefix('admins')
             Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
         });
     });
+
+    Route::resource('promotions', PromotionController::class);
+
+
+
+    //
+    Route::get('/test', function () {
+        return view('user/pages/cart');
+    });
+
     Route::resource('promotions', PromotionController::class);
