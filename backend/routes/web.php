@@ -106,3 +106,14 @@ Route::prefix('admins')
             Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
         });
     });
+<<<<<<< Updated upstream
+=======
+    Route::resource('promotions', PromotionController::class);
+
+
+
+    //
+    Route::get('/test', function () {
+        return view('user/pages/cart');
+    });
+>>>>>>> Stashed changes
