@@ -109,7 +109,7 @@
                                 <a href="{{route('promotions.index')}}" class="nav-link" data-key="t-chat">Danh sách khuyến mại </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('categories.create')}}" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
+                                <a href="{{ route('promotions.create') }}" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
                             </li>
                         </ul>
                     </div>
