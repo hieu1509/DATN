@@ -70,7 +70,7 @@
                                         Nhập email của bạn và hướng dẫn sẽ được gửi đến bạn!
                                     </div>
                                     <div class="p-2">
-                                        <form action="{{ route('password.email') }}" method="POST">
+                                        <form action="{{ route('admin.password.email') }}" method="POST">
                                             @csrf
                                             <div class="mb-4">
                                                 <label class="form-label">Email</label>
@@ -92,7 +92,7 @@
 
                             <div class="mt-4 text-center">
                                 <p class="mb-0">Đợi đã, tôi nhớ mật khẩu của mình...
-                                    <a href="{{ route('login') }}"
+                                    <a href="{{ route('admin.login') }}"
                                         class="fw-semibold text-primary text-decoration-underline"> Nhấn vào đây </a>
                                 </p>
                             </div>

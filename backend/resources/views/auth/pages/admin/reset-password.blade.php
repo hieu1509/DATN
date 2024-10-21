@@ -61,7 +61,7 @@
                                     </div>
 
                                     <div class="p-2">
-                                        <form action="{{ route('password.update') }}" method="POST">
+                                        <form action="{{ route('admin.password.update') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="token" value="{{ $token }}">
                                             <input type="hidden" name="email" value="{{ $email }}">

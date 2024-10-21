@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="p-2 mt-4">
                                         <!-- Form đăng ký -->
-                                        <form class="needs-validation" method="POST" action="{{ route('register') }}"
+                                        <form class="needs-validation" method="POST" action="{{ route('admin.register') }}"
                                             novalidate>
                                             @csrf <!-- Laravel CSRF bảo mật -->
 
@@ -147,6 +147,9 @@
                                             </div>
                                         </form>
                                         <!-- End Form -->
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <p class="mb-0">Bạn đã có tài khoản ? <a href="auth-signin-cover.html" class="fw-semibold text-primary text-decoration-underline"> Signin</a> </p>
                                     </div>
                                 </div>
                                 <!-- end card body -->

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class ForgotPasswordController extends Controller
+class UserForgotPasswordController extends Controller
 {
     // Hiển thị form yêu cầu quên mật khẩu
     public function showLinkRequestForm()
     {
-        return view('auth.pages.forgot-password');
+        return view('auth.pages.user.forgot-password');
     }
 
     // Xử lý yêu cầu quên mật khẩu
@@ -45,7 +45,7 @@ class ForgotPasswordController extends Controller
     // Hiển thị form đặt lại mật khẩu
     public function showResetForm(Request $request, $token = null)
     {
-        return view('auth.pages.reset-password')->with([
+        return view('auth.pages.user.reset-password')->with([
             'token' => $token,
             'email' => $request->email,
         ]);

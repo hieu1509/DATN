@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class RegisterController extends Controller
+class UserRegisterController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('auth.pages.register');
+        return view('auth.pages.user.register');
     }
 
     public function register(Request $request)
@@ -47,6 +47,6 @@ class RegisterController extends Controller
         Auth::login($user);
 
         // Chuyển hướng người dùng sau khi đăng ký thành công
-        return redirect()->route('home')->with('success', 'Đăng ký thành công!'); 
+        //return redirect()->route('home')->with('success', 'Đăng ký thành công!'); 
     }
 }

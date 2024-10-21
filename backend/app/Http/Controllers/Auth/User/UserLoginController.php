@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class UserLoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.pages.login'); // Đường dẫn tới view đăng nhập
+        return view('auth.pages.user.login'); // Đường dẫn tới view đăng nhập
     }
 
     public function login(Request $request)
@@ -30,7 +30,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Đăng nhập thành công, điều hướng đến trang chủ
-            return redirect()->intended('dashboard'); // Hoặc bất kỳ trang nào bạn muốn
+            return redirect()->intended('home'); // Hoặc bất kỳ trang nào bạn muốn
         }
 
         // Nếu đăng nhập không thành công, trở lại trang đăng nhập với thông báo lỗi
@@ -42,7 +42,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        Auth()->logout();
         return redirect()->route('login'); // Chuyển hướng về trang đăng nhập
     }
 }

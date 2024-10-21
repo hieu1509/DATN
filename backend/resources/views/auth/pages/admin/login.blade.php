@@ -41,7 +41,7 @@
                                     <p class="text-muted">Đăng nhập để tiếp tục đến TechShop.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form method="POST" action="{{ route('login') }}">
+                                    <form method="POST" action="{{ route('admin.login') }}">
                                         @csrf
 
                                         <div class="mb-3">
@@ -54,7 +54,7 @@
 
                                         <div class="mb-3">
                                             <div class="float-end">
-                                                <a href="{{ route('password.request') }}" class="text-muted">Quên mật khẩu?</a>
+                                                <a href="{{ route('admin.password.request') }}" class="text-muted">Quên mật khẩu?</a>
                                             </div>
                                             <label class="form-label" for="password-input">Mật khẩu <span class="text-danger">*</span></label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
@@ -94,7 +94,7 @@
                         <!-- end card -->
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Bạn chưa có tài khoản ? <a href="{{ route('register') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng ký </a> </p>
+                            <p class="mb-0">Bạn chưa có tài khoản ? <a href="{{ route('admin.register') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng ký </a> </p>
                         </div>
 
                     </div>
