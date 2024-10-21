@@ -106,10 +106,10 @@
                     <div class="collapse menu-dropdown" id="sidebarForms">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="/promotion/list" class="nav-link" data-key="t-chat">Danh sách khuyến mại </a>
+                                <a href="{{route('promotions.index')}}" class="nav-link" data-key="t-chat">Danh sách khuyến mại </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/promotion/add" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
+                                <a href="{{ route('promotions.create') }}" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
                             </li>
                         </ul>
                     </div>

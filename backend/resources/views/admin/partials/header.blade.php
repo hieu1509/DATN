@@ -800,12 +800,18 @@
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <span class="text-start ms-xl-2">
-                                <span
-                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->name }}</span>
-                                <span
-                                    class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ auth()->user()->email }}</span>
-                            </span>
+                            @if (auth()->check())
+                                <span class="text-start ms-xl-2">
+                                    <span
+                                        class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->name }}</span>
+                                    <span
+                                        class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ auth()->user()->email }}</span>
+                                </span>
+                            @else
+                                <span class="text-start ms-xl-2">
+                                    <span class="fw-medium user-name-text">Khách</span>
+                                </span>
+                            @endif
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
@@ -839,12 +845,12 @@
                             @csrf
                         </form>
 
+                        <!-- Liên Kết Đăng Xuất -->
                         <a class="dropdown-item" href="#"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Logout</span>
                         </a>
-
                     </div>
                 </div>
             </div>

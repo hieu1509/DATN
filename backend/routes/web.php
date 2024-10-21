@@ -1,9 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\api\ApiauthController;
-use App\Http\Controllers\Auth\User\UserForgotPasswordController;
-use App\Http\Controllers\Auth\User\UserRegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\PromotionController;
@@ -11,10 +10,10 @@ use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
-use App\Http\Controllers\Auth\Admin\ForgotPasswordController;
-use App\Http\Controllers\Auth\Admin\LoginController;
-use App\Http\Controllers\Auth\Admin\RegisterController;
-use App\Http\Controllers\Auth\User\UserLoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -30,33 +29,26 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-//Đăng ký, đăng nhập Admin
-Route::prefix('admin')->group(function () {
-    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('admin.register');
-    Route::post('register', [RegisterController::class, 'register']);
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
-    Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('admin.password.request');
-    Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('admin.password.email');
-    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('admin.password.reset');
-    Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('admin.password.update');
-});
+//Admin
+Route::get('/admins', [AdminController::class, 'admins'])->name('admins');
+Route::get('/admin/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
+Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register.post');
+Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
-
-// Đăng ký người dùng
-Route::get('register', [UserRegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [UserRegisterController::class, 'register']);
-// Đăng nhập người dùng
-Route::get('login', [UserLoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [UserLoginController::class, 'login']);
-Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
-// Khôi phục mật khẩu
-Route::get('forgot-password', [UserForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('forgot-password', [UserForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('reset-password/{token}', [UserForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('reset-password', [UserForgotPasswordController::class, 'resetPassword'])->name('password.update');
+//User
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
 // Danh sách sản phẩm
@@ -146,4 +138,14 @@ Route::prefix('admins')
                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
             });
     });
+
+Route::resource('promotions', PromotionController::class);
+
+
+
+//
+Route::get('/test', function () {
+    return view('user/pages/cart');
+});
+
 Route::resource('promotions', PromotionController::class);
