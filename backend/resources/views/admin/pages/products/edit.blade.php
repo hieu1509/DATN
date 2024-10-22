@@ -154,14 +154,17 @@
 
                                         <div class="col-lg-6">
                                             <div class="form-check form-switch form-switch-md" dir="ltr">
-                                                <input type="checkbox" class="form-check-input" id="is_sale"
-                                                    name="is_sale" value="1" {{ $product->is_sale ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="is_sale">Sản phẩm sale</label>
+                                                <input type="hidden" name="is_sale" value="0">
+                                                <input id="is_sale" name="is_sale" value="1" type="checkbox"
+                                                    class="form-check-input" {{ $product->is_sale ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="is_sale">Sản phẩm Sale</label>
                                             </div>
                                         </div>
+                                        
 
                                         <div class="col-lg-6">
                                             <div class="form-check form-switch form-switch-md" dir="ltr">
+                                                <input type="hidden" name="is_hot" value="0">
                                                 <input type="checkbox" class="form-check-input" id="is_hot"
                                                     name="is_hot" value="1" {{ $product->is_hot ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="is_hot">Sản phẩm Hot</label>
@@ -198,7 +201,7 @@
                                     data-choices-search-false>
                                     @foreach ($sub_categories as $id => $name)
                                         <option value="{{ $id }}"
-                                            {{ $product->subcategory_id == $id ? 'selected' : '' }}>{{ $name }}
+                                            {{ $product->sub_category_id == $id ? 'selected' : '' }}>{{ $name }}
                                         </option>
                                     @endforeach
                                 </select>
