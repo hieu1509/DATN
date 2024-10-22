@@ -12,7 +12,11 @@ use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+
+use App\Http\Controllers\view\DonHangController;
+
 use App\Http\Controllers\CartController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -157,4 +161,10 @@ Route::resource('promotions', PromotionController::class);
         Route::get('/{id}/edit', [CartController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
 
+
+    Route::resource('promotions', PromotionController::class);
+
+    Route::get('/myorder', [DonHangController::class, 'index'])->name('index');
+
         Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
+
