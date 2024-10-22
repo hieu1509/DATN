@@ -46,7 +46,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         DB::beginTransaction();
-    
+
         try {
             // Tạo sản phẩm mới
             $product = Product::create([
@@ -59,13 +59,13 @@ class ProductController extends Controller
                 'is_sale' => $request->is_sale,
                 'is_show_home' => $request->is_show_home,
             ]);
-    
+
             // Xử lý ảnh đại diện
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('product', 'public');
                 $product->update(['image' => $imagePath]);
             }
-    
+
             // Xử lý ảnh phụ
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $index => $image) {
@@ -79,7 +79,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
-    
+
             // Xử lý biến thể sản phẩm
             foreach ($request->chip_id as $index => $chipId) {
                 ProductVariant::create([
@@ -92,7 +92,7 @@ class ProductController extends Controller
                     'quantity' => $request->quantity[$index],
                 ]);
             }
-    
+
             DB::commit();
             return redirect()->route('admins.products.index')->with('success', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
@@ -100,31 +100,31 @@ class ProductController extends Controller
             return back()->withErrors(['error' => 'Đã có lỗi xảy ra!']);
         }
     }
-    
+
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
         $product = Product::with('productImages')->find($id); // Lấy sản phẩm cùng với hình ảnh
-    
+
         if (!$product) {
             return redirect()->route('admins.products.index')->with('error', 'Sản phẩm không tồn tại.');
         }
-    
+
         return view('admin.pages.products.detail', compact('product'));
     }
-    
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-       
+
         $product = Product::with(['productImages', 'variants'])->findOrFail($id);
 
-        
+
         $sub_categories = Subcategory::pluck('name', 'id')->all();
         $chips = Chip::pluck('name', 'id')->all();
         $rams = Ram::pluck('name', 'id')->all();
@@ -139,20 +139,20 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, $id)
     {
         DB::beginTransaction();
-    
+
         try {
             $product = Product::findOrFail($id);
             $product->update($request->validated());
-    
+
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('product', 'public');
                 $product->update(['image' => $imagePath]);
             }
-    
+
             if ($request->hasFile('images')) {
                 ProductImage::where('product_id', $product->id)->delete();
                 foreach ($request->file('images') as $index => $image) {
-                    $imagePath = $image->store('products');
+                    $imagePath = $image->store('products', 'public');
                     ProductImage::create([
                         'product_id' => $product->id,
                         'image_url' => $imagePath,
@@ -162,9 +162,9 @@ class ProductController extends Controller
                     ]);
                 }
             }
-    
+
             ProductVariant::where('product_id', $product->id)->delete();
-    
+
             foreach ($request->chip_id as $index => $chipId) {
                 ProductVariant::create([
                     'product_id' => $product->id,
@@ -176,7 +176,7 @@ class ProductController extends Controller
                     'quantity' => $request->quantity[$index],
                 ]);
             }
-    
+
             DB::commit();
             return redirect()->route('admins.products.index')->with('success', 'Cập nhật sản phẩm thành công!');
         } catch (\Exception $e) {
@@ -184,7 +184,7 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['message' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -195,6 +195,21 @@ class ProductController extends Controller
 
         try {
             $product = Product::findOrFail($id);
+
+            if ($product->image) {
+                $imagePath = public_path('storage/' . $product->image); 
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            $productImages = ProductImage::where('product_id', $product->id)->get();
+            foreach ($productImages as $productImage) {
+                $imagePath = public_path('storage/' . $productImage->image_url);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath); 
+                }
+            }
 
             ProductImage::where('product_id', $product->id)->delete();
 

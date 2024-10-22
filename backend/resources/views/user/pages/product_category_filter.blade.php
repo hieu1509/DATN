@@ -62,7 +62,6 @@
             color: #666;
             /* Màu sắc cho count */
         }
-
         .select {
             text-align: center;
             margin-top: 15px;
@@ -95,10 +94,10 @@
                                 <i class="tm tm-breadcrumbs-arrow-right"></i>
                             </span>
                             @if (isset($subCategory))
-                                
-                            Danh mục: {{ $subCategory->name }}
+                                Danh mục: {{ $subCategory->name }}
+                            @elseif(isset($category))
+                                Danh mục: {{ $category->name }}
                             @endif
-                            
                         </nav>
                         <!-- .woocommerce-breadcrumb -->
                         <div id="primary" class="content-area">
@@ -113,8 +112,9 @@
                                     <!-- .handheld-sidebar-toggle -->
                                     <h1 class="woocommerce-products-header__title page-title">
                                         @if (isset($subCategory))
-                                
-                                        Danh mục: {{ $subCategory->name }}
+                                            Danh mục: {{ $subCategory->name }}
+                                        @elseif(isset($category))
+                                            Danh mục: {{ $category->name }}
                                         @endif
                                     </h1>
                                     <ul role="tablist" class="shop-view-switcher nav nav-tabs">
@@ -196,7 +196,7 @@
                                                             </div>
                                                             <!-- .yith-wcwl-add-to-wishlist -->
                                                             <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
-                                                                href="{{ route('users.products.show', $product->id) }}">
+                                                                href="single-product-fullwidth.html">
                                                                 @if ($product->image)
                                                                     <img width="224" height="197"
                                                                         src="{{ Storage::url($product->image) }}"
@@ -242,7 +242,7 @@
                                                             </a>
                                                             <!-- .woocommerce-LoopProduct-link -->
                                                             <div class="hover-area">
-                                                                <a class="button" href="cart.html">Thêm vào giỏ hàng</a>
+                                                                <a class="button" href="cart.html">Add to cart</a>
                                                                 <a class="add-to-compare-link" href="compare.html">Add to
                                                                     compare</a>
                                                             </div>
@@ -258,22 +258,28 @@
                                         </div>
                                         <!-- .woocommerce -->
                                     </div>
-                                    {{-- <!-- .tab-pane -->
-                                    <div id="grid-extended" class="tab-pane" role="tabpanel">
-                                        <div class="woocommerce columns-7">
+                                    <!-- .tab-pane -->
+                                    {{-- <div id="grid-extended" class="tab-pane" role="tabpanel">
+                                        <div class="woocommerce columns-5">
                                             <div class="products">
                                                 <div class="product first">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/1.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/1.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate
+                                                            splashproof portable speaker</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -295,27 +301,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/2.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/2.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
+                                                        <h2 class="woocommerce-loop-product__title">4K Action Cam with
+                                                            Wi-Fi & GPS</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -337,27 +352,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/3.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/3.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
+                                                        <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG
+                                                        </h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -379,27 +403,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/4.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/4.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate
+                                                            splashproof portable speaker</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -421,111 +454,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product ">
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                    </div>
-                                                    <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/5.jpg">
-                                                        <span class="price">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
-                                                        </span>
-                                                        <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
-                                                    </a>
-                                                    <!-- .woocommerce-LoopProduct-link -->
-                                                    <div class="techmarket-product-rating">
-                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                            <span style="width:100%">
-                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                        </div>
-                                                        <span class="review-count">(1)</span>
-                                                    </div>
-                                                    <!-- .techmarket-product-rating -->
-                                                    <span class="sku_wrapper">SKU:
-                                                        <span class="sku">5487FB8/13</span>
-                                                    </span>
-                                                    <div class="woocommerce-product-details__short-description">
-                                                        <ul>
-                                                            <li>Multimedia Speakers</li>
-                                                            <li>120 watts peak</li>
-                                                            <li>Front-facing subwoofer</li>
-                                                            <li>Refresh Rate: 120Hz (Effective)</li>
-                                                            <li>Backlight: LED</li>
-                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product ">
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                    </div>
-                                                    <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/6.jpg">
-                                                        <span class="price">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
-                                                        </span>
-                                                        <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor</h2>
-                                                    </a>
-                                                    <!-- .woocommerce-LoopProduct-link -->
-                                                    <div class="techmarket-product-rating">
-                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                            <span style="width:100%">
-                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                        </div>
-                                                        <span class="review-count">(1)</span>
-                                                    </div>
-                                                    <!-- .techmarket-product-rating -->
-                                                    <span class="sku_wrapper">SKU:
-                                                        <span class="sku">5487FB8/13</span>
-                                                    </span>
-                                                    <div class="woocommerce-product-details__short-description">
-                                                        <ul>
-                                                            <li>Multimedia Speakers</li>
-                                                            <li>120 watts peak</li>
-                                                            <li>Front-facing subwoofer</li>
-                                                            <li>Refresh Rate: 120Hz (Effective)</li>
-                                                            <li>Backlight: LED</li>
-                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product last">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/7.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/5.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50
+                                                        </h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -547,27 +505,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product first">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/8.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/6.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate
+                                                            splashproof portable speaker</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -589,27 +556,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/9.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/7.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Video & Air Quality
+                                                            Monitor</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -631,27 +607,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/10.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/8.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen LED-Lit Monitorss Buds</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Video & Air Quality
+                                                            Monitor</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -673,27 +658,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/11.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/9.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen LED-Lit Monitorss Buds</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen
+                                                            LED-Lit Monitorss Buds</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -715,111 +709,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product ">
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                    </div>
-                                                    <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/12.jpg">
-                                                        <span class="price">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
-                                                        </span>
-                                                        <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
-                                                    </a>
-                                                    <!-- .woocommerce-LoopProduct-link -->
-                                                    <div class="techmarket-product-rating">
-                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                            <span style="width:100%">
-                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                        </div>
-                                                        <span class="review-count">(1)</span>
-                                                    </div>
-                                                    <!-- .techmarket-product-rating -->
-                                                    <span class="sku_wrapper">SKU:
-                                                        <span class="sku">5487FB8/13</span>
-                                                    </span>
-                                                    <div class="woocommerce-product-details__short-description">
-                                                        <ul>
-                                                            <li>Multimedia Speakers</li>
-                                                            <li>120 watts peak</li>
-                                                            <li>Front-facing subwoofer</li>
-                                                            <li>Refresh Rate: 120Hz (Effective)</li>
-                                                            <li>Backlight: LED</li>
-                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product ">
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                    </div>
-                                                    <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/13.jpg">
-                                                        <span class="price">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
-                                                        </span>
-                                                        <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
-                                                    </a>
-                                                    <!-- .woocommerce-LoopProduct-link -->
-                                                    <div class="techmarket-product-rating">
-                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                            <span style="width:100%">
-                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                        </div>
-                                                        <span class="review-count">(1)</span>
-                                                    </div>
-                                                    <!-- .techmarket-product-rating -->
-                                                    <span class="sku_wrapper">SKU:
-                                                        <span class="sku">5487FB8/13</span>
-                                                    </span>
-                                                    <div class="woocommerce-product-details__short-description">
-                                                        <ul>
-                                                            <li>Multimedia Speakers</li>
-                                                            <li>120 watts peak</li>
-                                                            <li>Front-facing subwoofer</li>
-                                                            <li>Refresh Rate: 120Hz (Effective)</li>
-                                                            <li>Backlight: LED</li>
-                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product last">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/14.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/10.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D
+                                                            with Bluetooth Glasses</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -841,27 +760,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product first">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/15.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/11.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate
+                                                            splashproof portable speaker</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -883,27 +811,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/16.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/12.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Bluetooth on-ear
+                                                            PureBass Headphones</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -925,27 +862,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/17.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/13.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
+                                                        <h2 class="woocommerce-loop-product__title">XONE Wireless
+                                                            Controller</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -967,27 +913,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product ">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/5.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/14.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D
+                                                            with Bluetooth Glasses</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -1009,111 +964,36 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product ">
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                    </div>
-                                                    <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/12.jpg">
-                                                        <span class="price">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
-                                                        </span>
-                                                        <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey Suture Leather Strap</h2>
-                                                    </a>
-                                                    <!-- .woocommerce-LoopProduct-link -->
-                                                    <div class="techmarket-product-rating">
-                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                            <span style="width:100%">
-                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                        </div>
-                                                        <span class="review-count">(1)</span>
-                                                    </div>
-                                                    <!-- .techmarket-product-rating -->
-                                                    <span class="sku_wrapper">SKU:
-                                                        <span class="sku">5487FB8/13</span>
-                                                    </span>
-                                                    <div class="woocommerce-product-details__short-description">
-                                                        <ul>
-                                                            <li>Multimedia Speakers</li>
-                                                            <li>120 watts peak</li>
-                                                            <li>Front-facing subwoofer</li>
-                                                            <li>Refresh Rate: 120Hz (Effective)</li>
-                                                            <li>Backlight: LED</li>
-                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product ">
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                    </div>
-                                                    <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/1.jpg">
-                                                        <span class="price">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
-                                                        </span>
-                                                        <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
-                                                    </a>
-                                                    <!-- .woocommerce-LoopProduct-link -->
-                                                    <div class="techmarket-product-rating">
-                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                            <span style="width:100%">
-                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                        </div>
-                                                        <span class="review-count">(1)</span>
-                                                    </div>
-                                                    <!-- .techmarket-product-rating -->
-                                                    <span class="sku_wrapper">SKU:
-                                                        <span class="sku">5487FB8/13</span>
-                                                    </span>
-                                                    <div class="woocommerce-product-details__short-description">
-                                                        <ul>
-                                                            <li>Multimedia Speakers</li>
-                                                            <li>120 watts peak</li>
-                                                            <li>Front-facing subwoofer</li>
-                                                            <li>Refresh Rate: 120Hz (Effective)</li>
-                                                            <li>Backlight: LED</li>
-                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
                                                 </div>
                                                 <!-- .product -->
                                                 <div class="product last">
                                                     <div class="yith-wcwl-add-to-wishlist">
-                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
                                                     </div>
                                                     <!-- .yith-wcwl-add-to-wishlist -->
-                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/8.jpg">
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/15.jpg">
                                                         <span class="price">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
                                                         </span>
-                                                        <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
+                                                        <h2 class="woocommerce-loop-product__title">Watch Stainless with
+                                                            Grey Suture Leather Strap</h2>
                                                     </a>
                                                     <!-- .woocommerce-LoopProduct-link -->
                                                     <div class="techmarket-product-rating">
@@ -1135,39 +1015,308 @@
                                                             <li>Refresh Rate: 120Hz (Effective)</li>
                                                             <li>Backlight: LED</li>
                                                             <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C, 1 Ethernet</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
                                                         </ul>
                                                     </div>
                                                     <!-- .woocommerce-product-details__short-description -->
-                                                    <a class="button product_type_simple add_to_cart_button" href="cart.html">Add to cart</a>
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
                                                     <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product first">
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                            Add to Wishlist</a>
+                                                    </div>
+                                                    <!-- .yith-wcwl-add-to-wishlist -->
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/16.jpg">
+                                                        <span class="price">
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                        </span>
+                                                        <h2 class="woocommerce-loop-product__title">Watch Stainless with
+                                                            Grey Suture Leather Strap</h2>
+                                                    </a>
+                                                    <!-- .woocommerce-LoopProduct-link -->
+                                                    <div class="techmarket-product-rating">
+                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                            <span style="width:100%">
+                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                        </div>
+                                                        <span class="review-count">(1)</span>
+                                                    </div>
+                                                    <!-- .techmarket-product-rating -->
+                                                    <span class="sku_wrapper">SKU:
+                                                        <span class="sku">5487FB8/13</span>
+                                                    </span>
+                                                    <div class="woocommerce-product-details__short-description">
+                                                        <ul>
+                                                            <li>Multimedia Speakers</li>
+                                                            <li>120 watts peak</li>
+                                                            <li>Front-facing subwoofer</li>
+                                                            <li>Refresh Rate: 120Hz (Effective)</li>
+                                                            <li>Backlight: LED</li>
+                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- .woocommerce-product-details__short-description -->
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product ">
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <a href="wishlist.html" rel="nofollow"
+                                                            class="add_to_wishlist"> Add to Wishlist</a>
+                                                    </div>
+                                                    <!-- .yith-wcwl-add-to-wishlist -->
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/17.jpg">
+                                                        <span class="price">
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                        </span>
+                                                        <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen
+                                                            LED-Lit Monitorss Buds</h2>
+                                                    </a>
+                                                    <!-- .woocommerce-LoopProduct-link -->
+                                                    <div class="techmarket-product-rating">
+                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                            <span style="width:100%">
+                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                        </div>
+                                                        <span class="review-count">(1)</span>
+                                                    </div>
+                                                    <!-- .techmarket-product-rating -->
+                                                    <span class="sku_wrapper">SKU:
+                                                        <span class="sku">5487FB8/13</span>
+                                                    </span>
+                                                    <div class="woocommerce-product-details__short-description">
+                                                        <ul>
+                                                            <li>Multimedia Speakers</li>
+                                                            <li>120 watts peak</li>
+                                                            <li>Front-facing subwoofer</li>
+                                                            <li>Refresh Rate: 120Hz (Effective)</li>
+                                                            <li>Backlight: LED</li>
+                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- .woocommerce-product-details__short-description -->
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product ">
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <a href="wishlist.html" rel="nofollow"
+                                                            class="add_to_wishlist"> Add to Wishlist</a>
+                                                    </div>
+                                                    <!-- .yith-wcwl-add-to-wishlist -->
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/5.jpg">
+                                                        <span class="price">
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                        </span>
+                                                        <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG
+                                                        </h2>
+                                                    </a>
+                                                    <!-- .woocommerce-LoopProduct-link -->
+                                                    <div class="techmarket-product-rating">
+                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                            <span style="width:100%">
+                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                        </div>
+                                                        <span class="review-count">(1)</span>
+                                                    </div>
+                                                    <!-- .techmarket-product-rating -->
+                                                    <span class="sku_wrapper">SKU:
+                                                        <span class="sku">5487FB8/13</span>
+                                                    </span>
+                                                    <div class="woocommerce-product-details__short-description">
+                                                        <ul>
+                                                            <li>Multimedia Speakers</li>
+                                                            <li>120 watts peak</li>
+                                                            <li>Front-facing subwoofer</li>
+                                                            <li>Refresh Rate: 120Hz (Effective)</li>
+                                                            <li>Backlight: LED</li>
+                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- .woocommerce-product-details__short-description -->
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product ">
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <a href="wishlist.html" rel="nofollow"
+                                                            class="add_to_wishlist"> Add to Wishlist</a>
+                                                    </div>
+                                                    <!-- .yith-wcwl-add-to-wishlist -->
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/12.jpg">
+                                                        <span class="price">
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                        </span>
+                                                        <h2 class="woocommerce-loop-product__title">4K Action Cam with
+                                                            Wi-Fi & GPS</h2>
+                                                    </a>
+                                                    <!-- .woocommerce-LoopProduct-link -->
+                                                    <div class="techmarket-product-rating">
+                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                            <span style="width:100%">
+                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                        </div>
+                                                        <span class="review-count">(1)</span>
+                                                    </div>
+                                                    <!-- .techmarket-product-rating -->
+                                                    <span class="sku_wrapper">SKU:
+                                                        <span class="sku">5487FB8/13</span>
+                                                    </span>
+                                                    <div class="woocommerce-product-details__short-description">
+                                                        <ul>
+                                                            <li>Multimedia Speakers</li>
+                                                            <li>120 watts peak</li>
+                                                            <li>Front-facing subwoofer</li>
+                                                            <li>Refresh Rate: 120Hz (Effective)</li>
+                                                            <li>Backlight: LED</li>
+                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- .woocommerce-product-details__short-description -->
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product last">
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <a href="wishlist.html" rel="nofollow"
+                                                            class="add_to_wishlist"> Add to Wishlist</a>
+                                                    </div>
+                                                    <!-- .yith-wcwl-add-to-wishlist -->
+                                                    <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                        href="single-product-fullwidth.html">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/1.jpg">
+                                                        <span class="price">
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <span
+                                                                    class="woocommerce-Price-currencySymbol">$</span>800.00</span>
+                                                        </span>
+                                                        <h2 class="woocommerce-loop-product__title">Bluetooth on-ear
+                                                            PureBass Headphones</h2>
+                                                    </a>
+                                                    <!-- .woocommerce-LoopProduct-link -->
+                                                    <div class="techmarket-product-rating">
+                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                            <span style="width:100%">
+                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                        </div>
+                                                        <span class="review-count">(1)</span>
+                                                    </div>
+                                                    <!-- .techmarket-product-rating -->
+                                                    <span class="sku_wrapper">SKU:
+                                                        <span class="sku">5487FB8/13</span>
+                                                    </span>
+                                                    <div class="woocommerce-product-details__short-description">
+                                                        <ul>
+                                                            <li>Multimedia Speakers</li>
+                                                            <li>120 watts peak</li>
+                                                            <li>Front-facing subwoofer</li>
+                                                            <li>Refresh Rate: 120Hz (Effective)</li>
+                                                            <li>Backlight: LED</li>
+                                                            <li>Smart Functionality: Yes, webOS 3.0</li>
+                                                            <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x
+                                                                3.0″, TV with stand: 43.5″ x 27.6″ x 8.5″</li>
+                                                            <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1
+                                                                Optical, 1 RS232C, 1 Ethernet</li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- .woocommerce-product-details__short-description -->
+                                                    <a class="button product_type_simple add_to_cart_button"
+                                                        href="cart.html">Add to cart</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                                 <!-- .product -->
                                             </div>
                                             <!-- .products -->
                                         </div>
                                         <!-- .woocommerce -->
-                                    </div>
+                                    </div> --}}
                                     <!-- .tab-pane -->
-                                    <div id="list-view-large" class="tab-pane active" role="tabpanel">
+                                    {{-- <div id="list-view-large" class="tab-pane" role="tabpanel">
                                         <div class="woocommerce columns-1">
                                             <div class="products">
                                                 <div class="product list-view-large first ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/1.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/1.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1175,16 +1324,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1200,11 +1360,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1215,19 +1378,26 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-large ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/2.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/2.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1235,16 +1405,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1260,11 +1441,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1275,19 +1459,26 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-large ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/3.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/3.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1295,16 +1486,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1320,11 +1522,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1335,19 +1540,26 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-large ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/4.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/4.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1355,16 +1567,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1380,11 +1603,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1393,21 +1619,28 @@
                                                     <!-- .media -->
                                                 </div>
                                                 <!-- .product -->
-                                                <div class="product list-view-large ">
+                                                <div class="product list-view-large last">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/5.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/5.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1415,16 +1648,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1440,11 +1684,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1453,21 +1700,28 @@
                                                     <!-- .media -->
                                                 </div>
                                                 <!-- .product -->
-                                                <div class="product list-view-large ">
+                                                <div class="product list-view-large first ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/6.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/6.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1475,16 +1729,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1500,11 +1765,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1517,26 +1785,33 @@
                                             <!-- .products -->
                                         </div>
                                         <!-- .woocommerce -->
-                                    </div>
+                                    </div> --}}
                                     <!-- .tab-pane -->
-                                    <div id="list-view" class="tab-pane" role="tabpanel">
+                                    {{-- <div id="list-view" class="tab-pane" role="tabpanel">
                                         <div class="woocommerce columns-1">
                                             <div class="products">
-                                                <div class="product list-view last">
+                                                <div class="product list-view ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/1.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/1.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1544,16 +1819,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1566,11 +1852,248 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
+                                                            </div>
+                                                            <!-- .product-actions -->
+                                                        </div>
+                                                        <!-- .media-body -->
+                                                    </div>
+                                                    <!-- .media -->
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product list-view ">
+                                                    <div class="media">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/2.jpg">
+                                                        <div class="media-body">
+                                                            <div class="product-info">
+                                                                <div class="yith-wcwl-add-to-wishlist">
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
+                                                                </div>
+                                                                <!-- .yith-wcwl-add-to-wishlist -->
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                    <div class="techmarket-product-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
+                                                                            <span style="width:100%">
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
+                                                                        </div>
+                                                                        <span class="review-count">(1)</span>
+                                                                    </div>
+                                                                </a>
+                                                                <!-- .woocommerce-LoopProduct-link -->
+                                                                <div class="brand">
+                                                                    <a href="#">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
+                                                                    </a>
+                                                                </div>
+                                                                <!-- .brand -->
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
+                                                                    <ul>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- .woocommerce-product-details__short-description -->
+                                                            </div>
+                                                            <!-- .product-info -->
+                                                            <div class="product-actions">
+                                                                <div class="availability">
+                                                                    Availability:
+                                                                    <p class="stock in-stock">1000 in stock</p>
+                                                                </div>
+                                                                <span class="price">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                </span>
+                                                                <!-- .price -->
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
+                                                            </div>
+                                                            <!-- .product-actions -->
+                                                        </div>
+                                                        <!-- .media-body -->
+                                                    </div>
+                                                    <!-- .media -->
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product list-view ">
+                                                    <div class="media">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/3.jpg">
+                                                        <div class="media-body">
+                                                            <div class="product-info">
+                                                                <div class="yith-wcwl-add-to-wishlist">
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
+                                                                </div>
+                                                                <!-- .yith-wcwl-add-to-wishlist -->
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                    <div class="techmarket-product-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
+                                                                            <span style="width:100%">
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
+                                                                        </div>
+                                                                        <span class="review-count">(1)</span>
+                                                                    </div>
+                                                                </a>
+                                                                <!-- .woocommerce-LoopProduct-link -->
+                                                                <div class="brand">
+                                                                    <a href="#">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
+                                                                    </a>
+                                                                </div>
+                                                                <!-- .brand -->
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
+                                                                    <ul>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- .woocommerce-product-details__short-description -->
+                                                            </div>
+                                                            <!-- .product-info -->
+                                                            <div class="product-actions">
+                                                                <div class="availability">
+                                                                    Availability:
+                                                                    <p class="stock in-stock">1000 in stock</p>
+                                                                </div>
+                                                                <span class="price">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                </span>
+                                                                <!-- .price -->
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
+                                                            </div>
+                                                            <!-- .product-actions -->
+                                                        </div>
+                                                        <!-- .media-body -->
+                                                    </div>
+                                                    <!-- .media -->
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product list-view last">
+                                                    <div class="media">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/4.jpg">
+                                                        <div class="media-body">
+                                                            <div class="product-info">
+                                                                <div class="yith-wcwl-add-to-wishlist">
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
+                                                                </div>
+                                                                <!-- .yith-wcwl-add-to-wishlist -->
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                    <div class="techmarket-product-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
+                                                                            <span style="width:100%">
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
+                                                                        </div>
+                                                                        <span class="review-count">(1)</span>
+                                                                    </div>
+                                                                </a>
+                                                                <!-- .woocommerce-LoopProduct-link -->
+                                                                <div class="brand">
+                                                                    <a href="#">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
+                                                                    </a>
+                                                                </div>
+                                                                <!-- .brand -->
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
+                                                                    <ul>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- .woocommerce-product-details__short-description -->
+                                                            </div>
+                                                            <!-- .product-info -->
+                                                            <div class="product-actions">
+                                                                <div class="availability">
+                                                                    Availability:
+                                                                    <p class="stock in-stock">1000 in stock</p>
+                                                                </div>
+                                                                <span class="price">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                </span>
+                                                                <!-- .price -->
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1581,19 +2104,26 @@
                                                 <!-- .product -->
                                                 <div class="product list-view first ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/2.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/5.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1601,16 +2131,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1623,11 +2164,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1638,19 +2182,26 @@
                                                 <!-- .product -->
                                                 <div class="product list-view ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/3.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/6.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
@@ -1658,16 +2209,27 @@
                                                                 <!-- .woocommerce-LoopProduct-link -->
                                                                 <div class="brand">
                                                                     <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
+                                                                        <img alt="galaxy"
+                                                                            src="assets/images/brands/5.png">
                                                                     </a>
                                                                 </div>
                                                                 <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1680,182 +2242,14 @@
                                                                 </div>
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                            </div>
-                                                            <!-- .product-actions -->
-                                                        </div>
-                                                        <!-- .media-body -->
-                                                    </div>
-                                                    <!-- .media -->
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product list-view ">
-                                                    <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/4.jpg">
-                                                        <div class="media-body">
-                                                            <div class="product-info">
-                                                                <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                                </div>
-                                                                <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                                            <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(1)</span>
-                                                                    </div>
-                                                                </a>
-                                                                <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="brand">
-                                                                    <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
-                                                                    </a>
-                                                                </div>
-                                                                <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
-                                                                    <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <!-- .woocommerce-product-details__short-description -->
-                                                            </div>
-                                                            <!-- .product-info -->
-                                                            <div class="product-actions">
-                                                                <div class="availability">
-                                                                    Availability:
-                                                                    <p class="stock in-stock">1000 in stock</p>
-                                                                </div>
-                                                                <span class="price">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
-                                                                </span>
-                                                                <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                            </div>
-                                                            <!-- .product-actions -->
-                                                        </div>
-                                                        <!-- .media-body -->
-                                                    </div>
-                                                    <!-- .media -->
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product list-view ">
-                                                    <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/5.jpg">
-                                                        <div class="media-body">
-                                                            <div class="product-info">
-                                                                <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                                </div>
-                                                                <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                                            <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(1)</span>
-                                                                    </div>
-                                                                </a>
-                                                                <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="brand">
-                                                                    <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
-                                                                    </a>
-                                                                </div>
-                                                                <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
-                                                                    <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <!-- .woocommerce-product-details__short-description -->
-                                                            </div>
-                                                            <!-- .product-info -->
-                                                            <div class="product-actions">
-                                                                <div class="availability">
-                                                                    Availability:
-                                                                    <p class="stock in-stock">1000 in stock</p>
-                                                                </div>
-                                                                <span class="price">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
-                                                                </span>
-                                                                <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                            </div>
-                                                            <!-- .product-actions -->
-                                                        </div>
-                                                        <!-- .media-body -->
-                                                    </div>
-                                                    <!-- .media -->
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product list-view ">
-                                                    <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/6.jpg">
-                                                        <div class="media-body">
-                                                            <div class="product-info">
-                                                                <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                                </div>
-                                                                <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                                            <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(1)</span>
-                                                                    </div>
-                                                                </a>
-                                                                <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="brand">
-                                                                    <a href="#">
-                                                                        <img alt="galaxy" src="assets/images/brands/5.png">
-                                                                    </a>
-                                                                </div>
-                                                                <!-- .brand -->
-                                                                <div class="woocommerce-product-details__short-description">
-                                                                    <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <!-- .woocommerce-product-details__short-description -->
-                                                            </div>
-                                                            <!-- .product-info -->
-                                                            <div class="product-actions">
-                                                                <div class="availability">
-                                                                    Availability:
-                                                                    <p class="stock in-stock">1000 in stock</p>
-                                                                </div>
-                                                                <span class="price">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
-                                                                </span>
-                                                                <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1868,37 +2262,54 @@
                                             <!-- .products -->
                                         </div>
                                         <!-- .woocommerce -->
-                                    </div>
+                                    </div> --}}
                                     <!-- .tab-pane -->
-                                    <div id="list-view-small" class="tab-pane" role="tabpanel">
+                                    {{-- <div id="list-view-small" class="tab-pane" role="tabpanel">
                                         <div class="woocommerce columns-1">
                                             <div class="products">
                                                 <div class="product list-view-small ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/1.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/1.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1907,11 +2318,81 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
+                                                            </div>
+                                                            <!-- .product-actions -->
+                                                        </div>
+                                                        <!-- .media-body -->
+                                                    </div>
+                                                    <!-- .media -->
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product list-view-small ">
+                                                    <div class="media">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/2.jpg">
+                                                        <div class="media-body">
+                                                            <div class="product-info">
+                                                                <div class="yith-wcwl-add-to-wishlist">
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
+                                                                </div>
+                                                                <!-- .yith-wcwl-add-to-wishlist -->
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                    <div class="techmarket-product-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
+                                                                            <span style="width:100%">
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
+                                                                        </div>
+                                                                        <span class="review-count">(1)</span>
+                                                                    </div>
+                                                                </a>
+                                                                <!-- .woocommerce-LoopProduct-link -->
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
+                                                                    <ul>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- .woocommerce-product-details__short-description -->
+                                                            </div>
+                                                            <!-- .product-info -->
+                                                            <div class="product-actions">
+                                                                <span class="price">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                </span>
+                                                                <!-- .price -->
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1922,30 +2403,47 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-small last">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/2.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/3.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -1954,11 +2452,14 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -1969,30 +2470,47 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-small first ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/3.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/4.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -2001,11 +2519,14 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -2016,30 +2537,47 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-small ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/4.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/5.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -2048,11 +2586,14 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -2063,30 +2604,47 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-small ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/5.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/6.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -2095,11 +2653,14 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -2110,30 +2671,47 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-small ">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/6.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/7.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -2142,105 +2720,14 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                            </div>
-                                                            <!-- .product-actions -->
-                                                        </div>
-                                                        <!-- .media-body -->
-                                                    </div>
-                                                    <!-- .media -->
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product list-view-small ">
-                                                    <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/7.jpg">
-                                                        <div class="media-body">
-                                                            <div class="product-info">
-                                                                <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                                </div>
-                                                                <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                                            <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(1)</span>
-                                                                    </div>
-                                                                </a>
-                                                                <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
-                                                                    <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <!-- .woocommerce-product-details__short-description -->
-                                                            </div>
-                                                            <!-- .product-info -->
-                                                            <div class="product-actions">
-                                                                <span class="price">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
-                                                                </span>
-                                                                <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                                            </div>
-                                                            <!-- .product-actions -->
-                                                        </div>
-                                                        <!-- .media-body -->
-                                                    </div>
-                                                    <!-- .media -->
-                                                </div>
-                                                <!-- .product -->
-                                                <div class="product list-view-small ">
-                                                    <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/8.jpg">
-                                                        <div class="media-body">
-                                                            <div class="product-info">
-                                                                <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
-                                                                </div>
-                                                                <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
-                                                                            <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(1)</span>
-                                                                    </div>
-                                                                </a>
-                                                                <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
-                                                                    <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <!-- .woocommerce-product-details__short-description -->
-                                                            </div>
-                                                            <!-- .product-info -->
-                                                            <div class="product-actions">
-                                                                <span class="price">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
-                                                                </span>
-                                                                <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -2251,30 +2738,47 @@
                                                 <!-- .product -->
                                                 <div class="product list-view-small last">
                                                     <div class="media">
-                                                        <img width="224" height="197" alt="" class="attachment-shop_catalog size-shop_catalog wp-post-image" src="assets/images/products/9.jpg">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/8.jpg">
                                                         <div class="media-body">
                                                             <div class="product-info">
                                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to Wishlist</a>
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
                                                                 </div>
                                                                 <!-- .yith-wcwl-add-to-wishlist -->
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link" href="single-product-fullwidth.html">
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150 60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 5.00 out of 5" class="star-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:100%">
-                                                                                <strong class="rating">5.00</strong> out of 5</span>
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(1)</span>
                                                                     </div>
                                                                 </a>
                                                                 <!-- .woocommerce-LoopProduct-link -->
-                                                                <div class="woocommerce-product-details__short-description">
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
                                                                     <ul>
-                                                                        <li>CUJO smart firewall brings business-level Internet security to protect all of your home devices</li>
-                                                                        <li>Internet Security: Guard your network and smart devices against hacks, malware, and cyber threats</li>
-                                                                        <li>Mobile App: Monitor your wired and wireless network activity with a sleek iPhone or Android app</li>
-                                                                        <li>CUJO connects to your wireless router with an ethernet cable. CUJO is not compatible with Luma and does not support Google Wifi Mesh. CUJO works with Eero in Bridge mode.</li>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- .woocommerce-product-details__short-description -->
@@ -2283,11 +2787,81 @@
                                                             <div class="product-actions">
                                                                 <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
                                                                 </span>
                                                                 <!-- .price -->
-                                                                <a class="button add_to_cart_button" href="cart.html">Add to Cart</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
+                                                            </div>
+                                                            <!-- .product-actions -->
+                                                        </div>
+                                                        <!-- .media-body -->
+                                                    </div>
+                                                    <!-- .media -->
+                                                </div>
+                                                <!-- .product -->
+                                                <div class="product list-view-small first ">
+                                                    <div class="media">
+                                                        <img width="224" height="197" alt=""
+                                                            class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                            src="assets/images/products/9.jpg">
+                                                        <div class="media-body">
+                                                            <div class="product-info">
+                                                                <div class="yith-wcwl-add-to-wishlist">
+                                                                    <a href="wishlist.html" rel="nofollow"
+                                                                        class="add_to_wishlist"> Add to Wishlist</a>
+                                                                </div>
+                                                                <!-- .yith-wcwl-add-to-wishlist -->
+                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+                                                                    href="single-product-fullwidth.html">
+                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
+                                                                    <div class="techmarket-product-rating">
+                                                                        <div title="Rated 5.00 out of 5"
+                                                                            class="star-rating">
+                                                                            <span style="width:100%">
+                                                                                <strong class="rating">5.00</strong> out
+                                                                                of 5</span>
+                                                                        </div>
+                                                                        <span class="review-count">(1)</span>
+                                                                    </div>
+                                                                </a>
+                                                                <!-- .woocommerce-LoopProduct-link -->
+                                                                <div
+                                                                    class="woocommerce-product-details__short-description">
+                                                                    <ul>
+                                                                        <li>CUJO smart firewall brings business-level
+                                                                            Internet security to protect all of your home
+                                                                            devices</li>
+                                                                        <li>Internet Security: Guard your network and smart
+                                                                            devices against hacks, malware, and cyber
+                                                                            threats</li>
+                                                                        <li>Mobile App: Monitor your wired and wireless
+                                                                            network activity with a sleek iPhone or Android
+                                                                            app</li>
+                                                                        <li>CUJO connects to your wireless router with an
+                                                                            ethernet cable. CUJO is not compatible with Luma
+                                                                            and does not support Google Wifi Mesh. CUJO
+                                                                            works with Eero in Bridge mode.</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- .woocommerce-product-details__short-description -->
+                                                            </div>
+                                                            <!-- .product-info -->
+                                                            <div class="product-actions">
+                                                                <span class="price">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">$</span>730.00</span>
+                                                                </span>
+                                                                <!-- .price -->
+                                                                <a class="button add_to_cart_button"
+                                                                    href="cart.html">Add to Cart</a>
+                                                                <a class="add-to-compare-link" href="compare.html">Add
+                                                                    to compare</a>
                                                             </div>
                                                             <!-- .product-actions -->
                                                         </div>
@@ -2300,8 +2874,8 @@
                                             <!-- .products -->
                                         </div>
                                         <!-- .woocommerce -->
-                                    </div>
-                                    <!-- .tab-pane --> --}}
+                                    </div> --}}
+                                    <!-- .tab-pane -->
                                 </div>
                                 <!-- .tab-content -->
                                 <div class="shop-control-bar-bottom">
@@ -2342,85 +2916,238 @@
                         </div>
                         <!-- #primary -->
                         <div id="secondary" class="widget-area shop-sidebar" role="complementary">
-                            <div id="techmarket_products_filter-3" class="widget widget_techmarket_products_filter">
-                                <span class="gamma widget-title">Bộ lọc</span>
+                            {{-- <div class="widget woocommerce widget_product_categories techmarket_widget_product_categories"
+                                id="techmarket_product_categories_widget-2">
+                                <ul class="product-categories ">
+                                    <li class="product_cat">
+                                        <span>Browse Categories</span>
+                                        <ul>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Televisions</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Home Theater &amp; Audio</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Headphones</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Digital Cameras</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Cells &amp; Tablets</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Smartwatches</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Games &amp; Consoles</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Printer</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>TV &amp; Video</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Home Entertainment</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Computers &amp; Laptops</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Notebooks</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Desktop PCs</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Mac Computers</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>All in One PC</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Audio &amp; Music</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>PC Components</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="child-indicator">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>Desktop PCs</a>
+                                            </li>
+                                            <li class="cat-item">
+                                                <a href="product-category.html">
+                                                    <span class="no-child"></span>Monitors</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div> --}}
 
-                                <form action="{{ route('users.filter') }}" method="GET">
+                            <form action="{{ route('users.categories.filter') }}" method="GET">
+                                <div id="techmarket_products_filter-3" class="widget widget_techmarket_products_filter">
+                                    <span class="gamma widget-title">Bộ lọc</span>
                                     <div class="widget woocommerce widget_price_filter" id="woocommerce_price_filter-2">
                                         <p>
                                             <span class="gamma widget-title">Lọc theo giá</span>
                                         <div class="price_slider_amount">
-                                            <input type="text" placeholder="Giá tối thiếu"
-                                                value="{{ request('min_price') }}" name="min_price" id="min_price"
-                                                style="width: 100%;">
-                                            <input type="text" placeholder="Giá tối đa"
-                                                value="{{ request('max_price') }}" name="max_price" id="max_price"
-                                                style="width: 100%;">
+                                            <input type="text" placeholder="Min price" data-min="6" value="0"
+                                                name="min_price" id="min_price" style="display: none; with: 100%;">
+                                            <input type="text" placeholder="Max price" data-max="6" value="10000000"
+                                                name="max_price" id="max_price" style="display: none;">
+                                            {{-- <button class="button" type="submit">Lọc</button> --}}
                                         </div>
-                                        </p>
+                                        {{-- <div id="slider-range" class="price_slider"></div> --}}
                                     </div>
-
                                     <div class="widget woocommerce widget_layered_nav maxlist-more">
                                         <span class="gamma widget-title">Danh mục</span>
                                         <select class="select" name="sub_category_id" id="sub_category_id">
-                                            <option value="">-- Tất cả danh mục --</option>
+                                            <option value="">-- Chọn danh mục --</option>
                                             @foreach ($sub_category as $key => $item)
-                                                <option value="{{ $key }}"
-                                                    {{ request('sub_category_id') == $key ? 'selected' : '' }}>
-                                                    {{ $item }}</option>
+                                                <option value="{{ $key }}">{{ $item }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-
+                                    <!-- .woocommerce widget_layered_nav -->
                                     <div class="widget woocommerce widget_layered_nav maxlist-more checkbox">
                                         <span class="gamma widget-title">Chip</span>
                                         <ul>
                                             @foreach ($chips as $key => $item)
                                                 <li class="wc-layered-nav-term">
-                                                    <input type="checkbox" name="chip_id[]"
-                                                        id="chip_{{ $key }}" value="{{ $key }}"
-                                                        {{ in_array($key, request('chip_id', [])) ? 'checked' : '' }}>
+                                                    <input type="checkbox" name="" id="chip_{{ $key }}"
+                                                        value="{{ $key }}">
                                                     <label for="chip_{{ $key }}">{{ $item }}</label>
+                                                    {{-- <span class="count">({{ $item->count ?? 0 }})</span> --}}
                                                 </li>
                                             @endforeach
                                         </ul>
                                     </div>
-
+                                    <!-- .woocommerce widget_layered_nav -->
                                     <div class="widget woocommerce widget_layered_nav maxlist-more checkbox">
                                         <span class="gamma widget-title">Ram</span>
                                         <ul>
                                             @foreach ($rams as $key => $item)
                                                 <li class="wc-layered-nav-term">
-                                                    <input type="checkbox" name="ram_id[]" id="ram_{{ $key }}"
-                                                        value="{{ $key }}"
-                                                        {{ in_array($key, request('ram_id', [])) ? 'checked' : '' }}>
+                                                    <input type="checkbox" name="" id="ram_{{ $key }}"
+                                                        value="{{ $key }}">
                                                     <label for="ram_{{ $key }}">{{ $item }}</label>
+                                                    {{-- <span class="count">({{ $item->count ?? 0 }})</span> --}}
                                                 </li>
                                             @endforeach
                                         </ul>
                                     </div>
-
+                                    <!-- .woocommerce widget_layered_nav -->
                                     <div class="widget woocommerce widget_layered_nav maxlist-more checkbox">
                                         <span class="gamma widget-title">Storage</span>
                                         <ul>
                                             @foreach ($storages as $key => $item)
                                                 <li class="wc-layered-nav-term">
-                                                    <input type="checkbox" name="storage_id[]"
-                                                        id="storage_{{ $key }}" value="{{ $key }}"
-                                                        {{ in_array($key, request('storage_id', [])) ? 'checked' : '' }}>
+                                                    <input type="checkbox" name="" id="storage_{{ $key }}"
+                                                        value="{{ $key }}">
                                                     <label for="storage_{{ $key }}">{{ $item }}</label>
+                                                    {{-- <span class="count">({{ $item->count ?? 0 }})</span> --}}
                                                 </li>
                                             @endforeach
                                         </ul>
                                     </div>
-
-                                    <button type="submit">Lọc</button>
-                                    <button type="reset">Reset</button>
-                                    <a href="{{ route('users.filter') }}"><button type="button">Xóa</button></a>
-
-                                </form>
-                                
-                            </div>
+                                    <!-- .woocommerce widget_layered_nav -->
+                                </div>
+                                <button type="submit">Lọc</button>
+                                <button type="reset">Reset</button>
+                            </form>
+                            {{-- 
+                            <form action="{{ route('users.subcategories.filter') }}" method="GET">
+                                <div>
+                                    <label for="sub_category_id">Danh mục con:</label>
+                                    <select name="sub_category_id" id="sub_category_id">
+                                        <option value="">-- Chọn danh mục --</option>
+                                        @foreach ($subCategories as $subCategory)
+                                            <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        
+                                <div>
+                                    <label for="min_price">Giá tối thiểu:</label>
+                                    <input type="number" name="min_price" id="min_price" placeholder="0">
+                                </div>
+                        
+                                <div>
+                                    <label for="max_price">Giá tối đa:</label>
+                                    <input type="number" name="max_price" id="max_price" placeholder="10000000">
+                                </div>
+                        
+                                <div>
+                                    <label for="chip_id">Chip:</label>
+                                    <select name="chip_id" id="chip_id">
+                                        <option value="">-- Chọn chip --</option>
+                                        @foreach ($chips as $chip)
+                                            <option value="{{ $chip->id }}">{{ $chip->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        
+                                <div>
+                                    <label for="ram_id">RAM:</label>
+                                    <select name="ram_id" id="ram_id">
+                                        <option value="">-- Chọn RAM --</option>
+                                        @foreach ($rams as $ram)
+                                            <option value="{{ $ram->id }}">{{ $ram->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        
+                                <div>
+                                    <label for="storage_id">Dung lượng lưu trữ:</label>
+                                    <select name="storage_id" id="storage_id">
+                                        <option value="">-- Chọn dung lượng --</option>
+                                        @foreach ($storages as $storage)
+                                            <option value="{{ $storage->id }}">{{ $storage->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        
+                                <button type="submit">Lọc sản phẩm</button>
+                            </form> --}}
 
                             <div class="widget widget_techmarket_products_carousel_widget">
                                 <section id="single-sidebar-carousel" class="section-products-carousel">

@@ -22,4 +22,5 @@
     </head>
 
     @yield('content')
+    @yield('js')
 </html>
