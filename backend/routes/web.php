@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -141,3 +142,17 @@ Route::prefix('admins')
     });
 
     Route::resource('promotions', PromotionController::class);
+
+    Route::prefix('cart')
+    ->as('cart.')
+    ->group(function(){
+        Route::get('/', [CartController::class, 'index'])->name('index');
+
+        Route::get('/create', [CartController::class, 'create'])->name('create');
+        Route::post('/store', [CartController::class, 'store'])->name('store');
+
+        Route::get('/{id}/edit', [CartController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
+
+        Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
+    });
