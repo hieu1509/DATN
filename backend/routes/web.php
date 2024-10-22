@@ -9,6 +9,10 @@ use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -25,6 +29,22 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//Đăng ký
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+//Đăng nhập
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+// Hiển thị form yêu cầu quên mật khẩu
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Gửi email đặt lại mật khẩu
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Hiển thị form đặt lại mật khẩu
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+// Xử lý đặt lại mật khẩu
+Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 
 // Danh sách sản phẩm
 Route::get('products', [ApiProductController::class, 'index']);
@@ -55,6 +75,8 @@ Route::prefix('users')
 Route::resource('admin/pages/categories', CategoryController::class);
 Route::resource('subcategories', SubcategoryController::class);
 
+
+//Danh sách thuộc tính
 Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
@@ -122,3 +144,17 @@ Route::prefix('admins')
     });
 
 Route::resource('promotions', PromotionController::class);
+    Route::resource('promotions', PromotionController::class);
+
+    Route::prefix('cart')
+    ->as('cart.')
+    ->group(function(){
+        Route::get('/', [CartController::class, 'index'])->name('index');
+
+        Route::get('/create', [CartController::class, 'create'])->name('create');
+        Route::post('/store', [CartController::class, 'store'])->name('store');
+
+        Route::get('/{id}/edit', [CartController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
+
+        Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
