@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('user.auth.login'); // Đường dẫn tới view đăng nhập
+        return view('auth.pages.login'); 
     }
 
     public function login(Request $request)
@@ -18,7 +19,6 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|email|exists:users,email',
             'password' => 'required|string|min:8',
-            'remember' => 'boolean',
         ], [
             'email.required' => 'Email là bắt buộc.',
             'email.email' => 'Email không đúng định dạng.',
@@ -30,20 +30,29 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Đăng nhập thành công, điều hướng đến trang chủ
-            return redirect()->intended('home'); // Hoặc bất kỳ trang nào bạn muốn
+
+            Session::flash('success', 'Đăng nhập thành công!');
+
+            // Điều hướng đến trang dựa trên vai trò người dùng
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('admins'); // Điều hướng cho admin
+            }
+
+            return redirect()->intended('home'); // Điều hướng cho người dùng bình thường
         }
 
         // Nếu đăng nhập không thành công, trở lại trang đăng nhập với thông báo lỗi
         return back()->withErrors([
             'email' => 'Thông tin đăng nhập không chính xác.',
-        ]);
+        ])->withInput($request->only('email')); 
     }
-
 
     public function logout()
     {
-        Auth()->logout();
-        return redirect()->route('login'); // Chuyển hướng về trang đăng nhập
+        Auth::logout();
+        Session::flash('success', 'Bạn đã đăng xuất thành công!'); 
+        return redirect()->route('login'); 
     }
 }
+

@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\api\ApiauthController;
 use App\Http\Controllers\CategoryController;
@@ -16,7 +15,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,26 +28,26 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-//Admin
-Route::get('/admins', [AdminController::class, 'admins'])->name('admins');
-Route::get('/admin/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
-Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register.post');
-Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
-Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
-
-//User
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+//Đăng ký
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+//Đăng nhập
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+// Hiển thị form yêu cầu quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Gửi email đặt lại mật khẩu
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Hiển thị form đặt lại mật khẩu
 Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+// Xử lý đặt lại mật khẩu
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+// Các route yêu cầu quyền admin
+Route::group(['middleware' => ['admin']], function () {
+    Route::get('admins', [AdminController::class, 'index'])->name('admins');
+    Route::get('admin/users', [UserController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+});
 
 
 // Danh sách sản phẩm
@@ -76,76 +75,76 @@ Route::resource('subcategories', SubcategoryController::class);
 Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
-        Route::get('/', function () {
+        Route::get('/', function(){
             return view('admin.pages.dashboard');
         });
 
         Route::prefix('products')
-            ->as('products.')
-            ->group(function () {
-                Route::get('/', [ProductController::class, 'index'])->name('index');
+        ->as('products.')
+        ->group(function() {
+            Route::get('/', [ProductController::class, 'index'])->name('index');
 
-                Route::get('/create', [ProductController::class, 'create'])->name('create');
-                Route::post('/store', [ProductController::class, 'store'])->name('store');
+            Route::get('/create', [ProductController::class, 'create'])->name('create');
+            Route::post('/store', [ProductController::class, 'store'])->name('store');
 
-                Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
-                Route::put('/{id}/update', [ProductController::class, 'update'])->name('update');
+            Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [ProductController::class, 'update'])->name('update');
 
-                Route::delete('/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
+            Route::delete('/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
 
-                Route::get('/{id}', [ProductController::class, 'show'])->name('show');
-            });
+            Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+        });
 
         Route::prefix('chips')
-            ->as('chips.')
-            ->group(function () {
-                Route::get('/', [ChipController::class, 'index'])->name('index');
+        ->as('chips.')
+        ->group(function(){
+            Route::get('/', [ChipController::class, 'index'])->name('index');
 
-                Route::get('/create', [ChipController::class, 'create'])->name('create');
-                Route::post('/store', [ChipController::class, 'store'])->name('store');
+            Route::get('/create', [ChipController::class, 'create'])->name('create');
+            Route::post('/store', [ChipController::class, 'store'])->name('store');
 
-                Route::get('/{id}/edit', [ChipController::class, 'edit'])->name('edit');
-                Route::put('/{id}/update', [ChipController::class, 'update'])->name('update');
+            Route::get('/{id}/edit', [ChipController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [ChipController::class, 'update'])->name('update');
 
-                Route::delete('/{id}/destroy', [ChipController::class, 'destroy'])->name('destroy');
-            });
+            Route::delete('/{id}/destroy', [ChipController::class, 'destroy'])->name('destroy');
+        });
 
         Route::prefix('rams')
-            ->as('rams.')
-            ->group(function () {
-                Route::get('/', [RamController::class, 'index'])->name('index');
+        ->as('rams.')
+        ->group(function(){
+            Route::get('/', [RamController::class, 'index'])->name('index');
 
-                Route::get('/create', [RamController::class, 'create'])->name('create');
-                Route::post('/store', [RamController::class, 'store'])->name('store');
+            Route::get('/create', [RamController::class, 'create'])->name('create');
+            Route::post('/store', [RamController::class, 'store'])->name('store');
 
-                Route::get('/{id}/edit', [RamController::class, 'edit'])->name('edit');
-                Route::put('/{id}/update', [RamController::class, 'update'])->name('update');
+            Route::get('/{id}/edit', [RamController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [RamController::class, 'update'])->name('update');
 
-                Route::delete('/{id}/destroy', [RamController::class, 'destroy'])->name('destroy');
-            });
+            Route::delete('/{id}/destroy', [RamController::class, 'destroy'])->name('destroy');
+        });
 
         Route::prefix('storages')
-            ->as('storages.')
-            ->group(function () {
-                Route::get('/', [StorageController::class, 'index'])->name('index');
+        ->as('storages.')
+        ->group(function(){
+            Route::get('/', [StorageController::class, 'index'])->name('index');
 
-                Route::get('/create', [StorageController::class, 'create'])->name('create');
-                Route::post('/store', [StorageController::class, 'store'])->name('store');
+            Route::get('/create', [StorageController::class, 'create'])->name('create');
+            Route::post('/store', [StorageController::class, 'store'])->name('store');
 
-                Route::get('/{id}/edit', [StorageController::class, 'edit'])->name('edit');
-                Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
+            Route::get('/{id}/edit', [StorageController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
 
-                Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
-            });
+            Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
+        });
     });
 
-Route::resource('promotions', PromotionController::class);
+    Route::resource('promotions', PromotionController::class);
 
 
 
-//
-Route::get('/test', function () {
-    return view('user/pages/cart');
-});
+    //
+    Route::get('/test', function () {
+        return view('user/pages/cart');
+    });
 
-Route::resource('promotions', PromotionController::class);
+    Route::resource('promotions', PromotionController::class);
