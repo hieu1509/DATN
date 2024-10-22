@@ -114,7 +114,7 @@
                             <!-- end card -->
 
                             <div class="mt-4 text-center">
-                                <p class="mb-0">Đợi đã, tôi nhớ mật khẩu của mình... <a href="{{ route('login') }}"
+                                <p class="mb-0">Đợi đã, tôi nhớ mật khẩu của mình... <a href="{{ route('login.user') }}"
                                         class="fw-semibold text-primary text-decoration-underline"> Nhấn vào đây </a> </p>
                             </div>
 

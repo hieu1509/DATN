@@ -627,7 +627,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h6 class="m-0 fs-16 fw-semibold">
-                                <a href="{{ route('login') }}" class="text-decoration-none">Đăng nhập</a>
+                                <a href="{{ route('login.admin') }}" class="text-decoration-none">Đăng nhập</a>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="m-0 fs-16 fw-semibold">
+                                <a href="{{ route('register.admin') }}" class="text-decoration-none">Đăng ký</a>
                             </h6>
                         </div>
                     </div>
@@ -677,16 +687,17 @@
                         <a class="dropdown-item" href="auth-lockscreen-basic.html"><i
                                 class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Lock screen</span></a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                        <!-- Form đăng xuất cho Admin -->
+                        <form id="logout-admin-form" action="{{ route('logout.admin') }}" method="POST"
                             style="display: none;">
                             @csrf
                         </form>
 
-                        <!-- Liên Kết Đăng Xuất -->
+                        <!-- Liên Kết Đăng Xuất cho Admin -->
                         <a class="dropdown-item" href="#"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            onclick="event.preventDefault(); document.getElementById('logout-admin-form').submit();">
                             <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                            <span class="align-middle" data-key="t-logout">Logout</span>
+                            <span class="align-middle" data-key="t-logout">Đăng xuất</span>
                         </a>
                     </div>
                 </div>

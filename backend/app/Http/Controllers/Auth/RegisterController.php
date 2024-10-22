@@ -12,12 +12,56 @@ use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
-    public function showRegistrationForm()
+    // Hiển thị form đăng ký cho admin
+    public function showAdminRegistrationForm()
     {
-        return view('auth.pages.register');
+        return view('auth.pages.admin-register');
     }
 
-    public function register(Request $request)
+    // Hiển thị form đăng ký cho user
+    public function showUserRegistrationForm()
+    {
+        return view('auth.pages.user-register');
+    }
+
+    public function registerAdmin(Request $request)
+    {
+        // Xác thực dữ liệu nhập vào
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:15|regex:/^[0-9]+$/', // Chỉ cho phép số
+            'role' => 'required|in:admin,user',
+        ]);
+
+        // Kiểm tra và trả về thông báo lỗi nếu có
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Tạo người dùng mới
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'address' => $request->address ?? '',
+                'phone' => $request->phone ?? '',
+                'role' => $request->role,
+            ]);
+        } catch (\Exception $e) {
+            // Ghi nhật ký lỗi (nếu cần thiết)
+            Log::error('Error creating user: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Đã xảy ra lỗi trong quá trình tạo tài khoản.')->withInput();
+        }
+
+        // Chuyển hướng người dùng sang trang đăng nhập sau khi đăng ký thành công
+        return redirect()->route('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.'); 
+    }
+
+    public function registerUser(Request $request)
     {
         // Xác thực dữ liệu nhập vào
         $validator = Validator::make($request->all(), [

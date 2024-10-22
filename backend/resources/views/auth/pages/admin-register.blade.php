@@ -34,7 +34,7 @@
                                     <p class="text-muted">Nhận ngay tài khoản TechShop miễn phí của bạn</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form class="needs-validation" method="POST" action="{{ route('register') }}" novalidate>
+                                    <form class="needs-validation" method="POST" action="{{ route('register.admin') }}"" novalidate>
                                         @csrf
 
                                         <div class="mb-3">
@@ -107,10 +107,7 @@
 
                                         <div class="mb-3">
                                             <label for="role">Vai trò:</label>
-                                            <select id="role" name="role" class="form-select" required>
-                                                <option value="user">Người dùng</option>
-                                                <option value="admin">Quản trị viên</option>
-                                            </select>
+                                            <input type="hidden" name="role" value="user"> Quản trị viên
                                         </div>
 
                                         <div class="mt-4">
@@ -134,7 +131,7 @@
                         </div>
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Bạn đã có tài khoản? <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng nhập </a></p>
+                            <p class="mb-0">Bạn đã có tài khoản? <a href="{{ route('login.admin') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng nhập </a></p>
                         </div>
                     </div>
                 </div>

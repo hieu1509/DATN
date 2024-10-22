@@ -92,7 +92,7 @@
 
                             <div class="mt-4 text-center">
                                 <p class="mb-0">Đợi đã, tôi nhớ mật khẩu của mình...
-                                    <a href="{{ route('login') }}"
+                                    <a href="{{ route('login.user') }}"
                                         class="fw-semibold text-primary text-decoration-underline"> Nhấn vào đây </a>
                                 </p>
                             </div>
@@ -104,25 +104,6 @@
                 <!-- end container -->
             </div>
             <!-- end auth page content -->
-
-            <!-- footer -->
-            {{-- <footer class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="text-center">
-                                <p class="mb-0 text-muted">&copy;
-                                    <script>
-                                        document.write(new Date().getFullYear())
-                                    </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i>
-                                    by Themesbrand
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer> --}}
-            <!-- end Footer -->
         </div>
         <!-- end auth-page-wrapper -->
 

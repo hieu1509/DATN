@@ -28,13 +28,21 @@ use App\Http\Controllers\UserController;
 |
 */
 
-//Đăng ký
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
+// Đăng ký admin
+Route::get('register/admin', [RegisterController::class, 'showAdminRegistrationForm'])->name('register.admin');
+Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin.post');
+
+Route::get('register/user', [RegisterController::class, 'showUserRegistrationForm'])->name('register.user');
+Route::post('register/user', [RegisterController::class, 'registerUser'])->name('register.user.post');
 //Đăng nhập
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('login/admin', [LoginController::class, 'showAdminLoginForm'])->name('login.admin');
+Route::post('login/admin', [LoginController::class, 'adminLogin'])->name('login.admin.post');
+
+Route::get('login/user', [LoginController::class, 'showUserLoginForm'])->name('login.user');
+Route::post('login/user', [LoginController::class, 'userLogin'])->name('login.user.post');
+Route::post('admin/logout', [LoginController::class, 'adminLogout'])->name('logout.admin');
+Route::post('user/logout', [LoginController::class, 'userLogout'])->name('logout.user');
+
 // Hiển thị form yêu cầu quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 // Gửi email đặt lại mật khẩu
