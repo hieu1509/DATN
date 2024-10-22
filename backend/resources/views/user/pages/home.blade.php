@@ -12,19 +12,20 @@
         <!-- ============================================================= Header End ============================================================= -->
         <div id="content" class="site-content" tabindex="-1">
             <div class="col-full">
-                <div class="row">
+                <div class="row"> 
                     <div id="primary" class="content-area">
                         <main id="main" class="site-main">
                             <div class="home-v4-slider home-slider">
-                                <div class="slider-1" style="background-image: url(assets/images/slider/home-v4-background.jpg);">
+                                <div class="slider-1" >
+                                    <img src="{{ asset('template2/assets/images/5.png') }}" alt="">
                                     <div class="caption">
-                                        <div class="title">The gift they are
-                                            <br>wishing for is right here </div>
-                                        <div class="sub-title">The curved display has a curvature level equivalent to that of a circle, tracks the rounded shape of the eyes better </div>
-                                        <div class="button">Get Yours now
+                                        <div class="title">Công nghệ đỉnh cao,
+                                            <br>hiệu năng vượt trội. </div>
+                                        <div class="sub-title">Khám phá bộ sưu tập laptop hàng đầu ngay hôm nay! </div>
+                                        <div class="button">Mua ngay
                                             <i class="tm tm-long-arrow-right"></i>
                                         </div>
-                                        <div class="bottom-caption">Free shipping on US Terority</div>
+                                        <div class="bottom-caption">Miễn phí vân chuyển trên toàn quốc.</div>
                                     </div>
                                 </div>
                             </div>
@@ -32,16 +33,16 @@
                                 <div class="row">
                                     <div class="banner small-banner text-in-left">
                                         <a href="shop.html">
-                                            <div style="background-size: cover; background-position: center center; background-image: url( assets/images/banner/3-1.jpg ); height: 259px;" class="banner-bg">
+                                            <div style="background-size: cover; background-position: center center; background-image: url( {{ asset('template2/assets/images/banner/3-1.jpg ') }}); height: 259px;" class="banner-bg">
                                                 <div class="caption">
                                                     <div class="banner-info">
-                                                        <h3 class="title">New Arrivals
-                                                            <br> in
-                                                            <strong>Accessories</strong>
-                                                            <br> at Best Prices.</h3>
+                                                        <h3 class="title">Sản phẩm phụ kiện
+                                                            <br>
+                                                            <strong> với giá tốt nhất.</strong>
+                                                            <br></h3>
                                                     </div>
                                                     <!-- .banner-info -->
-                                                    <span class="banner-action button">View all</span>
+                                                    <span class="banner-action button">Xem tất cả</span>
                                                 </div>
                                                 <!-- .caption -->
                                             </div>
@@ -51,16 +52,16 @@
                                     <!-- .banner -->
                                     <div class="banner large-banner text-in-right">
                                         <a href="shop.html">
-                                            <div style="background-size: cover; background-position: center center; background-image: url( assets/images/banner/3-4.jpg ); height: 259px;" class="banner-bg">
+                                            <div style="background-size: cover; background-position: center center; background-image: url({{ asset('template2/assets/images/banner/3-4.jpg ') }}); height: 259px;" class="banner-bg">
                                                 <div class="caption">
                                                     <div class="banner-info">
-                                                        <h3 class="title">Catch Hottest
+                                                        <h3 class="title">Laptop gaming học tốt
                                                             <br>
-                                                            <strong>Deals</strong> on the
-                                                            <br> Curved Soundbars.</h3>
+                                                            <strong>chơi game ngon!!</strong> 
+                                                            <br></h3>
                                                     </div>
                                                     <!-- .banner-info -->
-                                                    <span class="banner-action button">Browse</span>
+                                                    <span class="banner-action button">Xem</span>
                                                 </div>
                                                 <!-- .caption -->
                                             </div>
@@ -70,16 +71,16 @@
                                     <!-- .banner -->
                                     <div class="banner small-banner text-in-left">
                                         <a href="shop.html">
-                                            <div style="background-size: cover; background-position: center center; background-image: url( assets/images/banner/3-3.jpg ); height: 259px;" class="banner-bg">
+                                            <div style="background-size: cover; background-position: center center; background-image: url({{ asset('template2/assets/images/banner/3-3.jpg') }} ); height: 259px;" class="banner-bg">
                                                 <div class="caption">
                                                     <div class="banner-info">
                                                         <h3 class="title">
                                                             <strong>1000 mAh</strong>
-                                                            <br> Power Bank Pro</h3>
+                                                            <br> Pin dự phòng</h3>
                                                     </div>
                                                     <!-- .banner-info -->
-                                                    <span class="price">$34.99</span>
-                                                    <span class="banner-action button">Buy Now</span>
+                                                    <span class="price"></span>
+                                                    <span class="banner-action button">Mua ngay</span>
                                                 </div>
                                                 <!-- .caption -->
                                             </div>
@@ -95,7 +96,7 @@
                                 <div class="row">
                                     <section class="carousel-tabs-with-no-hover section-single-carousel column-1-single-carousel " id="section-single-carousel">
                                         <header class="section-header">
-                                            <h2 class="section-title">Trending Now</h2>
+                                            <h2 class="section-title">Xu hướng</h2>
                                             <nav class="custom-slick-nav"></nav>
                                             <!-- .custom-slick-nav -->
                                         </header>
@@ -104,14 +105,34 @@
                                             <div class="container-fluid">
                                                 <div class="woocommerce columns-1">
                                                     <div class="products">
+                                                        @foreach ($hotProducts as $product)
                                                         <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/4.jpg" class="wp-post-image" alt="">
+                                                            <a href="{{ route('users.products.show', $product->id) }}" class="woocommerce-LoopProduct-link">
+                                                                @if ($product->image)
+                                                                <img width="224" height="197" src="{{ Storage::url($product->image) }}" class="wp-post-image" alt="$product->name">
+                                                            @else
+                                                                <span>Không có ảnh</span>
+                                                            @endif
                                                                 <span class="price">
                                                                     <ins>
-                                                                        <span class="amount"> </span>
+                                                                        <span class="amount"></span>
                                                                     </ins>
-                                                                    <span class="amount"> 456.00</span>
+                                                                    <span class="amount"> @php
+                                                                        // Lấy tất cả các giá của biến thể sản phẩm
+                                                                        $prices = $product->variants->pluck('listed_price')->toArray();
+                
+                                                                        // Nếu có biến thể thì tính khoảng giá
+                                                                        if (!empty($prices)) {
+                                                                            $minPrice = min($prices); // Lấy giá thấp nhất
+                                                                            $maxPrice = max($prices); // Lấy giá cao nhất
+                                                                            echo number_format($minPrice, 0, ',', '.') .
+                                                                                'đ - ' .
+                                                                                number_format($maxPrice, 0, ',', '.') .
+                                                                                'đ';
+                                                                        } else {
+                                                                            echo 'Chưa có giá';
+                                                                        }
+                                                                    @endphp</span>
                                                                 </span>
                                                                 <!-- /.price -->
                                                                 <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
@@ -123,234 +144,9 @@
                                                                 </div>
                                                                 <span class="review-count">(5)</span>
                                                             </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
+                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Thêm vào giỏ hàng</a>
                                                         </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/1.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> 309.95</span>
-                                                                    </ins>
-                                                                    <del>
-                                                                        <span class="amount">459.00</span>
-                                                                    </del>
-                                                                    <span class="amount"> </span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/2.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/9.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey Suture Leather Strap</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/3.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/5.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/11.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/7.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/8.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/10.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> </span>
-                                                                    </ins>
-                                                                    <span class="amount"> 456.00</span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
-                                                        <!-- /.product-outer -->
-                                                        <div class="product product-featured">
-                                                            <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                <img width="224" height="197" src="assets/images/products/6.jpg" class="wp-post-image" alt="">
-                                                                <span class="price">
-                                                                    <ins>
-                                                                        <span class="amount"> 789.95</span>
-                                                                    </ins>
-                                                                    <del>
-                                                                        <span class="amount">999.00</span>
-                                                                    </del>
-                                                                    <span class="amount"> </span>
-                                                                </span>
-                                                                <!-- /.price -->
-                                                                <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
-                                                            </a>
-                                                            <div class="techmarket-product-rating">
-                                                                <div class="star-rating" title="Rated 0 out of 5">
-                                                                    <span style="width:0%">
-                                                                        <strong class="rating">0</strong> out of 5</span>
-                                                                </div>
-                                                                <span class="review-count">(5)</span>
-                                                            </div>
-                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                        </div>
+                                                        @endforeach
                                                         <!-- /.product-outer -->
                                                     </div>
                                                 </div>
@@ -364,9 +160,9 @@
                                         <div class="section-products-carousel-tabs-wrap">
                                             <header class="section-header">
                                                 <ul role="tablist" class="nav justify-content-end">
-                                                    <li class="nav-item"><a class="nav-link active" href="#tab-59f89f0aa8cdd0" data-toggle="tab">New Arrivals</a></li>
-                                                    <li class="nav-item"><a class="nav-link " href="#tab-59f89f0aa8cdd1" data-toggle="tab">On Sale</a></li>
-                                                    <li class="nav-item"><a class="nav-link " href="#tab-59f89f0aa8cdd2" data-toggle="tab">Best Rated</a></li>
+                                                    <li class="nav-item"><a class="nav-link active" href="#tab-59f89f0aa8cdd0" data-toggle="tab">Hàng mới về</a></li>
+                                                    <li class="nav-item"><a class="nav-link " href="#tab-59f89f0aa8cdd1" data-toggle="tab">Sản phẩm hot</a></li>
+                                                    <li class="nav-item"><a class="nav-link " href="#tab-59f89f0aa8cdd2" data-toggle="tab">Đang sale</a></li>
                                                 </ul>
                                             </header>
                                             <div class="tab-content">
@@ -375,254 +171,51 @@
                                                         <div class="container-fluid">
                                                             <div class="woocommerce columns-3">
                                                                 <div class="products">
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/11.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
+                                                                    @foreach ($latestProducts as $product)
+                                                                        <div class="product product-featured">
+                                                                            <a href="{{ route('users.products.show', $product->id) }}" class="woocommerce-LoopProduct-link">
+                                                                            @if ($product->image)
+                                                                                <img width="224" height="197" src="{{ Storage::url($product->image) }}" class="wp-post-image" alt="$product->name">
+                                                                            @else
+                                                                                <span>Không có ảnh</span>
+                                                                            @endif
+                                                                                <span class="price">
+                                                                                    <ins>
+                                                                                        <span class="amount"></span>
+                                                                                    </ins>
+                                                                                    <span class="amount">  
+                                                                                        @php
+                                                                                            // Lấy tất cả các giá của biến thể sản phẩm
+                                                                                            $prices = $product->variants->pluck('listed_price')->toArray();
+                                    
+                                                                                            // Nếu có biến thể thì tính khoảng giá
+                                                                                            if (!empty($prices)) {
+                                                                                                $minPrice = min($prices); // Lấy giá thấp nhất
+                                                                                                $maxPrice = max($prices); // Lấy giá cao nhất
+                                                                                                echo number_format($minPrice, 0, ',', '.') .
+                                                                                                    'đ - ' .
+                                                                                                    number_format($maxPrice, 0, ',', '.') .
+                                                                                                    'đ';
+                                                                                            } else {
+                                                                                                echo 'Chưa có giá';
+                                                                                            }
+                                                                                        @endphp
+                                                                                    </span>
+                                                                                </span>
+                                                                                <!-- /.price -->
+                                                                                <h2 class="woocommerce-loop-product__title">{{ $product->name }}</h2>
+                                                                            </a>
+                                                                            <div class="techmarket-product-rating">
+                                                                                <div class="star-rating" title="Rated 0 out of 5">
+                                                                                    <span style="width:0%">
+                                                                                        <strong class="rating">0</strong> out of 5</span>
+                                                                                </div>
+                                                                                <span class="review-count">(5)</span>
                                                                             </div>
-                                                                            <span class="review-count">(5)</span>
+                                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Thêm vào giỏ hàng</a>
                                                                         </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
                                                                     <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/4.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/5.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/8.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/10.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/2.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/7.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/6.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 789.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">999.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/9.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey Suture Leather Strap</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/1.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 309.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">459.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/3.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
+                                                                    @endforeach
                                                                 </div>
                                                             </div>
                                                             <!-- .woocommerce -->
@@ -637,254 +230,51 @@
                                                         <div class="container-fluid">
                                                             <div class="woocommerce columns-3">
                                                                 <div class="products">
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/11.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
+                                                                    @foreach ($hotProducts as $product)
+                                                                        <div class="product product-featured">
+                                                                            <a href="{{ route('users.products.show', $product->id) }}" class="woocommerce-LoopProduct-link">
+                                                                            @if ($product->image)
+                                                                                <img width="224" height="197" src="{{ Storage::url($product->image) }}" class="wp-post-image" alt="$product->name">
+                                                                            @else
+                                                                                <span>Không có ảnh</span>
+                                                                            @endif
+                                                                                <span class="price">
+                                                                                    <ins>
+                                                                                        <span class="amount"></span>
+                                                                                    </ins>
+                                                                                    <span class="amount">  
+                                                                                        @php
+                                                                                            // Lấy tất cả các giá của biến thể sản phẩm
+                                                                                            $prices = $product->variants->pluck('listed_price')->toArray();
+                                    
+                                                                                            // Nếu có biến thể thì tính khoảng giá
+                                                                                            if (!empty($prices)) {
+                                                                                                $minPrice = min($prices); // Lấy giá thấp nhất
+                                                                                                $maxPrice = max($prices); // Lấy giá cao nhất
+                                                                                                echo number_format($minPrice, 0, ',', '.') .
+                                                                                                    'đ - ' .
+                                                                                                    number_format($maxPrice, 0, ',', '.') .
+                                                                                                    'đ';
+                                                                                            } else {
+                                                                                                echo 'Chưa có giá';
+                                                                                            }
+                                                                                        @endphp
+                                                                                    </span>
+                                                                                </span>
+                                                                                <!-- /.price -->
+                                                                                <h2 class="woocommerce-loop-product__title">{{ $product->name }}</h2>
+                                                                            </a>
+                                                                            <div class="techmarket-product-rating">
+                                                                                <div class="star-rating" title="Rated 0 out of 5">
+                                                                                    <span style="width:0%">
+                                                                                        <strong class="rating">0</strong> out of 5</span>
+                                                                                </div>
+                                                                                <span class="review-count">(5)</span>
                                                                             </div>
-                                                                            <span class="review-count">(5)</span>
+                                                                            <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Thêm vào giỏ hàng</a>
                                                                         </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
                                                                     <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/4.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/7.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/6.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 789.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">999.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/9.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey Suture Leather Strap</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/2.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/8.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/3.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/1.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 309.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">459.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/10.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/5.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
+                                                                    @endforeach
                                                                 </div>
                                                             </div>
                                                             <!-- .woocommerce -->
@@ -899,108 +289,42 @@
                                                         <div class="container-fluid">
                                                             <div class="woocommerce columns-3">
                                                                 <div class="products">
+                                                                    @foreach ($saleProducts as $product)
                                                                     <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/8.jpg" class="wp-post-image" alt="">
+                                                                        <a href="{{ route('users.products.show', $product->id) }}" class="woocommerce-LoopProduct-link">
+                                                                        @if ($product->image)
+                                                                            <img width="224" height="197" src="{{ Storage::url($product->image) }}" class="wp-post-image" alt="$product->name">
+                                                                        @else
+                                                                            <span>Không có ảnh</span>
+                                                                        @endif
                                                                             <span class="price">
                                                                                 <ins>
-                                                                                    <span class="amount"> </span>
+                                                                                    <span class="amount"></span>
                                                                                 </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/3.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/11.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/10.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/6.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 789.95</span>
-                                                                                </ins>
+                                                                                <span class="amount">  
+                                                                                    @php
+                                                                                        // Lấy tất cả các giá của biến thể sản phẩm
+                                                                                        $prices = $product->variants->pluck('sale_price')->toArray();
+                                
+                                                                                        // Nếu có biến thể thì tính khoảng giá
+                                                                                        if (!empty($prices)) {
+                                                                                            $minPrice = min($prices); // Lấy giá thấp nhất
+                                                                                            $maxPrice = max($prices); // Lấy giá cao nhất
+                                                                                            echo number_format($minPrice, 0, ',', '.') .
+                                                                                                'đ - ' .
+                                                                                                number_format($maxPrice, 0, ',', '.') .
+                                                                                                'đ';
+                                                                                        } else {
+                                                                                            echo 'Chưa có giá';
+                                                                                        }
+                                                                                    @endphp
+                                                                                </span>
                                                                                 <del>
-                                                                                    <span class="amount">999.00</span>
+                                                                                    <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
                                                                                 </del>
-                                                                                <span class="amount"> </span>
                                                                             </span>
                                                                             <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
+                                                                            <h2 class="woocommerce-loop-product__title">{{ $product->name }}</h2>
                                                                         </a>
                                                                         <div class="techmarket-product-rating">
                                                                             <div class="star-rating" title="Rated 0 out of 5">
@@ -1009,144 +333,10 @@
                                                                             </div>
                                                                             <span class="review-count">(5)</span>
                                                                         </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
+                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Thêm vào giỏ hàng</a>
                                                                     </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/4.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/2.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/9.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey Suture Leather Strap</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/7.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/5.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/1.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 309.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">459.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
+                                                                <!-- /.product-outer -->
+                                                                @endforeach
                                                                 </div>
                                                             </div>
                                                             <!-- .woocommerce -->
@@ -1167,7 +357,7 @@
                             <!-- .section-single-carousel-with-tab-product -->
                             <div class="fullwidth-notice stretch-full-width">
                                 <div class="col-full">
-                                    <p class="message">Download our new app today! Dont miss our mobile-only offers and shop with Android Play.</p>
+                                    <p class="message">Chất lượng hàng đầu, trải nghiệm công nghệ - Mua sắm laptop dễ dàng, nhanh chóng!</p>
                                 </div>
                                 <!-- .col-full -->
                             </div>
@@ -1181,15 +371,15 @@
                                                     <div class="media">
                                                         <div class="media-body">
                                                             <header class="section-header">
-                                                                <h4 class="pretitle">Featured Product</h4>
+                                                                <h4 class="pretitle">Sản phẩm nổi bật!!</h4>
                                                                 <h2 class="section-title">
-                                                                    <strong>The features you want,</strong>
-                                                                    <br>all in one place</h2>
+                                                                    <strong>Các tính năng bạn muốn,</strong>
+                                                                    <br>tất cả ở một nơi.</h2>
                                                             </header>
                                                             <!-- /.section-header -->
                                                             <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link woocommerce-loop-product__link" tabindex="0">
                                                                 <div class="ribbon green-label">
-                                                                    <span>A++</span>
+                                                                    <span>S++</span>
                                                                 </div>
                                                                 <span class="price">
                                                                     <ins>
@@ -1210,7 +400,7 @@
                                                                     <span class="review-count">(0)</span>
                                                                 </div>
                                                             </a>
-                                                            <a rel="nofollow" href="single-product-fullwidth.html" class="button product_type_simple ajax_add_to_cart" tabindex="0">Read more</a>
+                                                            <a rel="nofollow" href="single-product-fullwidth.html" class="button product_type_simple ajax_add_to_cart" tabindex="0">Xem ngay</a>
                                                         </div>
                                                         <!-- /.media-body -->
                                                         <div class="product-images-wrapper">
@@ -1413,12 +603,12 @@
                                             <div style="background-size: cover; background-position: center center; background-image: url( assets/images/banner/4-1.jpg ); height: 484px;" class="banner-bg">
                                                 <div class="caption">
                                                     <div class="banner-info">
-                                                        <h3 class="title">Your Home
-                                                            <br> on every screen
-                                                            <br>imagination</h3>
+                                                        <h3 class="title">Màn hình 4k
+                                                            <br> đáp ứng mọi trải nghiệm
+                                                            <br></h3>
                                                     </div>
                                                     <!-- .banner-info -->
-                                                    <span class="banner-action button">Check More</span>
+                                                    <span class="banner-action button">Xem ngay</span>
                                                 </div>
                                                 <!-- .caption -->
                                             </div>
@@ -1436,7 +626,7 @@
                                                         <h4 class="subtitle">Discover up to 6000mAh in one device</h4>
                                                     </div>
                                                     <!-- .banner-info -->
-                                                    <span class="banner-action button">Buy Now</span>
+                                                    <span class="banner-action button">Mua ngay</span>
                                                 </div>
                                                 <!-- .caption -->
                                             </div>
@@ -1452,7 +642,7 @@
                                 <div class="products-carousel-with-brands">
                                     <section class="section-landscape-products-widget-carousel">
                                         <header class="section-header">
-                                            <h2 class="section-title">Top Rated Products</h2>
+                                            <h2 class="section-title">Sản phẩm được đánh giá cao</h2>
                                         </header>
                                         <div class="products-carousel">
                                             <div class="container-fluid">
@@ -1670,19 +860,19 @@
                                     <section class="section-hot-new-arrivals section-products-carousel-tabs">
                                         <div class="section-products-carousel-tabs-wrap">
                                             <header class="section-header">
-                                                <h2 class="section-title">CES 2017 Arrivals</h2>
+                                                <h2 class="section-title">Sản phẩm mới nhất 2024!</h2>
                                                 <ul role="tablist" class="nav justify-content-end">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" href="#top-20" data-toggle="tab" role="tab" aria-controls="top-20">Top 20</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " href="#audio-video" data-toggle="tab" role="tab" aria-controls="audio-video">Audio &amp; Video</a>
+                                                        <a class="nav-link " href="#laptops-computers" data-toggle="tab" role="tab" aria-controls="laptops-computers">Laptops</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " href="#laptops-computers" data-toggle="tab" role="tab" aria-controls="laptops-computers">Laptops &amp; Computers</a>
+                                                        <a class="nav-link " href="#video-cameras" data-toggle="tab" role="tab" aria-controls="video-cameras">Bàn phím</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " href="#video-cameras" data-toggle="tab" role="tab" aria-controls="video-cameras">Video Cameras</a>
+                                                        <a class="nav-link " href="#audio-video" data-toggle="tab" role="tab" aria-controls="audio-video">Chuột</a>
                                                     </li>
                                                 </ul>
                                             </header>
@@ -2745,19 +1935,16 @@
                                     <section class="section-hot-new-arrivals section-products-carousel-tabs">
                                         <div class="section-products-carousel-tabs-wrap">
                                             <header class="section-header">
-                                                <h2 class="section-title">Cell Phones & Tablets</h2>
+                                                <h2 class="section-title">Tai nghe & Loa</h2>
                                                 <ul role="tablist" class="nav justify-content-end">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" href="#top-20-2" data-toggle="tab" role="tab" aria-controls="top-20-2">Top 20</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " href="#audio-video-2" data-toggle="tab" role="tab" aria-controls="audio-video-2">Audio &amp; Video</a>
+                                                        <a class="nav-link " href="#audio-video-2" data-toggle="tab" role="tab" aria-controls="audio-video-2">Tai nghe</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link " href="#laptops-computers-2" data-toggle="tab" role="tab" aria-controls="laptops-computers-2">Laptops &amp; Computers</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link " href="#video-cameras-2" data-toggle="tab" role="tab" aria-controls="video-cameras-2">Video Cameras</a>
+                                                        <a class="nav-link " href="#laptops-computers-2" data-toggle="tab" role="tab" aria-controls="laptops-computers-2">Loa</a>
                                                     </li>
                                                 </ul>
                                             </header>
@@ -3549,268 +2736,6 @@
                                                     <!-- .slick-dots -->
                                                 </div>
                                                 <!-- .tab-pane -->
-                                                <div role="tabpanel" class="tab-pane" id="video-cameras-2">
-                                                    <div class="products-carousel carousel-tabs-with-no-hover section-products-carousel-tabs" data-ride="tm-slick-carousel" data-wrap=".products" data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4,&quot;dots&quot;:true,&quot;arrows&quot;:false,&quot;responsive&quot;:[{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesToScroll&quot;:2}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}}]}">
-                                                        <div class="container-fluid">
-                                                            <div class="woocommerce columns-4">
-                                                                <div class="products">
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/11.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/7.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass Headphones</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/2.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD W10</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/1.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 309.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">459.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/3.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/10.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof portable speaker</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/4.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/8.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/9.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey Suture Leather Strap</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/5.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> </span>
-                                                                                </ins>
-                                                                                <span class="amount"> 456.00</span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                    <div class="product product-featured">
-                                                                        <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                                            <img width="224" height="197" src="assets/images/products/6.jpg" class="wp-post-image" alt="">
-                                                                            <span class="price">
-                                                                                <ins>
-                                                                                    <span class="amount"> 789.95</span>
-                                                                                </ins>
-                                                                                <del>
-                                                                                    <span class="amount">999.00</span>
-                                                                                </del>
-                                                                                <span class="amount"> </span>
-                                                                            </span>
-                                                                            <!-- /.price -->
-                                                                            <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with Bluetooth Glasses</h2>
-                                                                        </a>
-                                                                        <div class="techmarket-product-rating">
-                                                                            <div class="star-rating" title="Rated 0 out of 5">
-                                                                                <span style="width:0%">
-                                                                                    <strong class="rating">0</strong> out of 5</span>
-                                                                            </div>
-                                                                            <span class="review-count">(5)</span>
-                                                                        </div>
-                                                                        <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add to cart</a>
-                                                                    </div>
-                                                                    <!-- /.product-outer -->
-                                                                </div>
-                                                            </div>
-                                                            <!-- .woocommerce -->
-                                                        </div>
-                                                        <!-- .container-fluid -->
-                                                    </div>
-                                                    <!-- .slick-dots -->
-                                                </div>
-                                                <!-- .tab-pane -->
                                             </div>
                                             <!-- .tab-content -->
                                         </div>
@@ -3822,8 +2747,8 @@
                             <section class="section-product-cards-carousel-tabs stretch-full-width section-products-carousel-tabs">
                                 <div class="section-products-carousel-tabs-wrap">
                                     <header class="section-header">
-                                        <h2 class="section-title">Hurry up!
-                                            <span>Special Offers</span>
+                                        <h2 class="section-title">Nhanh tay!
+                                            <span>Khuyến mại đặc biệt!</span>
                                         </h2>
                                         <ul role="tablist" class="nav justify-content-center">
                                             <li class="nav-item"><a class="nav-link active" href="#cameras" data-toggle="tab">Cameras</a></li>

@@ -47,12 +47,6 @@ class ProductController extends Controller
     {
         $query = Product::with(['subCategory', 'variants', 'productImages']);
 
-        if ($request->has('category_id')) {
-            $query->whereHas('subCategory', function ($q) use ($request) {
-                $q->where('category_id', $request->input('category_id'));
-            });
-        }
-    
         // Lọc theo danh mục con
         if ($request->has('sub_category_id')) {
             $query->where('sub_category_id', $request->input('sub_category_id'));
