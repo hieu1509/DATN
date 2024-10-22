@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -137,3 +138,15 @@ Route::prefix('cart')
         Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
     });
 
+// Checkout routes
+Route::get('/checkout', function () {
+    return view('user.pages.checkout'); // Đường dẫn đến view checkout của bạn
+})->name('checkout');
+
+Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
+
+// Order detail route
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
+
+// Momo payment route
+Route::post('/momo_payment', [OrderController::class, 'momo_payment'])->name('momo.payment');
