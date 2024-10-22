@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\view\DonHangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -141,3 +142,5 @@ Route::prefix('admins')
     });
 
     Route::resource('promotions', PromotionController::class);
+
+    Route::get('/myorder', [DonHangController::class, 'index'])->name('index');

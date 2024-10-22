@@ -18,6 +18,7 @@
         
         <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,900" rel="stylesheet">
         <link rel="shortcut icon" href="{{ asset('template2/assets/images/fav-icon.png') }}">
+        @yield('css')
     </head>
 
     @yield('content')
