@@ -45,11 +45,11 @@
                                                 <tbody>
                                                     @foreach ($cartDetail as $detail)
                                                     <tr>
-                                                        <td class="product-thumbnail">
+                                                        <td class="product-image">
                                                             <a href="single-product-fullwidth.html">
                                                                 <img width="180" height="180" alt="{{ $detail->productVariant->product->name }}"
                                                                     class="wp-post-image"
-                                                                    src="{{ Storage::url($detail->productVariant->product->image) }}">
+                                                                    src="{{ Storage::url($detail->productVariant->product->image)}}">
                                                             </a>
                                                         </td>
                                                         <td data-title="Product" class="product-name">
