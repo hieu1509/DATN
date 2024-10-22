@@ -53,7 +53,6 @@ class User extends Authenticatable
     public function orderhistory(){
         return $this->hasMany(OrderHistory::class);
     }
-}
 
     public function carts(){
         return $this->hasMany(Cart::class);
