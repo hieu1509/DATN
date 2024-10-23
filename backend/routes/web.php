@@ -138,15 +138,20 @@ Route::prefix('cart')
         Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
     });
 
-// Checkout routes
+// Hiển thị trang checkout
 Route::get('/checkout', function () {
     return view('user.pages.checkout'); // Đường dẫn đến view checkout của bạn
 })->name('checkout');
 
-Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
+// Xử lý đặt hàng và thanh toán (phương thức POST)
+Route::post('/checkout', [OrderController::class, 'placeOrder'])->name('checkout.place');
 
-// Order detail route
-Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
+// Trang thành công sau khi thanh toán
+Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
 
-// Momo payment route
-Route::post('/momo_payment', [OrderController::class, 'momo_payment'])->name('momo.payment');
+// IPN của MoMo
+Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+
+
+

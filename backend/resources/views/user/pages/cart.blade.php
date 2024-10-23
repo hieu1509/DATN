@@ -89,31 +89,32 @@
 
                                             <div class="cart-collaterals">
                                                 <div class="cart_totals">
-                                                    <h2>Tổng giỏ hàng</h2>
-                                                    <table class="shop_table shop_table_responsive">
-                                                        <tbody>
-                                                            <tr class="cart-subtotal">
-                                                                <th>Tổng tạm</th>
-                                                                <td data-title="Subtotal">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">£</span>{{$total}}</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="shipping">
-                                                                <th>Phí vận chuyển</th>
-                                                                <td data-title="Shipping">Phí cố định</td>
-                                                            </tr>
-                                                            <tr class="order-total">
-                                                                <th>Tổng cộng</th>
-                                                                <td data-title="Total">
-                                                                    <strong>
-                                                                        <span class="woocommerce-Price-amount amount">
-                                                                            <span class="woocommerce-Price-currencySymbol">£</span>{{$total}}</span>
-                                                                    </strong>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                   <table class="shop_table woocommerce-checkout-review-order-table">
+<thead>
+        <tr>
+            <th class="product-name">Sản phẩm</th>
+            <th class="product-total">Tổng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($cartDetail as $detail)
+            <tr class="cart_item">
+                <td class="product-name">{{ $detail->productVariant->product->name }} ({{ $detail->productVariant->chip->name }}, {{ $detail->productVariant->ram->name }}, {{ $detail->productVariant->storage->name }})</td>
+                <td class="product-total">{{ number_format($detail->productVariant->listed_price * $detail->quantity, 0, ',', '.') }} VND</td>
+            </tr>
+        @endforeach
+    </tbody>
+    <tfoot>
+        <tr class="cart-subtotal">
+            <th>Tổng tạm</th>
+            <td>{{ number_format($total, 0, ',', '.') }} VND</td>
+        </tr>
+        <tr class="order-total">
+            <th>Tổng</th>
+            <td>{{ number_format($total, 0, ',', '.') }} VND</td>
+        </tr>
+    </tfoot>
+</table>
                                                     <div class="wc-proceed-to-checkout">
                                                         <form class="woocommerce-shipping-calculator" method="post" action="#">
                                                             <p>
