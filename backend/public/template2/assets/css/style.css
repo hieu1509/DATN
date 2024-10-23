@@ -3192,7 +3192,11 @@ select {
 @media (min-width: 768px) {
   table.shop_table_responsive tbody tr td,
   table.shop_table_responsive tbody tr th {
+
+    text-align: left; }
+
     text-align: center; }
+
   .site-header {
     padding-top: 2.617924em;
     padding-bottom: 0; }
@@ -21231,7 +21235,10 @@ table.cart {
     padding: 0.571em; } }
   table.cart thead th {
     font-size: 0.938em;
+
+
     text-align: center;
+
     border: none;
     text-transform: none;
     font-weight: 400;
@@ -21255,7 +21262,10 @@ table.cart {
     display: none; }
   table.cart td.product-name {
     font-size: 0.875em;
+
+
     text-align: center;
+
     line-height: 1.5em;
     letter-spacing: -0.01em;
     font-weight: 400;
@@ -21299,7 +21309,10 @@ table.cart {
   table.cart td.product-price,
   table.cart td.product-subtotal {
     font-size: 1em;
+
+
     text-align: center;
+
     line-height: 1.5em;
     font-weight: 500;
     letter-spacing: -0.01em;

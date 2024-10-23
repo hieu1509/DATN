@@ -55,9 +55,8 @@
 
                                 <div class="card-body p-4">
                                     <div class="text-center mt-2">
-                                        <h5 class="text-primary">Create new password</h5>
-                                        <p class="text-muted">Your new password must be different from previous used
-                                            password.</p>
+                                        <h5 class="text-primary">Tạo mật khẩu mới</h5>
+                                        <p class="text-muted">Mật khẩu mới của bạn phải khác với mật khẩu đã sử dụng trước đó.</p>
                                     </div>
 
                                     <div class="p-2">
@@ -67,28 +66,27 @@
                                             <input type="hidden" name="email" value="{{ $email }}">
 
                                             <div class="mb-3">
-                                                <label class="form-label" for="password-input">Password</label>
+                                                <label class="form-label" for="password-input">Mật khẩu</label>
                                                 <div class="position-relative auth-pass-inputgroup">
                                                     <input type="password" name="password"
                                                         class="form-control pe-5 password-input" onpaste="return false"
-                                                        placeholder="Enter password" id="password-input"
+                                                        placeholder="Nhập mật khẩu" id="password-input"
                                                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                                                     <button
                                                         class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                         type="button" id="password-addon"><i
                                                             class="ri-eye-fill align-middle"></i></button>
                                                 </div>
-                                                <div id="passwordInput" class="form-text">Must be at least 8 characters.
+                                                <div id="passwordInput" class="form-text">Mật khẩu phải có ít nhất 8 ký tự.
                                                 </div>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label" for="confirm-password-input">Confirm
-                                                    Password</label>
+                                                <label class="form-label" for="confirm-password-input">Xác nhận mật khẩu</label>
                                                 <div class="position-relative auth-pass-inputgroup mb-3">
                                                     <input type="password" name="password_confirmation"
                                                         class="form-control pe-5 password-input" onpaste="return false"
-                                                        placeholder="Confirm password"
+                                                        placeholder="Xác nhận mật khẩu"
                                                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                         id="confirm-password-input" required>
                                                     <button
@@ -101,12 +99,11 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="auth-remember-check">
-                                                <label class="form-check-label" for="auth-remember-check">Remember
-                                                    me</label>
+                                                <label class="form-check-label" for="auth-remember-check">Nhớ mật khẩu</label>
                                             </div>
 
                                             <div class="mt-4">
-                                                <button class="btn btn-success w-100" type="submit">Reset Password</button>
+                                                <button class="btn btn-success w-100" type="submit">Đặt lại mật khẩu</button>
                                             </div>
                                         </form>
 
@@ -117,8 +114,8 @@
                             <!-- end card -->
 
                             <div class="mt-4 text-center">
-                                <p class="mb-0">Wait, I remember my password... <a href="auth-signin-basic.html"
-                                        class="fw-semibold text-primary text-decoration-underline"> Click here </a> </p>
+                                <p class="mb-0">Đợi đã, tôi nhớ mật khẩu của mình... <a href="{{ route('login.user') }}"
+                                        class="fw-semibold text-primary text-decoration-underline"> Nhấn vào đây </a> </p>
                             </div>
 
                         </div>
@@ -128,25 +125,6 @@
                 <!-- end container -->
             </div>
             <!-- end auth page content -->
-
-            <!-- footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="text-center">
-                                <p class="mb-0 text-muted">&copy;
-                                    <script>
-                                        document.write(new Date().getFullYear())
-                                    </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i>
-                                    by Themesbrand
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <!-- end Footer -->
         </div>
         <!-- end auth-page-wrapper -->
 

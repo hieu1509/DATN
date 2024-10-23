@@ -46,7 +46,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         DB::beginTransaction();
-
+    
         try {
             // Tạo sản phẩm mới
             $product = Product::create([
@@ -60,11 +60,19 @@ class ProductController extends Controller
                 'is_show_home' => $request->is_show_home,
             ]);
 
+    
+
+
+
             // Xử lý ảnh đại diện
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('product', 'public');
                 $product->update(['image' => $imagePath]);
             }
+
+    
+
+
 
             // Xử lý ảnh phụ
             if ($request->hasFile('images')) {
@@ -80,6 +88,10 @@ class ProductController extends Controller
                 }
             }
 
+    
+
+
+
             // Xử lý biến thể sản phẩm
             foreach ($request->chip_id as $index => $chipId) {
                 ProductVariant::create([
@@ -92,7 +104,7 @@ class ProductController extends Controller
                     'quantity' => $request->quantity[$index],
                 ]);
             }
-
+    
             DB::commit();
             return redirect()->route('admins.products.index')->with('success', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
@@ -100,6 +112,10 @@ class ProductController extends Controller
             return back()->withErrors(['error' => 'Đã có lỗi xảy ra!']);
         }
     }
+
+    
+
+
 
     /**
      * Display the specified resource.
@@ -144,10 +160,18 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $product->update($request->validated());
 
+    
+
+
+
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('product', 'public');
                 $product->update(['image' => $imagePath]);
             }
+
+    
+
+
 
             if ($request->hasFile('images')) {
                 ProductImage::where('product_id', $product->id)->delete();
@@ -163,7 +187,13 @@ class ProductController extends Controller
                 }
             }
 
+    
             ProductVariant::where('product_id', $product->id)->delete();
+    
+
+
+            ProductVariant::where('product_id', $product->id)->delete();
+
 
             foreach ($request->chip_id as $index => $chipId) {
                 ProductVariant::create([
@@ -184,6 +214,7 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['message' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
         }
     }
+    
 
 
     /**
