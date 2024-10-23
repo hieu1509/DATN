@@ -2,196 +2,239 @@
 
 @section('content')
 
-<body class="page home page-template-default">
-    <div id="page" class="hfeed site">
+    <body class="page home page-template-default">
+        <div id="page" class="hfeed site">
 
-        @include('user.partials.header')
+            @include('user.partials.header')
 
-        @include('user.partials.menu')
+            @include('user.partials.menu')
 
-        <!-- .header-v2 -->
-        <!-- ============================================================= Header End ============================================================= -->
-        <div id="content" class="site-content">
-            <div class="col-full">
-                <div class="row">
-                    <nav class="woocommerce-breadcrumb">
-                        <a href="home-v1.html">Trang chủ</a>
-                        <span class="delimiter">
-                            <i class="tm tm-breadcrumbs-arrow-right"></i>
-                        </span>
-                        Giỏ hàng
-                    </nav>
-                    <!-- .woocommerce-breadcrumb -->
-                    <div id="primary" class="content-area">
-                        <main id="main" class="site-main">
-                            <div class="type-page hentry">
-                                <div class="entry-content">
-                                    <div class="woocommerce">
-                                        <div class="cart-wrapper">
-                                            <table class="shop_table shop_table_responsive cart">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="product-remove">&nbsp;</th>
-                                                        <th class="product-thumbnail">&nbsp;</th>
-                                                        <th class="product-image">Hình ảnh</th>
-                                                        <th class="product-name">Sản phẩm</th>
-                                                        <th class="product-price">Giá</th>
-                                                        <th class="product-quantity">Số lượng</th>
-                                                        <th class="product-subtotal">Tổng cộng</th>
-                                                        <th class="product-delete">Hành động</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($cartDetail as $detail)
-                                                    <tr>
-                                                        <td class="product-image">
-                                                            <a href="single-product-fullwidth.html">
-                                                                <img width="180" height="180" alt="{{ $detail->productVariant->product->name }}"
-                                                                    class="wp-post-image"
-                                                                    src="{{ Storage::url($detail->productVariant->product->image) }}">
-                                                            </a>
-                                                        </td>
-                                                        <td data-title="Product" class="product-name">
-                                                            <a href="single-product-fullwidth.html">{{ $detail->productVariant->product->name }}</a>
-                                                        </td>
-                                                        <td data-title="Price" class="product-price">
-                                                            {{ $detail->productVariant->listed_price }}
-                                                        </td>
-                                                        <td class="product-quantity" data-title="Quantity">
-                                                            <form action="{{ route('cart.update', $detail->id) }}" method="post" class="quantity-form">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <div class="aquantity">
-                                                                    <button type="button" class="btn-minus">−</button>
-                                                                    <input id="quantity-input-{{ $detail->id }}" type="number"
-                                                                        name="quantity" value="{{ $detail->quantity }}"
-                                                                        title="Qty" class="input-text qty text" size="4" min="1">
-                                                                    <button type="button" class="btn-plus">+</button>
-                                                                </div>
-                                                            </form>
-                                                        </td>
-                                                        <td data-title="Total" class="product-subtotal">
-                                                            <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">£</span>{{ $detail->productVariant->listed_price * $detail->quantity }}
-                                                            </span>
-                                                        </td>
-                                                        <td class="product-delete">
-                                                            <form action="{{ route('cart.destroy', $detail->id) }}" method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="remove">Xóa</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+            <!-- .header-v2 -->
+            <!-- ============================================================= Header End ============================================================= -->
+            <div id="content" class="site-content">
+                <div class="col-full">
+                    <div class="row">
+                        <nav class="woocommerce-breadcrumb">
+                            <a href="home-v1.html">Trang chủ</a>
+                            <span class="delimiter">
+                                <i class="tm tm-breadcrumbs-arrow-right"></i>
+                            </span>
+                            Giỏ hàng
+                        </nav>
+                        <!-- .woocommerce-breadcrumb -->
+                        <div id="primary" class="content-area">
+                            <main id="main" class="site-main">
+                                <div class="type-page hentry">
+                                    <div class="entry-content">
+                                        <div class="woocommerce">
+                                            <div class="cart-wrapper">
+                                                <table class="shop_table shop_table_responsive cart">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="product-remove">&nbsp;</th>
+                                                            <th class="product-thumbnail">&nbsp;</th>
+                                                            <th class="product-image">Hình ảnh</th>
+                                                            <th class="product-name">Sản phẩm</th>
+                                                            <th class="product-price">Giá</th>
+                                                            <th class="product-quantity">Số lượng</th>
+                                                            <th class="product-subtotal">Tổng cộng</th>
+                                                            <th class="product-delete">Hành động</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($cartDetail as $detail)
+                                                            <tr>
+                                                                <td class="product-image">
+                                                                    <a href="single-product-fullwidth.html">
+                                                                        <img width="180" height="180"
+                                                                            alt="{{ $detail->productVariant->product->name }}"
+                                                                            class="wp-post-image"
+                                                                            src="{{ Storage::url($detail->productVariant->product->image) }}">
+                                                                    </a>
+                                                                </td>
+                                                                <td data-title="Product" class="product-name">
+                                                                    <a
+                                                                        href="single-product-fullwidth.html">{{ $detail->productVariant->product->name }}</a>
+                                                                </td>
+                                                                <td data-title="Price" class="product-price">
+                                                                    {{ $detail->productVariant->listed_price }}
+                                                                </td>
+                                                                <td class="product-quantity" data-title="Quantity">
+                                                                    <form action="{{ route('cart.update', $detail->id) }}"
+                                                                        method="post" class="quantity-form">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <div class="aquantity">
+                                                                            <button type="button"
+                                                                                class="btn-minus">−</button>
+                                                                            <input id="quantity-input-{{ $detail->id }}"
+                                                                                type="number" name="quantity"
+                                                                                value="{{ $detail->quantity }}"
+                                                                                title="Qty" class="input-text qty text"
+                                                                                size="4" min="1">
+                                                                            <button type="button"
+                                                                                class="btn-plus">+</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </td>
+                                                                <td data-title="Total" class="product-subtotal">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span
+                                                                            class="woocommerce-Price-currencySymbol">£</span>{{ $detail->productVariant->listed_price * $detail->quantity }}
+                                                                    </span>
+                                                                </td>
+                                                                <td class="product-delete">
+                                                                    <form action="{{ route('cart.destroy', $detail->id) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="remove">Xóa</button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
 
-                                            <div class="cart-collaterals">
-                                                <div class="cart_totals">
-                                                   <table class="shop_table woocommerce-checkout-review-order-table">
-<thead>
-        <tr>
-            <th class="product-name">Sản phẩm</th>
-            <th class="product-total">Tổng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($cartDetail as $detail)
-            <tr class="cart_item">
-                <td class="product-name">{{ $detail->productVariant->product->name }} ({{ $detail->productVariant->chip->name }}, {{ $detail->productVariant->ram->name }}, {{ $detail->productVariant->storage->name }})</td>
-                <td class="product-total">{{ number_format($detail->productVariant->listed_price * $detail->quantity, 0, ',', '.') }} VND</td>
-            </tr>
-        @endforeach
-    </tbody>
-    <tfoot>
-        <tr class="cart-subtotal">
-            <th>Tổng tạm</th>
-            <td>{{ number_format($total, 0, ',', '.') }} VND</td>
-        </tr>
-        <tr class="order-total">
-            <th>Tổng</th>
-            <td>{{ number_format($total, 0, ',', '.') }} VND</td>
-        </tr>
-    </tfoot>
-</table>
-                                                    <div class="wc-proceed-to-checkout">
-                                                        <form class="woocommerce-shipping-calculator" method="post" action="#">
-                                                            <p>
-                                                                <a class="shipping-calculator-button" data-toggle="collapse" href="#shipping-form" aria-expanded="false" aria-controls="shipping-form">Tính phí vận chuyển</a>
-                                                            </p>
-                                                            <div class="collapse" id="shipping-form">
-                                                                <div class="shipping-calculator-form">
-                                                                    <p id="calc_shipping_country_field" class="form-row form-row-wide">
-                                                                        <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
-                                                                            <option value="">Chọn quốc gia…</option>
-                                                                            <option value="AX">Đảo Åland</option>
-                                                                        </select>
-                                                                    </p>
-                                                                    <p id="calc_shipping_state_field" class="form-row form-row-wide validate-required">
-                                                                        <span>
-                                                                            <select id="calc_shipping_state" name="calc_shipping_state">
-                                                                                <option value="">Chọn một tùy chọn…</option>
-                                                                                <option value="AP">Andhra Pradesh</option>
-                                                                                <option value="AR">Arunachal Pradesh</option>
-                                                                                <option value="PY">Pondicherry (Puducherry)</option>
+                                                <div class="cart-collaterals">
+                                                    <div class="cart_totals">
+                                                        <table class="shop_table woocommerce-checkout-review-order-table">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    <th class="product-total">Tổng Tiền</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {{-- @foreach ($cartDetail as $detail)
+                                                                    <tr class="cart_item">
+                                                                        <td class="product-name">
+                                                                            {{ $detail->productVariant->product->name }}
+                                                                            ({{ $detail->productVariant->chip->name }},
+                                                                            {{ $detail->productVariant->ram->name }},
+                                                                            {{ $detail->productVariant->storage->name }})
+                                                                        </td>
+                                                                        <td class="product-total">
+                                                                            {{ number_format($detail->productVariant->listed_price * $detail->quantity, 0, ',', '.') }}
+                                                                            VND</td>
+                                                                    </tr>
+                                                                @endforeach --}}
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr class="order-total">
+
+                                                                    <td>{{ number_format($total, 0, ',', '.') }} VND</td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                        <div class="wc-proceed-to-checkout">
+                                                            <form class="woocommerce-shipping-calculator" method="post"
+                                                                action="#">
+                                                                <p>
+                                                                    <a class="shipping-calculator-button"
+                                                                        data-toggle="collapse" href="#shipping-form"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="shipping-form">Tính phí vận
+                                                                        chuyển</a>
+                                                                </p>
+                                                                <div class="collapse" id="shipping-form">
+                                                                    <div class="shipping-calculator-form">
+                                                                        <p id="calc_shipping_country_field"
+                                                                            class="form-row form-row-wide">
+                                                                            <select rel="calc_shipping_state"
+                                                                                class="country_to_state"
+                                                                                id="calc_shipping_country"
+                                                                                name="calc_shipping_country">
+                                                                                <option value="">Chọn quốc gia…
+                                                                                </option>
+                                                                                <option value="AX">Đảo Åland</option>
                                                                             </select>
-                                                                        </span>
-                                                                    </p>
-                                                                    <p id="calc_shipping_postcode_field" class="form-row form-row-wide validate-required">
-                                                                        <input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Mã bưu điện / ZIP" value="" class="input-text">
-                                                                    </p>
-                                                                    <p>
-                                                                        <button class="button" value="1" name="calc_shipping" type="submit">Cập nhật tổng</button>
-                                                                    </p>
+                                                                        </p>
+                                                                        <p id="calc_shipping_state_field"
+                                                                            class="form-row form-row-wide validate-required">
+                                                                            <span>
+                                                                                <select id="calc_shipping_state"
+                                                                                    name="calc_shipping_state">
+                                                                                    <option value="">Chọn một tùy
+                                                                                        chọn…</option>
+                                                                                    <option value="AP">Andhra Pradesh
+                                                                                    </option>
+                                                                                    <option value="AR">Arunachal
+                                                                                        Pradesh</option>
+                                                                                    <option value="PY">Pondicherry
+                                                                                        (Puducherry)</option>
+                                                                                </select>
+                                                                            </span>
+                                                                        </p>
+                                                                        <p id="calc_shipping_postcode_field"
+                                                                            class="form-row form-row-wide validate-required">
+                                                                            <input type="text"
+                                                                                id="calc_shipping_postcode"
+                                                                                name="calc_shipping_postcode"
+                                                                                placeholder="Mã bưu điện / ZIP"
+                                                                                value="" class="input-text">
+                                                                        </p>
+                                                                        <p>
+                                                                            <button class="button" value="1"
+                                                                                name="calc_shipping" type="submit">Cập
+                                                                                nhật tổng</button>
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </form>
-                                                        <a class="checkout-button button alt wc-forward" href="{{ route('checkout') }}">Tiến hành thanh toán</a>
+                                                            </form>
+                                                            <form action="{{ route('cart.checkout') }}" method="POST">
+                                                                @csrf
+                                                                <a class="checkout-button button alt wc-forward">
+                                                                    <button type="submit"
+                                                                        >Tiến
+                                                                        hành
+                                                                        thanh toán</button> </a>
+                                                            </form>
 
-                                                        <a class="back-to-shopping" href="shop.html">Quay lại mua sắm</a>
+                                                            <a class="back-to-shopping" href="shop.html">Quay lại mua
+                                                                sắm</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </main>
+                            </main>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            @include('user.partials.footer')
+
         </div>
 
-        @include('user.partials.footer')
+        @include('user.partials.js')
 
-    </div>
-
-    @include('user.partials.js')
-
-</body>
+    </body>
 @endsection
 
 @section('js')
-<script>
-    document.querySelectorAll('.btn-plus').forEach(button => {
-        button.addEventListener('click', function() {
-            const input = this.previousElementSibling;
-            let value = parseInt(input.value);
-            input.value = value + 1; // Tăng giá trị lên 1
-            this.closest('form').submit(); // Submit form cha
+    <script>
+        document.querySelectorAll('.btn-plus').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                let value = parseInt(input.value);
+                input.value = value + 1; // Tăng giá trị lên 1
+                this.closest('form').submit(); // Submit form cha
+            });
         });
-    });
 
-    document.querySelectorAll('.btn-minus').forEach(button => {
-        button.addEventListener('click', function() {
-            const input = this.nextElementSibling;
-            let value = parseInt(input.value);
-            if (value > 1) {
-                input.value = value - 1; // Giảm giá trị xuống 1 nếu lớn hơn 1
-            }
-            this.closest('form').submit(); // Submit form cha
+        document.querySelectorAll('.btn-minus').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.nextElementSibling;
+                let value = parseInt(input.value);
+                if (value > 1) {
+                    input.value = value - 1; // Giảm giá trị xuống 1 nếu lớn hơn 1
+                }
+                this.closest('form').submit(); // Submit form cha
+            });
         });
-    });
-</script>
+    </script>
 @endsection

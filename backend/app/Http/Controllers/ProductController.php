@@ -53,7 +53,7 @@ class ProductController extends Controller
                 'sub_category_id' => $request->sub_category_id,
                 'name' => $request->name,
                 'description' => $request->description,
-                'content' => $request->getContent(),
+                'content' => $request->content,
                 'view' => 0,
                 'is_hot' => $request->is_hot,
                 'is_sale' => $request->is_sale,

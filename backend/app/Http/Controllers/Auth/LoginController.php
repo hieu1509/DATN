@@ -30,7 +30,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Đăng nhập thành công, điều hướng đến trang chủ
-            return redirect()->intended('dashboard'); // Hoặc bất kỳ trang nào bạn muốn
+            return redirect()->route('users.index'); // Hoặc bất kỳ trang nào bạn muốn
         }
 
         // Nếu đăng nhập không thành công, trở lại trang đăng nhập với thông báo lỗi

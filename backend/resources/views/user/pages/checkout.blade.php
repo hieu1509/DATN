@@ -42,8 +42,9 @@
                                                     <div class="clear"></div>
                                                 </form>
                                             </div>
-                                            <form action="#" class="checkout woocommerce-checkout" method="post"
-                                                name="checkout">
+                                            <form action="{{ route('checkout.place') }}"
+                                                class="checkout woocommerce-checkout" method="POST" name="checkout">
+                                                @csrf
                                                 <div id="customer_details" class="col2-set">
                                                     <div class="col-1">
                                                         <div class="woocommerce-billing-fields">
@@ -57,7 +58,7 @@
                                                                         </label>
                                                                         <input type="text" value="" placeholder=""
                                                                             id="billing_first_name"
-                                                                            name="billing_first_name" class="input-text ">
+                                                                            name="billing_first_name" class="input-text " required>
                                                                     </p>
                                                                     <p id="billing_last_name_field"
                                                                         class="form-row form-row-last validate-required">
@@ -66,10 +67,10 @@
                                                                         </label>
                                                                         <input type="text" value="" placeholder=""
                                                                             id="billing_last_name" name="billing_last_name"
-                                                                            class="input-text ">
+                                                                            class="input-text " required>
                                                                     </p>
                                                                     <div class="clear"></div>
-                                                                    <p id="billing_country_field"
+                                                                    {{-- <p id="billing_country_field"
                                                                         class="form-row form-row-wide validate-required validate-email">
                                                                         <label class="" for="billing_country">Quốc gia
                                                                             <abbr title="required" class="required">*</abbr>
@@ -81,7 +82,7 @@
                                                                             <option value="">Chọn quốc gia…</option>
                                                                             <option value="ZM">Việt Nam </option>
                                                                         </select>
-                                                                    </p>
+                                                                    </p> --}}
                                                                     <div class="clear"></div>
                                                                     <p id="billing_address_1_field"
                                                                         class="form-row form-row-wide address-field validate-required">
@@ -91,15 +92,15 @@
                                                                         </label>
                                                                         <input type="text" value=""
                                                                             placeholder="Địa chỉ" id="billing_address_1"
-                                                                            name="billing_address_1" class="input-text ">
+                                                                            name="billing_address_1" class="input-text " required>
                                                                     </p>
-                                                                    <p id="billing_address_2_field"
+                                                                    {{-- <p id="billing_address_2_field"
                                                                         class="form-row form-row-wide address-field">
                                                                         <input type="text" value=""
                                                                             placeholder="Căn hộ, phòng, đơn vị... (tùy chọn)"
                                                                             id="billing_address_2"
                                                                             name="billing_address_2" class="input-text ">
-                                                                    </p>
+                                                                    </p> --}}
                                                                     <p id="billing_city_field"
                                                                         class="form-row form-row-wide address-field validate-required">
                                                                         <label class="" for="billing_city">Thành phố
@@ -108,9 +109,9 @@
                                                                         </label>
                                                                         <input type="text" value=""
                                                                             placeholder="" id="billing_city"
-                                                                            name="billing_city" class="input-text ">
+                                                                            name="billing_city" class="input-text " required>
                                                                     </p>
-                                                                    <p id="billing_state_field"
+                                                                    {{-- <p id="billing_state_field"
                                                                         class="form-row form-row-wide validate-required validate-email">
                                                                         <label class="" for="billing_state">Tỉnh /
                                                                             Hạt
@@ -127,8 +128,8 @@
                                                                             <option value="PY">Pondicherry (Puducherry)
                                                                             </option>
                                                                         </select>
-                                                                    </p>
-                                                                    <p id="billing_postcode_field"
+                                                                    </p> --}}
+                                                                    {{-- <p id="billing_postcode_field"
                                                                         class="form-row form-row-wide address-field validate-postcode validate-required">
                                                                         <label class="" for="billing_postcode">Mã
                                                                             bưu điện / ZIP
@@ -138,7 +139,7 @@
                                                                         <input type="text" value=""
                                                                             placeholder="" id="billing_postcode"
                                                                             name="billing_postcode" class="input-text ">
-                                                                    </p>
+                                                                    </p> --}}
                                                                     <p id="billing_phone_field"
                                                                         class="form-row form-row-last validate-required validate-phone">
                                                                         <label class="" for="billing_phone">Điện
@@ -148,9 +149,9 @@
                                                                         </label>
                                                                         <input type="tel" value=""
                                                                             placeholder="" id="billing_phone"
-                                                                            name="billing_phone" class="input-text ">
+                                                                            name="billing_phone" class="input-text " required>
                                                                     </p>
-                                                                    <p id="billing_email_field"
+                                                                    {{-- <p id="billing_email_field"
                                                                         class="form-row form-row-first validate-required validate-email">
                                                                         <label class="" for="billing_email">Địa chỉ
                                                                             Email
@@ -160,7 +161,7 @@
                                                                         <input type="email" value=""
                                                                             placeholder="" id="billing_email"
                                                                             name="billing_email" class="input-text ">
-                                                                    </p>
+                                                                    </p> --}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -192,7 +193,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-2">
-                                                        <div class="woocommerce-shipping-fields">
+                                                        {{-- <div class="woocommerce-shipping-fields">
                                                             <h3 id="ship-to-different-address">
                                                                 <label
                                                                     class="collapsed woocommerce-form__label woocommerce-form__label-for-checkbox checkbox"
@@ -270,7 +271,7 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="woocommerce-additional-fields">
                                                             <div class="woocommerce-additional-fields__field-wrapper">
                                                                 <p id="order_comments_field" class="form-row notes">
@@ -285,58 +286,71 @@
                                                     </div>
                                                 </div>
 
-                                                <form method="POST" action="{{ route('checkout.place') }}">
-                                                    @csrf
-                                                    <h3 id="order_review_heading">Đơn hàng của bạn</h3>
-                                                    <div class="woocommerce-checkout-review-order" id="order_review">
-                                                        <div class="order-review-wrapper">
-                                                            <table class="shop_table woocommerce-checkout-review-order-table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th class="product-name">Sản phẩm</th>
-                                                                        <th class="product-total">Tổng</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <!-- Hiển thị các sản phẩm trong giỏ hàng, ví dụ: -->
+
+                                                <h3 id="order_review_heading">Đơn hàng của bạn</h3>
+                                                <div class="woocommerce-checkout-review-order" id="order_review">
+                                                    <div class="order-review-wrapper">
+                                                        <table class="shop_table woocommerce-checkout-review-order-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="product-name">Sản phẩm</th>
+                                                                    <th class="product-name">Số lượng</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($cartDetails as $detail)
                                                                     <tr class="cart_item">
-                                                                        <td class="product-name">Sản phẩm A</td>
-                                                                        <td class="product-total">100,000 VND</td>
+                                                                        <td class="product-name">
+                                                                            {{ $detail->productVariant->product->name }}
+                                                                        </td>
+                                                                        {{-- <td class="product-total">{{ number_format($detail->productVariant->listed_price, 0, ',', '.') }}
+                                                                                VND</td> --}}
+                                                                        <td class="product-total">{{ $detail->quantity }}
+                                                                        </td>
                                                                     </tr>
-                                                                    <!-- Thêm sản phẩm -->
-                                                                </tbody>
-                                                                <tfoot>
-                                                                    <tr class="cart-subtotal">
-                                                                        <th>Tổng tạm</th>
-                                                                        <td>900,000 VND</td>
-                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                            <tfoot>
+                                                                @foreach ($cartDetails as $detail)
                                                                     <tr class="order-total">
                                                                         <th>Tổng</th>
-                                                                        <td>900,000 VND</td>
+                                                                        <td class="product-total">
+                                                                            {{ number_format($detail->productVariant->listed_price * $detail->quantity, 0, ',', '.') }}
+                                                                            VND</td>
                                                                     </tr>
-                                                                </tfoot>
-                                                            </table>
-                                                
-                                                            <div class="woocommerce-checkout-payment" id="payment">
-                                                                <ul class="wc_payment_methods payment_methods methods">
-                                                                    <li class="wc_payment_method payment_method_cod">
-                                                                        <input type="radio" value="cod" name="payment_method" class="input-radio" id="payment_method_cod">
-                                                                        <label for="payment_method_cod">Thanh toán khi nhận hàng</label>
-                                                                    </li>
-                                                                    <li class="wc_payment_method payment_method_momo">
-                                                                        <input type="radio" value="momo" name="payment_method" class="input-radio" id="payment_method_momo">
-                                                                        <label for="payment_method_momo">Thanh toán qua Momo</label>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                
-                                                            <div class="form-row place-order">
-                                                                <button type="submit" class="button wc-forward text-center">Đặt hàng</button>
-                                                            </div>
+                                                                @endforeach
+                                                                {{-- <tr class="cart-subtotal">
+                                                                        <th>Tổng</th>
+                                                                        <td>900,000 VND</td>
+                                                                    </tr> --}}
+                                                            </tfoot>
+                                                        </table>
+
+                                                        <div class="woocommerce-checkout-payment" id="payment">
+                                                            <ul class="wc_payment_methods payment_methods methods">
+                                                                <li class="wc_payment_method payment_method_cod">
+                                                                    <input type="radio" value="cod"
+                                                                        name="payment_method" class="input-radio"
+                                                                        id="payment_method_cod">
+                                                                    <label for="payment_method_cod">Thanh toán khi nhận
+                                                                        hàng</label>
+                                                                </li>
+                                                                <li class="wc_payment_method payment_method_momo">
+                                                                    <input type="radio" value="momo"
+                                                                        name="payment_method" class="input-radio"
+                                                                        id="payment_method_momo">
+                                                                    <label for="payment_method_momo">Thanh toán qua
+                                                                        Momo</label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="form-row place-order">
+                                                            <button type="submit"
+                                                                class="button wc-forward text-center">Đặt hàng</button>
                                                         </div>
                                                     </div>
-                                                </form>
-                                                
+                                                </div>
 
                                                 <script>
                                                     // Validate and handle form submission
