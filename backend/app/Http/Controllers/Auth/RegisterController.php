@@ -58,7 +58,7 @@ class RegisterController extends Controller
         }
 
         // Chuyển hướng người dùng sang trang đăng nhập sau khi đăng ký thành công
-        return redirect()->route('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.'); 
+        return redirect()->route('login.admin')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.'); 
     }
 
     public function registerUser(Request $request)
@@ -95,6 +95,6 @@ class RegisterController extends Controller
         }
 
         // Chuyển hướng người dùng sang trang đăng nhập sau khi đăng ký thành công
-        return redirect()->route('login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.'); 
+        return redirect()->route('login.user')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.'); 
     }
 }
