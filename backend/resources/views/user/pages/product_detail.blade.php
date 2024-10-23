@@ -1,6 +1,101 @@
 @extends('user.layout')
 
 @section('content')
+<style>
+    .card-container {
+        display: flex;
+        /* Sử dụng Flexbox để hiển thị các card theo hàng ngang */
+        flex-wrap: wrap;
+        /* Cho phép các card xuống hàng nếu không đủ chỗ */
+        gap: 15px;
+        /* Khoảng cách giữa các card */
+        justify-content: center;
+        /* Căn giữa các card trong container */
+        padding: 20px;
+        /* Padding cho container */
+    }
+
+    .card {
+        box-sizing: border-box;
+        /* Bao gồm padding và border trong kích thước */
+        border: 2px solid transparent;
+        /* Đặt border mặc định là trong suốt */
+        border-radius: 8px;
+        /* Góc bo tròn */
+        padding: 15px;
+        /* Padding trong card */
+        background-color: #f9f9f9;
+        /* Màu nền nhẹ cho card */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Bóng đổ nhẹ cho card */
+        text-align: center;
+        /* Căn giữa nội dung */
+        width: 180px;
+        /* Kích thước chiều rộng của card */
+        height: 180px;
+        /* Kích thước chiều cao của card */
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        /* Thêm hiệu ứng cho bóng đổ và màu viền */
+        cursor: pointer;
+        /* Đổi con trỏ khi hover */
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        /* Đẩy card lên một chút khi hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        /* Bóng đổ mạnh hơn khi hover */
+    }
+
+    .card.active {
+        border-color: #007bff;
+        /* Màu viền khi active */
+        box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+        /* Bóng đổ mạnh hơn khi active */
+    }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        /* Sắp xếp theo chiều dọc */
+        align-items: center;
+        /* Căn giữa các thành phần */
+    }
+
+    .chip-name,
+    .ram-name,
+    .storage-name {
+        margin: 5px 0;
+        /* Khoảng cách giữa các tên */
+        font-size: 14px;
+        /* Kích thước chữ */
+        color: #333;
+        /* Màu chữ tối */
+    }
+
+    .price {
+        color: #0063D1;
+        /* Màu chữ cho giá */
+        font-size: 16px;
+        /* Kích thước chữ giá */
+        margin-top: 10px;
+        /* Khoảng cách trên của giá */
+        font-weight: bold;
+        /* Chữ đậm cho giá */
+    }
+
+    .sale_price {
+        color: #999;
+        /* Màu mờ cho giá bán */
+        font-size: 14px;
+        /* Kích thước chữ cho giá bán */
+        text-decoration: line-through;
+        /* Gạch ngang giá bán */
+        margin-left: 5px;
+        /* Khoảng cách bên trái giữa giá bán và giá gốc */
+    }
+</style>
+
 <body class="woocommerce-active single-product full-width normal">
     <div id="page" class="hfeed site">
 
@@ -14,13 +109,13 @@
             <div class="col-full">
                 <div class="row">
                     <nav class="woocommerce-breadcrumb">
-                        <a href="home-v1.html">Home</a>
+                        <a href="home-v1.html">Trang chủ</a>
                         <span class="delimiter">
                             <i class="tm tm-breadcrumbs-arrow-right"></i>
-                        </span><a href="product-category.html">TV & Video</a>
+                        </span><a href="#">{{ $product->subCategory->name }}</a>
                         <span class="delimiter">
                             <i class="tm tm-breadcrumbs-arrow-right"></i>
-                        </span>60UH6150 60-Inch 4K Ultra HD Smart LED TV
+                        </span>{{ $product->name }}
                     </nav>
                     <!-- .woocommerce-breadcrumb -->
                     <div id="primary" class="content-area">
@@ -36,57 +131,37 @@
                                         <div id="techmarket-single-product-gallery"
                                             class="techmarket-single-product-gallery techmarket-single-product-gallery--with-images techmarket-single-product-gallery--columns-4 images"
                                             data-columns="4">
-                                            <div class="techmarket-single-product-gallery-images" data-ride="tm-slick-carousel"
+                                            <div class="techmarket-single-product-gallery-images"
+                                                data-ride="tm-slick-carousel"
                                                 data-wrap=".woocommerce-product-gallery__wrapper"
                                                 data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:false,&quot;asNavFor&quot;:&quot;#techmarket-single-product-gallery .techmarket-single-product-gallery-thumbnails__wrapper&quot;}">
                                                 <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images"
                                                     data-columns="4">
-                                                    <a href="#" class="woocommerce-product-gallery__trigger">🔍</a>
+                                                    <a href="#"
+                                                        class="woocommerce-product-gallery__trigger">🔍</a>
                                                     <figure class="woocommerce-product-gallery__wrapper ">
-                                                        <div data-thumb="{{ asset('template2/assets/images/products/sm-card-1.jpg') }}"
+                                                        <div data-thumb="{{ asset('storage/' . $product->image) }}"
                                                             class="woocommerce-product-gallery__image">
-                                                            <a href="{{ asset('template2/assets/images/products/big-card.jpg') }}" tabindex="0">
+                                                            <a href="{{ asset('template2/assets/images/products/big-card.jpg') }}"
+                                                                tabindex="0">
                                                                 <img width="600" height="600"
-                                                                    src="{{ asset('template2/assets/images/products/big-card.jpg') }}"
+                                                                    src="{{ asset('storage/' . $product->image) }}"
                                                                     class="attachment-shop_single size-shop_single wp-post-image"
                                                                     alt="">
                                                             </a>
                                                         </div>
+                                                        @foreach ($product->productImages as $image)
                                                         <div data-thumb="{{ asset('template2/assets/images/products/sm-card-3.jpg') }}"
                                                             class="woocommerce-product-gallery__image">
-                                                            <a href="{{ asset('template2/assets/images/products/big-card-2.jpg') }}" tabindex="-1">
+                                                            <a href="{{ asset('template2/assets/images/products/big-card-2.jpg') }}"
+                                                                tabindex="-1">
                                                                 <img width="600" height="600"
-                                                                    src="{{ asset('template2/assets/images/products/big-card-2.jpg') }}"
+                                                                    src="{{ asset('storage/' . $image->image_url) }}"
                                                                     class="attachment-shop_single size-shop_single"
-                                                                    alt="">
+                                                                    alt="{{ $product->name }}">
                                                             </a>
                                                         </div>
-                                                        <div data-thumb="{{ asset('template2/assets/images/products/sm-card-2.jpg') }}"
-                                                            class="woocommerce-product-gallery__image">
-                                                            <a href="{{ asset('template2/assets/images/products/big-card-1.jpg') }}" tabindex="-1">
-                                                                <img width="600" height="600"
-                                                                    src="{{ asset('template2/assets/images/products/big-card-1.jpg') }}"
-                                                                    class="attachment-shop_single size-shop_single"
-                                                                    alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div data-thumb="{{ asset('template2/assets/images/products/deals-sm-5.jpg') }}"
-                                                            class="woocommerce-product-gallery__image">
-                                                            <a href="{{ asset('template2/assets/images/products/big-4.jpg') }}" tabindex="-1">
-                                                                <img width="600" height="600"
-                                                                    src="{{ asset('template2/assets/images/products/big-4.jpg') }}"
-                                                                    class="attachment-shop_single size-shop_single"
-                                                                    alt=""> </a>
-                                                        </div>
-                                                        <div data-thumb="{{ asset('template2/assets/images/products/sm-card-2.jpg') }}"
-                                                            class="woocommerce-product-gallery__image">
-                                                            <a href="{{ asset('template2/assets/images/products/big-card-2.jpg') }}" tabindex="-1">
-                                                                <img width="600" height="600"
-                                                                    src="{{ asset('template2/assets/images/products/big-card-1.jpg') }}"
-                                                                    class="attachment-shop_single size-shop_single"
-                                                                    alt="">
-                                                            </a>
-                                                        </div>
+                                                        @endforeach
                                                     </figure>
                                                 </div>
                                                 <!-- .woocommerce-product-gallery -->
@@ -97,41 +172,24 @@
                                                 data-wrap=".techmarket-single-product-gallery-thumbnails__wrapper"
                                                 data-slick="{&quot;infinite&quot;:false,&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;vertical&quot;:true,&quot;verticalSwiping&quot;:true,&quot;focusOnSelect&quot;:true,&quot;touchMove&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-up\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-down\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;asNavFor&quot;:&quot;#techmarket-single-product-gallery .woocommerce-product-gallery__wrapper&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:765,&quot;settings&quot;:{&quot;vertical&quot;:false,&quot;horizontal&quot;:true,&quot;verticalSwiping&quot;:false,&quot;slidesToShow&quot;:4}}]}">
                                                 <figure class="techmarket-single-product-gallery-thumbnails__wrapper">
-                                                    <figure data-thumb="{{ asset('template2/assets/images/products/sm-card-1.jpg') }}"
+                                                    <figure
+                                                        data-thumb="{{ asset('template2/assets/images/products/sm-card-1.jpg') }}"
                                                         class="techmarket-wc-product-gallery__image">
                                                         <img width="180" height="180"
-                                                            src="{{ asset('template2/assets/images/products/sm-card-1.jpg') }}"
+                                                            src="{{ asset('storage/' . $product->image) }}"
                                                             class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
                                                             alt="">
                                                     </figure>
-                                                    <figure data-thumb="{{ asset('template2/assets/images/products/sm-card-3.jpg') }}"
+                                                    @foreach ($product->productImages as $image)
+                                                    <figure
+                                                        data-thumb="{{ asset('template2/assets/images/products/sm-card-3.jpg') }}"
                                                         class="techmarket-wc-product-gallery__image">
                                                         <img width="180" height="180"
-                                                            src="{{ asset('template2/assets/images/products/sm-card-3.jpg') }}"
+                                                            src="{{ asset('storage/' . $image->image_url) }}"
                                                             class="attachment-shop_thumbnail size-shop_thumbnail"
-                                                            alt="">
+                                                            alt="{{ $product->name }}">
                                                     </figure>
-                                                    <figure data-thumb="{{ asset('template2/assets/images/products/sm-card-2.jpg') }}"
-                                                        class="techmarket-wc-product-gallery__image">
-                                                        <img width="180" height="180"
-                                                            src="{{ asset('template2/assets/images/products/sm-card-2.jpg') }}"
-                                                            class="attachment-shop_thumbnail size-shop_thumbnail"
-                                                            alt="">
-                                                    </figure>
-                                                    <figure data-thumb="{{ asset('template2/assets/images/products/big-4.jpg') }}"
-                                                        class="techmarket-wc-product-gallery__image">
-                                                        <img width="180" height="180"
-                                                            src="{{ asset('template2/assets/images/products/big-4.jpg') }}"
-                                                            class="attachment-shop_thumbnail size-shop_thumbnail"
-                                                            alt="">
-                                                    </figure>
-                                                    <figure data-thumb="{{ asset('template2/assets/images/products/sm-card-2.jpg') }}"
-                                                        class="techmarket-wc-product-gallery__image">
-                                                        <img width="180" height="180"
-                                                            src="{{ asset('template2/assets/images/products/sm-card-2.jpg') }}"
-                                                            class="attachment-shop_thumbnail size-shop_thumbnail"
-                                                            alt="">
-                                                    </figure>
+                                                    @endforeach
                                                 </figure>
                                                 <!-- .techmarket-single-product-gallery-thumbnails__wrapper -->
                                             </div>
@@ -142,20 +200,23 @@
                                     <!-- .product-images-wrapper -->
                                     <div class="summary entry-summary">
                                         <div class="single-product-header">
-                                            <h1 class="product_title entry-title">60UH6150 60-Inch 4K Ultra HD Smart LED TV
+                                            <h1 class="product_title entry-title">{{ $product->name }}
                                             </h1>
-                                            <a class="add-to-wishlist" href="wishlist.html"> Add to Wishlist</a>
+                                            <a class="add-to-wishlist" href="wishlist.html"> Yêu thích</a>
                                         </div>
                                         <!-- .single-product-header -->
                                         <div class="single-product-meta">
                                             <div class="brand">
                                                 <a href="#">
-                                                    <img alt="galaxy" src="{{ asset('template2/assets/images/brands/5.png') }}">
+                                                    <img alt="galaxy"
+                                                        src="{{ asset('storage/' . $product->subCategory->image) }}"
+                                                        alt="{{ $product->subCategory->name }} " width="80px">
                                                 </a>
                                             </div>
                                             <div class="cat-and-sku">
                                                 <span class="posted_in categories">
-                                                    <a rel="tag" href="product-category.html">TV &amp; Video</a>
+                                                    <a rel="tag"
+                                                        href="product-category.html">{{ $product->subCategory->name }}</a>
                                                 </span>
                                                 <span class="sku_wrapper">SKU:
                                                     <span class="sku">5487FB8/11</span>
@@ -175,56 +236,69 @@
                                                         <strong class="rating">5.00</strong> out of 5 based on
                                                         <span class="rating">1</span> customer rating</span>
                                                 </div>
-                                                <a rel="nofollow" class="woocommerce-review-link" href="#reviews">(<span
-                                                        class="count">1</span> customer review)</a>
+                                                <a rel="nofollow" class="woocommerce-review-link"
+                                                    href="#reviews">(<span class="count">1</span> customer
+                                                    review)</a>
                                             </div>
                                         </div>
                                         <!-- .rating-and-sharing-wrapper -->
                                         <div class="woocommerce-product-details__short-description">
                                             <ul>
-                                                <li>Multimedia Speakers</li>
-                                                <li>120 watts peak</li>
-                                                <li>Front-facing subwoofer</li>
-                                                <li>Refresh Rate: 120Hz (Effective)</li>
-                                                <li>Backlight: LED</li>
-                                                <li>Smart Functionality: Yes, webOS 3.0</li>
-                                                <li>Dimensions (W x H x D): TV without stand: 43.5″ x 25.4″ x 3.0″, TV with
-                                                    stand: 43.5″ x 27.6″ x 8.5″</li>
-                                                <li>Inputs: 3 HMDI, 2 USB, 1 RF, 1 Component, 1 Composite, 1 Optical, 1 RS232C,
-                                                    1 Ethernet</li>
+                                                @foreach(explode(';', $product->description) as $spec)
+                                                @if(trim($spec) !== '')
+                                                <li>{{ trim($spec) }}</li>
+                                                @endif
+                                                @endforeach
                                             </ul>
                                         </div>
                                         <!-- .woocommerce-product-details__short-description -->
                                         <div class="product-actions-wrapper">
-                                            <div class="product-actions">
-                                                <p class="price">
-                                                    <del>
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span
-                                                                class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
-                                                    </del>
-                                                    <ins>
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span
-                                                                class="woocommerce-Price-currencySymbol">$</span>997.00</span>
-                                                    </ins>
-                                                </p>
-                                                <!-- .single-product-header -->
-                                                <form enctype="multipart/form-data" method="post" class="cart">
-                                                    <div class="quantity">
-                                                        <label for="quantity-input">Quantity</label>
-                                                        <input type="number" size="4" class="input-text qty text"
-                                                            title="Qty" value="1" name="quantity"
-                                                            id="quantity-input">
+                                            <form action="{{route('cart.store')}}" enctype="multipart/form-data" method="post" class="cart">
+                                                @csrf
+                                                <div class="card-container">
+                                                    @foreach($product->variants as $variant)
+                                                    <div class="card @if($variant->isActive) active @endif" onclick="selectCard(this)">
+                                                        <div class="card-content">
+                                                            <input type="hidden" name="variant_id" value="{{$variant->id}}">
+                                                            <strong class="chip-name">{{ $variant->chip->name }}</strong>
+                                                            <strong class="ram-name">{{ $variant->ram->name }}</strong>
+                                                            <strong class="storage-name">{{ $variant->storage->name }}</strong>
+                                                            <span class="price">{{ number_format($variant->listed_price, 0, ',', '.') }} đ</span>
+                                                            <span class="sale_price">{{ number_format($variant->sale_price, 0, ',', '.') }} đ</span>
+                                                        </div>
                                                     </div>
-                                                    <!-- .quantity -->
-                                                    <button class="single_add_to_cart_button button alt" value="185"
-                                                        name="add-to-cart" type="submit">Add to cart</button>
-                                                </form>
-                                                <!-- .cart -->
-                                                <a class="add-to-compare-link" href="compare.html">Add to compare</a>
-                                            </div>
-                                            <!-- .product-actions -->
+                                                    @endforeach
+                                                </div>
+
+
+                                                <script>
+                                                    const cards = document.querySelectorAll('.card');
+
+                                                    cards.forEach(card => {
+                                                        card.addEventListener('click', (event) => {
+                                                            // Ngăn chặn hành vi mặc định của thẻ <a>
+                                                            event.preventDefault();
+
+                                                            // Xóa lớp active khỏi tất cả các card
+                                                            cards.forEach(c => c.classList.remove('active'));
+
+                                                            // Thêm lớp active vào card đã nhấn
+                                                            card.classList.add('active');
+                                                        });
+                                                    });
+                                                </script>
+                                                <div class="product-actions">
+                                                    <!-- .single-product-header -->
+
+                                                    <input type="text" name="quantity" id="">
+                                                    <button class="single_add_to_cart_button button alt"
+                                                        value="185" name="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
+
+                                                    <!-- .cart -->
+                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                </div>
+                                                <!-- .product-actions -->
+                                            </form>
                                         </div>
                                         <!-- .product-actions-wrapper -->
                                     </div>
@@ -232,7 +306,8 @@
                                 </div>
                                 <!-- .single-product-wrapper -->
                                 <div class="tm-related-products-carousel section-products-carousel"
-                                    id="tm-related-products-carousel" data-ride="tm-slick-carousel" data-wrap=".products"
+                                    id="tm-related-products-carousel" data-ride="tm-slick-carousel"
+                                    data-wrap=".products"
                                     data-slick="{&quot;slidesToShow&quot;:7,&quot;slidesToScroll&quot;:7,&quot;dots&quot;:true,&quot;arrows&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-left\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-right\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;appendArrows&quot;:&quot;#tm-related-products-carousel .custom-slick-nav&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:767,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1}},{&quot;breakpoint&quot;:780,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:5}}]}">
                                     <section class="related">
                                         <header class="section-header">
@@ -243,12 +318,14 @@
                                         <div class="products">
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/5.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/5.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -256,23 +333,28 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">XONE Wireless Controller</h2>
+                                                    <h2 class="woocommerce-loop-product__title">XONE Wireless
+                                                        Controller</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/16.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/16.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -283,20 +365,24 @@
                                                     <h2 class="woocommerce-loop-product__title">Band Fitbit Flex</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/8.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/8.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -304,24 +390,29 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Video & Air Quality Monitor
+                                                    <h2 class="woocommerce-loop-product__title">Video & Air Quality
+                                                        Monitor
                                                     </h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/11.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/11.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -329,24 +420,29 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof
+                                                    <h2 class="woocommerce-loop-product__title">Xtreme ultimate
+                                                        splashproof
                                                         portable speaker</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/10.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/10.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -354,24 +450,29 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Xtreme ultimate splashproof
+                                                    <h2 class="woocommerce-loop-product__title">Xtreme ultimate
+                                                        splashproof
                                                         portable speaker</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/15.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/15.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -382,20 +483,24 @@
                                                     <h2 class="woocommerce-loop-product__title">Band Fitbit Flex</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/6.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/6.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -403,29 +508,34 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D with
+                                                    <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D
+                                                        with
                                                         Bluetooth Glasses</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
                                                     <span class="onsale">
                                                         <span class="woocommerce-Price-amount amount">
                                                             <span
                                                                 class="woocommerce-Price-currencySymbol">$</span>150.04</span>
                                                     </span>
-                                                    <img src="assets/images/products/14.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                    <img src="assets/images/products/14.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> 262.81</span>
@@ -439,25 +549,29 @@
                                                     <h2 class="woocommerce-loop-product__title">Band Fitbit Flex</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
                                                     <span class="onsale">
                                                         <span class="woocommerce-Price-amount amount">
                                                             <span
                                                                 class="woocommerce-Price-currencySymbol">$</span>150.04</span>
                                                     </span>
-                                                    <img src="assets/images/products/2.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                    <img src="assets/images/products/2.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> 309.95</span>
@@ -468,29 +582,34 @@
                                                         <span class="amount"> </span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB 512SSD
+                                                    <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB
+                                                        512SSD
                                                         W10</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
                                                     <span class="onsale">
                                                         <span class="woocommerce-Price-amount amount">
                                                             <span
                                                                 class="woocommerce-Price-currencySymbol">$</span>150.04</span>
                                                     </span>
-                                                    <img src="assets/images/products/7.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                    <img src="assets/images/products/7.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> 789.95</span>
@@ -501,24 +620,29 @@
                                                         <span class="amount"> </span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Bluetooth on-ear PureBass
+                                                    <h2 class="woocommerce-loop-product__title">Bluetooth on-ear
+                                                        PureBass
                                                         Headphones</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/4.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/4.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -526,24 +650,29 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">4K Action Cam with Wi-Fi & GPS
+                                                    <h2 class="woocommerce-loop-product__title">4K Action Cam with
+                                                        Wi-Fi & GPS
                                                     </h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/3.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/3.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -551,23 +680,28 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG</h2>
+                                                    <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG
+                                                    </h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/13.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/13.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -575,23 +709,28 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Drone WIFI FPV With 4K</h2>
+                                                    <h2 class="woocommerce-loop-product__title">Drone WIFI FPV With 4K
+                                                    </h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/9.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/9.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -599,24 +738,29 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Watch Stainless with Grey
+                                                    <h2 class="woocommerce-loop-product__title">Watch Stainless with
+                                                        Grey
                                                         Suture Leather Strap</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/1.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/1.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -624,23 +768,28 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50</h2>
+                                                    <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50
+                                                    </h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
                                             <div class="product">
                                                 <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist"> Add to
+                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                        Add to
                                                         Wishlist</a>
                                                 </div>
-                                                <a href="single-product-fullwidth.html" class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/12.jpg" width="224" height="197"
-                                                        class="wp-post-image" alt="">
+                                                <a href="single-product-fullwidth.html"
+                                                    class="woocommerce-LoopProduct-link">
+                                                    <img src="assets/images/products/12.jpg" width="224"
+                                                        height="197" class="wp-post-image" alt="">
                                                     <span class="price">
                                                         <ins>
                                                             <span class="amount"> </span>
@@ -648,13 +797,16 @@
                                                         <span class="amount"> 456.00</span>
                                                     </span>
                                                     <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen LED-Lit
+                                                    <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen
+                                                        LED-Lit
                                                         Monitorss Buds</h2>
                                                 </a>
                                                 <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html" rel="nofollow">Add
+                                                    <a class="button add_to_cart_button" href="cart.html"
+                                                        rel="nofollow">Add
                                                         to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    <a class="add-to-compare-link" href="compare.html">Add to
+                                                        compare</a>
                                                 </div>
                                             </div>
                                             <!-- /.product-outer -->
@@ -667,19 +819,22 @@
                                     <ul role="tablist" class="nav tabs wc-tabs">
                                         <li class="nav-item accessories_tab">
                                             <a class="nav-link active" data-toggle="tab" role="tab"
-                                                aria-controls="tab-accessories" href="#tab-accessories">Accessories</a>
+                                                aria-controls="tab-accessories"
+                                                href="#tab-accessories">Sản phẩm liên quan</a>
                                         </li>
                                         <li class="nav-item description_tab">
                                             <a class="nav-link" data-toggle="tab" role="tab"
-                                                aria-controls="tab-description" href="#tab-description">Description</a>
+                                                aria-controls="tab-description"
+                                                href="#tab-description">Mô tả</a>
                                         </li>
                                         <li class="nav-item specification_tab">
                                             <a class="nav-link" data-toggle="tab" role="tab"
-                                                aria-controls="tab-specification" href="#tab-specification">Specification</a>
+                                                aria-controls="tab-specification"
+                                                href="#tab-specification">Thông số kỹ thuật</a>
                                         </li>
                                         <li class="nav-item reviews_tab">
-                                            <a class="nav-link" data-toggle="tab" role="tab" aria-controls="tab-reviews"
-                                                href="#tab-reviews">Reviews (1)</a>
+                                            <a class="nav-link" data-toggle="tab" role="tab"
+                                                aria-controls="tab-reviews" href="#tab-reviews">Bình luận (1)</a>
                                         </li>
                                     </ul>
                                     <!-- /.ec-tabs -->
@@ -697,24 +852,29 @@
                                                                         src="assets/images/products/8.jpg">
                                                                     <span class="price">
                                                                         <del>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
                                                                         </del>
                                                                         <ins>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>997.00</span>
                                                                         </ins>
                                                                     </span>
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        60UH6150
                                                                         60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                 </a>
                                                                 <div class="checkbox accessory-checkbox">
                                                                     <label>
-                                                                        <input type="checkbox" data-product-type="simple"
+                                                                        <input type="checkbox"
+                                                                            data-product-type="simple"
                                                                             data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked=""> Remove
+                                                                            class="product-check" checked="">
+                                                                        Remove
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -726,24 +886,29 @@
                                                                         src="assets/images/products/16.jpg">
                                                                     <span class="price">
                                                                         <del>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
                                                                         </del>
                                                                         <ins>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>997.00</span>
                                                                         </ins>
                                                                     </span>
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        60UH6150
                                                                         60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                 </a>
                                                                 <div class="checkbox accessory-checkbox">
                                                                     <label>
-                                                                        <input type="checkbox" data-product-type="simple"
+                                                                        <input type="checkbox"
+                                                                            data-product-type="simple"
                                                                             data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked=""> Remove
+                                                                            class="product-check" checked="">
+                                                                        Remove
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -755,24 +920,29 @@
                                                                         src="assets/images/products/14.jpg">
                                                                     <span class="price">
                                                                         <del>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
                                                                         </del>
                                                                         <ins>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>997.00</span>
                                                                         </ins>
                                                                     </span>
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        60UH6150
                                                                         60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                 </a>
                                                                 <div class="checkbox accessory-checkbox">
                                                                     <label>
-                                                                        <input type="checkbox" data-product-type="simple"
+                                                                        <input type="checkbox"
+                                                                            data-product-type="simple"
                                                                             data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked=""> Remove
+                                                                            class="product-check" checked="">
+                                                                        Remove
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -784,24 +954,29 @@
                                                                         src="assets/images/products/4.jpg">
                                                                     <span class="price">
                                                                         <del>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
                                                                         </del>
                                                                         <ins>
-                                                                            <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-amount amount">
                                                                                 <span
                                                                                     class="woocommerce-Price-currencySymbol">$</span>997.00</span>
                                                                         </ins>
                                                                     </span>
-                                                                    <h2 class="woocommerce-loop-product__title">60UH6150
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        60UH6150
                                                                         60-Inch 4K Ultra HD Smart LED TV</h2>
                                                                 </a>
                                                                 <div class="checkbox accessory-checkbox">
                                                                     <label>
-                                                                        <input type="checkbox" data-product-type="simple"
+                                                                        <input type="checkbox"
+                                                                            data-product-type="simple"
                                                                             data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked=""> Remove
+                                                                            class="product-check" checked="">
+                                                                        Remove
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -834,151 +1009,83 @@
                                             <!-- .accessories -->
                                         </div>
                                         <div class="tab-pane panel wc-tab" id="tab-description" role="tabpanel">
-                                            <h2>Description</h2>
-                                            <h1 style="text-align: center;">Exceptional color. Authentic images.</h1>
-                                            <p style="text-align: center;max-width: 1160px;margin: auto auto 60px;">Nullam
-                                                dignissim elit ut urna rutrum, a fermentum mi auctor. Mauris efficitur magna
-                                                orci, et dignissim lacus scelerisque sit amet. Proin malesuada tincidunt nisl ac
-                                                commodo. Vivamus eleifend porttitor ex sit amet suscipit. Vestibulum at
-                                                ullamcorper lacus, vel facilisis arcu. Aliquam erat volutpat.</p>
-                                            <div style="text-align: center;">
-                                                <iframe width="854" height="480" allowfullscreen="allowfullscreen"
-                                                    src="https://www.youtube.com/embed/K5OGs8a3vlM?ecver=1"></iframe>
-                                            </div>
-                                            <div class="outer-wrap">
-                                                <div class="content-info">
-                                                    <h1 style="text-align: left;">Dynamic brightness
-                                                        <br> reveals hidden details
-                                                    </h1>
-                                                    <p style="text-align: left;">Nullam dignissim elit ut urna rutrum, a
-                                                        fermentum mi auctor. Mauris efficitur magna orci, et dignissim lacus
-                                                        <br> scelerisque sit amet. Proin malesuada tincidunt nisl ac commodo.
-                                                        Vivamus eleifend porttitor ex sit amet suscipit.
-                                                        <br> Vestibulum at ullamcorper lacus, vel facilisis arcu. Aliquam erat
-                                                        volutpat.
-                                                    </p>
+                                            <h2>Mô tả</h2>
+                                            <h1 style="text-align: center;"></h1>
+                                            <p style="text-align: center;max-width: 1160px;margin: auto auto 60px;">
+                                                {!! $product->content !!} </p>
+                                            {{-- <div style="text-align: center;">
+                                                    <iframe width="854" height="480"
+                                                        allowfullscreen="allowfullscreen"
+                                                        src="https://www.youtube.com/embed/K5OGs8a3vlM?ecver=1"></iframe>
+                                                </div> --}}
+                                            {{-- <div class="outer-wrap">
+                                                    <div class="content-info">
+                                                        <h1 style="text-align: left;">Dynamic brightness
+                                                            <br> reveals hidden details
+                                                        </h1>
+                                                        <p style="text-align: left;">Nullam dignissim elit ut urna rutrum,
+                                                            a
+                                                            fermentum mi auctor. Mauris efficitur magna orci, et dignissim
+                                                            lacus
+                                                            <br> scelerisque sit amet. Proin malesuada tincidunt nisl ac
+                                                            commodo.
+                                                            Vivamus eleifend porttitor ex sit amet suscipit.
+                                                            <br> Vestibulum at ullamcorper lacus, vel facilisis arcu.
+                                                            Aliquam erat
+                                                            volutpat.
+                                                        </p>
+                                                    </div>
+                                                    <!-- .content-info -->
+                                                    <div class="image-info">
+                                                        <img src="assets/images/products/des1.png" alt="">
+                                                    </div>
+                                                    <!-- .image-info -->
                                                 </div>
-                                                <!-- .content-info -->
-                                                <div class="image-info">
-                                                    <img src="assets/images/products/des1.png" alt="">
-                                                </div>
-                                                <!-- .image-info -->
-                                            </div>
-                                            <!-- .outer-wrap -->
-                                            <div class="outer-wrap">
-                                                <div class="image-info">
-                                                    <img src="assets/images/products/des2.png" class="alignnone"
-                                                        alt="">
-                                                </div>
-                                                <!-- .image-info -->
-                                                <div class="content-info">
-                                                    <h1 style="text-align: right;">An incredible view,
-                                                        <br> wherever you sit
-                                                    </h1>
-                                                    <p style="text-align: right;">Nullam dignissim elit ut urna rutrum, a
-                                                        fermentum mi auctor. Mauris efficitur magna orci, et dignissim lacus
-                                                        <br> scelerisque sit amet. Proin malesuada tincidunt nisl ac commodo.
-                                                        Vivamus eleifend porttitor ex sit amet suscipit. Vestibulum at
-                                                        ullamcorper lacus, vel facilisis arcu. Aliquam erat volutpat.
-                                                    </p>
-                                                </div>
-                                                <!-- .content-info -->
-                                            </div>
+                                                <!-- .outer-wrap -->
+                                                <div class="outer-wrap">
+                                                    <div class="image-info">
+                                                        <img src="assets/images/products/des2.png" class="alignnone"
+                                                            alt="">
+                                                    </div>
+                                                    <!-- .image-info -->
+                                                    <div class="content-info">
+                                                        <h1 style="text-align: right;">An incredible view,
+                                                            <br> wherever you sit
+                                                        </h1>
+                                                        <p style="text-align: right;">Nullam dignissim elit ut urna rutrum,
+                                                            a
+                                                            fermentum mi auctor. Mauris efficitur magna orci, et dignissim
+                                                            lacus
+                                                            <br> scelerisque sit amet. Proin malesuada tincidunt nisl ac
+                                                            commodo.
+                                                            Vivamus eleifend porttitor ex sit amet suscipit. Vestibulum at
+                                                            ullamcorper lacus, vel facilisis arcu. Aliquam erat volutpat.
+                                                        </p>
+                                                    </div>
+                                                    <!-- .content-info -->
+                                                </div> --}}
                                             <!-- .outer-wrap -->
                                         </div>
                                         <div class="tab-pane" id="tab-specification" role="tabpanel">
                                             <div class="tm-shop-attributes-detail like-column columns-3">
-                                                <h3 class="tm-attributes-title">General</h3>
+                                                <h3 class="tm-attributes-title">Thông số</h3>
                                                 <table class="shop_attributes">
                                                     <tbody>
+                                                        @foreach (explode(';', $product->description) as $spec)
+                                                        @if (trim($spec) !== '')
+                                                        @php
+                                                        $parts = explode(':', $spec);
+                                                        @endphp
                                                         <tr>
-                                                            <th>Brand</th>
+                                                            <th>{{ trim($parts[0]) }}</th>
                                                             <td>
-                                                                <p><a href="#" rel="tag">Galaxy</a></p>
+                                                                <p><a href="#" rel="tag">{{ trim($parts[1] ?? '') }}</a></p>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <th>Label</th>
-                                                            <td>
-                                                                <p><a href="#" rel="tag">A+</a></p>
-                                                            </td>
-                                                        </tr>
+                                                        @endif
+                                                        @endforeach
                                                     </tbody>
-                                                </table>
-                                                <!-- /.shop_attributes -->
-                                                <h3 class="tm-attributes-title">Technical Specs</h3>
-                                                <table class="shop_attributes">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Screen Size</th>
-                                                            <td>40″</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Aspect Ratio</th>
-                                                            <td>16:9</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>3DTV</th>
-                                                            <td>No</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Recommended Resolution</th>
-                                                            <td>1080p</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Panel</th>
-                                                            <td>LED</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Tuner</th>
-                                                            <td>ATSC/Clear QAM Tuners</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Refresh Rate</th>
-                                                            <td>120Hz</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Refresh Rate</th>
-                                                            <td>120Hz</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <!-- /.shop_attributes -->
-                                                <h3 class="tm-attributes-title">Connectivity</h3>
-                                                <table class="shop_attributes">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>HDMI</th>
-                                                            <td>2 In</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Digital Audio</th>
-                                                            <td>1 Optical Out</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Other Connectors</th>
-                                                            <td>1 x RF In</td>
-                                                            <td>1 x Audio Out (Mini Jack)</td>
-                                                            <td>1 x RS232C</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>LAN</th>
-                                                            <td>1</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Composite A/V</th>
-                                                            <td>1 In</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>USB</th>
-                                                            <td>2</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Component Video</th>
-                                                            <td>1 in
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
+
                                                 </table>
                                                 <!-- /.shop_attributes -->
                                             </div>
@@ -1003,7 +1110,8 @@
                                                                 </div>
                                                                 <div class="rating-count">1</div>
                                                                 <div class="rating-percentage-bar">
-                                                                    <span class="rating-percentage" style="width:100%"></span>
+                                                                    <span class="rating-percentage"
+                                                                        style="width:100%"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="rating-bar">
@@ -1012,7 +1120,8 @@
                                                                 </div>
                                                                 <div class="rating-count zero">0</div>
                                                                 <div class="rating-percentage-bar">
-                                                                    <span class="rating-percentage" style="width:0%"></span>
+                                                                    <span class="rating-percentage"
+                                                                        style="width:0%"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="rating-bar">
@@ -1021,7 +1130,8 @@
                                                                 </div>
                                                                 <div class="rating-count zero">0</div>
                                                                 <div class="rating-percentage-bar">
-                                                                    <span class="rating-percentage" style="width:0%"></span>
+                                                                    <span class="rating-percentage"
+                                                                        style="width:0%"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="rating-bar">
@@ -1030,7 +1140,8 @@
                                                                 </div>
                                                                 <div class="rating-count zero">0</div>
                                                                 <div class="rating-percentage-bar">
-                                                                    <span class="rating-percentage" style="width:0%"></span>
+                                                                    <span class="rating-percentage"
+                                                                        style="width:0%"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="rating-bar">
@@ -1039,7 +1150,8 @@
                                                                 </div>
                                                                 <div class="rating-count zero">0</div>
                                                                 <div class="rating-percentage-bar">
-                                                                    <span class="rating-percentage" style="width:0%"></span>
+                                                                    <span class="rating-percentage"
+                                                                        style="width:0%"></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1050,17 +1162,23 @@
                                                         <div id="review_form_wrapper">
                                                             <div id="review_form">
                                                                 <div class="comment-respond" id="respond">
-                                                                    <h3 class="comment-reply-title" id="reply-title">Add a
+                                                                    <h3 class="comment-reply-title" id="reply-title">
+                                                                        Add a
                                                                         review</h3>
                                                                     <form novalidate="" class="comment-form"
-                                                                        id="commentform" method="post" action="#">
+                                                                        id="commentform" method="post"
+                                                                        action="#">
                                                                         <div class="comment-form-rating">
                                                                             <label>Your Rating</label>
                                                                             <p class="stars">
-                                                                                <span><a href="#" class="star-1">1</a><a
-                                                                                        href="#" class="star-2">2</a><a
-                                                                                        href="#" class="star-3">3</a><a
-                                                                                        href="#" class="star-4">4</a><a
+                                                                                <span><a href="#"
+                                                                                        class="star-1">1</a><a
+                                                                                        href="#"
+                                                                                        class="star-2">2</a><a
+                                                                                        href="#"
+                                                                                        class="star-3">3</a><a
+                                                                                        href="#"
+                                                                                        class="star-4">4</a><a
                                                                                         href="#"
                                                                                         class="star-5">5</a></span>
                                                                             </p>
@@ -1074,24 +1192,26 @@
                                                                                 <span class="required">*</span>
                                                                             </label>
                                                                             <input type="text" aria-required="true"
-                                                                                size="30" value="" name="author"
-                                                                                id="author">
+                                                                                size="30" value=""
+                                                                                name="author" id="author">
                                                                         </p>
                                                                         <p class="comment-form-email">
                                                                             <label for="email">Email
                                                                                 <span class="required">*</span>
                                                                             </label>
                                                                             <input type="text" aria-required="true"
-                                                                                size="30" value="" name="email"
-                                                                                id="email">
+                                                                                size="30" value=""
+                                                                                name="email" id="email">
                                                                         </p>
                                                                         <p class="form-submit">
                                                                             <input type="submit" value="Add Review"
-                                                                                class="submit" id="submit" name="submit">
+                                                                                class="submit" id="submit"
+                                                                                name="submit">
                                                                             <input type="hidden" id="comment_post_ID"
                                                                                 value="185" name="comment_post_ID">
                                                                             <input type="hidden" value="0"
-                                                                                id="comment_parent" name="comment_parent">
+                                                                                id="comment_parent"
+                                                                                name="comment_parent">
                                                                         </p>
                                                                     </form>
                                                                     <!-- /.comment-form -->
@@ -1113,16 +1233,19 @@
                                                                 <div class="comment-text">
                                                                     <div class="star-rating">
                                                                         <span style="width:100%">Rated
-                                                                            <strong class="rating">5</strong> out of 5</span>
+                                                                            <strong class="rating">5</strong> out of
+                                                                            5</span>
                                                                     </div>
                                                                     <p class="meta">
                                                                         <strong itemprop="author"
                                                                             class="woocommerce-review__author">first
                                                                             last</strong>
-                                                                        <span class="woocommerce-review__dash">&ndash;</span>
+                                                                        <span
+                                                                            class="woocommerce-review__dash">&ndash;</span>
                                                                         <time datetime="2017-06-21T08:05:40+00:00"
                                                                             itemprop="datePublished"
-                                                                            class="woocommerce-review__published-date">June 21,
+                                                                            class="woocommerce-review__published-date">June
+                                                                            21,
                                                                             2017</time>
                                                                     </p>
                                                                     <div class="description">
@@ -1144,12 +1267,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <section class="section-landscape-products-carousel recently-viewed" id="recently-viewed">
+                                <section class="section-landscape-products-carousel recently-viewed"
+                                    id="recently-viewed">
                                     <header class="section-header">
                                         <h2 class="section-title">Recently viewed products</h2>
                                         <nav class="custom-slick-nav"></nav>
                                     </header>
-                                    <div class="products-carousel" data-ride="tm-slick-carousel" data-wrap=".products"
+                                    <div class="products-carousel" data-ride="tm-slick-carousel"
+                                        data-wrap=".products"
                                         data-slick="{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:2,&quot;dots&quot;:true,&quot;arrows&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-left\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-right\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;appendArrows&quot;:&quot;#recently-viewed .custom-slick-nav&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesToScroll&quot;:2}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1700,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}}]}">
                                         <div class="container-fluid">
                                             <div class="woocommerce columns-5">
@@ -1159,7 +1284,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-6.jpg" alt="">
+                                                                    src="assets/images/products/card-6.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1168,12 +1294,15 @@
                                                                         <span class="amount"> $600</span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">ZenBook 3
+                                                                    <h2 class="woocommerce-loop-product__title">ZenBook
+                                                                        3
                                                                         Ultrabook 8GB 512SSD W10</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1192,7 +1321,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-3.jpg" alt="">
+                                                                    src="assets/images/products/card-3.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1204,12 +1334,15 @@
                                                                         <span class="amount"> </span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">PowerBank 4400
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        PowerBank 4400
                                                                     </h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1228,7 +1361,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-4.jpg" alt="">
+                                                                    src="assets/images/products/card-4.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1237,12 +1371,15 @@
                                                                         <span class="amount"> $800</span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">Snap White
+                                                                    <h2 class="woocommerce-loop-product__title">Snap
+                                                                        White
                                                                         Instant Digital Camera in White</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1261,7 +1398,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-5.jpg" alt="">
+                                                                    src="assets/images/products/card-5.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1273,12 +1411,15 @@
                                                                         <span class="amount"> </span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">Smart Watches 3
+                                                                    <h2 class="woocommerce-loop-product__title">Smart
+                                                                        Watches 3
                                                                         SWR50</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1297,7 +1438,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-3.jpg" alt="">
+                                                                    src="assets/images/products/card-3.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1309,12 +1451,15 @@
                                                                         <span class="amount"> </span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">PowerBank 4400
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        PowerBank 4400
                                                                     </h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1333,7 +1478,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-2.jpg" alt="">
+                                                                    src="assets/images/products/card-2.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1342,12 +1488,15 @@
                                                                         <span class="amount"> $500</span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">Headset 3D
+                                                                    <h2 class="woocommerce-loop-product__title">Headset
+                                                                        3D
                                                                         Glasses VR for Android</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1366,7 +1515,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-4.jpg" alt="">
+                                                                    src="assets/images/products/card-4.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1375,12 +1525,15 @@
                                                                         <span class="amount"> $800</span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">Snap White
+                                                                    <h2 class="woocommerce-loop-product__title">Snap
+                                                                        White
                                                                         Instant Digital Camera in White</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1399,7 +1552,8 @@
                                                             href="single-product-fullwidth.html">
                                                             <div class="media">
                                                                 <img class="wp-post-image"
-                                                                    src="assets/images/products/card-1.jpg" alt="">
+                                                                    src="assets/images/products/card-1.jpg"
+                                                                    alt="">
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
@@ -1411,12 +1565,15 @@
                                                                         <span class="amount"> </span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">Unlocked
+                                                                    <h2 class="woocommerce-loop-product__title">
+                                                                        Unlocked
                                                                         Android 6″ Inch 4.4.2 Dual Core</h2>
                                                                     <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
+                                                                        <div title="Rated 0 out of 5"
+                                                                            class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
+                                                                                <strong class="rating">0</strong> out
+                                                                                of
                                                                                 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
@@ -1653,13 +1810,13 @@
             <!-- .col-full -->
         </div>
         <!-- #content -->
-    
+
         @include('user.partials.footer')
 
         <!-- .site-footer -->
     </div>
-    
+
     @include('user.partials.js')
-    
+
 </body>
 @endsection

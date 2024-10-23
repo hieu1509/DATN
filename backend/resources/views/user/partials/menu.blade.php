@@ -2,7 +2,9 @@
     <div class="col-full desktop-only">
         <div class="row">
             <div class="site-branding">
+                <a href="{{ route('users.index')}}">
                 <img src="{{ asset('template2/assets/images/logo.png') }}" alt="">
+            </a>
                 <!-- /.custom-logo-link -->
             </div>
             <!-- /.site-branding -->
@@ -567,7 +569,7 @@
                                             <span class="woocommerce-Price-currencySymbol">$</span>136.99</span>
                                     </p>
                                     <p class="woocommerce-mini-cart__buttons buttons">
-                                        <a href="cart.html" class="button wc-forward">Xem giỏ hàng</a>
+                                        <a href="{{route('cart.index')}}" class="button wc-forward">Xem giỏ hàng</a>
                                         <a href="checkout.html" class="button checkout wc-forward">Thanh toán</a>
                                     </p>
                                 </div>
@@ -587,12 +589,32 @@
                 <nav id="navbar-primary" class="navbar-primary text-center" aria-label="Navbar Primary" data-nav="flex-menu">
                     <ul id="menu-navbar-primary" class="nav yamm">
                         <li class="menu-item animate-dropdown">
-                            <a title="ALL CATEGORIES" href="product-category.html">Trang chủ</a>
+                            <a title="ALL CATEGORIES" href="{{ route('users.index')}}">Trang chủ</a>
                         </li>
                         <li class="yamm-fw menu-item menu-item-has-children animate-dropdown dropdown">
-                            <a title="Pages" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="#">Danh mục <span class="caret"></span></a>
+                            <a title="Pages" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" href="">Danh mục <span class="caret"></span></a>
                             <ul role="menu" class=" dropdown-menu">
-                                <li class="menu-item menu-item-object-static_block animate-dropdown">
+                                @foreach ($categories as $category)
+                                    <li class="menu-item menu-item-object-static_block animate-dropdown">
+                                        <div class="yamm-content">
+                                            <div class="tm-mega-menu">
+                                                <div class="widget widget_nav_menu">
+                                                    <a href="#">{{ $category->name }}</a> <!-- Danh mục cha -->
+                                                        @if ($category->subCategories->isNotEmpty())
+                                                            <ul class="menu">
+                                                                @foreach ($category->subCategories as $subCategory)
+                                                                    <li class="nav-title menu-item">
+                                                                        <a href="{{ route('users.subcategories', $subCategory->id) }}">{{ $subCategory->name }}</a> <!-- Danh mục con -->
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                </div>
+                                            </div>
+                                        </div>       
+                                    </li>
+                                @endforeach
+                                {{-- <li class="menu-item menu-item-object-static_block animate-dropdown">
                                     <div class="yamm-content">
                                         <div class="tm-mega-menu">
                                             <div class="widget widget_nav_menu">
@@ -776,7 +798,7 @@
                                         <!-- .tm-mega-menu -->
                                     </div>
                                     <!-- .yamm-content -->
-                                </li>
+                                </li> --}}
                                 <!-- .menu-item -->
                             </ul>
                             <!-- .dropdown-menu -->

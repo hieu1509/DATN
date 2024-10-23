@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('code')->nullable();
-            $table->string('status')->default(Order::CHO_XAC_NHA)->change(); // Thay đổi tùy theo kiểu dữ liệu thực tế
+            $table->string('status')->default(Order::CHO_XAC_NHA); // Thay đổi tùy theo kiểu dữ liệu thực tế
             $table->string('payment_type')->nullable(); // Thay đổi tùy theo kiểu dữ liệu thực tế
-            $table->string('payment_status')->default(Order::CHUA_THANH_TOAN)->change(); // Thay đổi tùy theo kiểu dữ liệu thực tế
+            $table->string('payment_status')->default(Order::CHUA_THANH_TOAN); // Thay đổi tùy theo kiểu dữ liệu thực tế
             $table->decimal('total_price', 10, 2)->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('promotion_id')->nullable()->constrained()->onDelete('set null');

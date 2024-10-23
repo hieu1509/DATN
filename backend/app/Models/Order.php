@@ -30,6 +30,26 @@ class Order extends Model
     const HUY_HANG = 'huy_hang';
     const CHUA_THANH_TOAN = 'chua_thanh_toan';
     const DA_THANH_TOAN = 'da_thanh_toan';
+    protected $fillable = [
+          'code',
+          'payment_type',
+          'total_price',
+          'user_id',
+          'promotion_id',
+          'shipping_id',
+          'name',
+          'address',
+          'money_total',
+          'phone',
+          'note',
+    ];
 
+    public function users(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+    public function products()
+{
+    return $this->belongsToMany(Product::class)->withPivot('quantity');
 }
 
+}

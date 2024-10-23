@@ -94,7 +94,12 @@ class RegisterController extends Controller
             return redirect()->back()->with('error', 'Đã xảy ra lỗi trong quá trình tạo tài khoản.')->withInput();
         }
 
+
         // Chuyển hướng người dùng sang trang đăng nhập sau khi đăng ký thành công
         return redirect()->route('login.user')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.'); 
+
+        // Chuyển hướng người dùng sau khi đăng ký thành công
+        return redirect()->route('users.index')->with('success', 'Đăng ký thành công!'); 
+
     }
 }
