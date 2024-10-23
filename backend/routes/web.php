@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -137,3 +138,20 @@ Route::prefix('cart')
         Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
     });
 
+// Hiển thị trang checkout
+// Route::get('/checkout', function () {
+//     return view('user.pages.checkout'); // Đường dẫn đến view checkout của bạn
+// })->name('checkout');
+
+// Route để hiển thị trang thanh toán
+Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
+
+// Xử lý đặt hàng và thanh toán (phương thức POST)
+Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
+
+// Trang thành công sau khi thanh toán
+Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
+
+// IPN của MoMo
+Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');

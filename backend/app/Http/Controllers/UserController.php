@@ -13,6 +13,11 @@ use App\Models\Storage;
 
 class UserController extends Controller
 {
+    public function menu(){
+        $categories = Category::with('subCategories')->get();
+
+        return view('user.partials.menu', compact('categories'));
+    }
     public function index()
     {
         $latestProducts = Product::with(['subCategory', 'variants'])
@@ -31,9 +36,7 @@ class UserController extends Controller
             ->take(12)
             ->get();
 
-        $categories = Category::with('subCategories')->get();
-
-        return view('user.pages.home', compact('latestProducts', 'hotProducts', 'saleProducts', 'categories'));
+        return view('user.pages.home', compact('latestProducts', 'hotProducts', 'saleProducts'));
     }
 
     public function showSubCategories(SubCategory $subCategory)
@@ -48,14 +51,13 @@ class UserController extends Controller
         }
 
         // Lấy dữ liệu cần thiết cho bộ lọc
-        $categories = Category::with('subCategories')->get();
         $sub_category = SubCategory::pluck('name', 'id')->all();
         $chips = Chip::pluck('name', 'id')->all();
         $rams = Ram::pluck('name', 'id')->all();
         $storages = Storage::pluck('name', 'id')->all();
 
         // Trả về view với tất cả dữ liệu cần thiết
-        return view('user.pages.product_category', compact('products', 'subCategory', 'categories', 'sub_category', 'chips', 'rams', 'storages'));
+        return view('user.pages.product_category', compact('products', 'subCategory', 'sub_category', 'chips', 'rams', 'storages'));
     }
 
     public function filter(Request $request)
@@ -128,20 +130,18 @@ class UserController extends Controller
         $products = $isFiltered ? $query ->where('is_show_home', 1)->paginate(20) : Product::with(['subCategory', 'variants'])->where('is_show_home', 1)->paginate(20);
 
         // Lấy các thông tin khác (danh mục con, chip, RAM, dung lượng lưu trữ)
-        $categories = Category::with('subCategories')->get();
         $chips = Chip::pluck('name', 'id')->all();
         $rams = Ram::pluck('name', 'id')->all();
         $storages = Storage::pluck('name', 'id')->all();
         $sub_category = SubCategory::pluck('name', 'id')->all();
 
-        return view('user.pages.product_category', compact('sub_category', 'products', 'categories', 'chips', 'rams', 'storages'));
+        return view('user.pages.product_category', compact('sub_category', 'products', 'chips', 'rams', 'storages'));
     }
 
     public function show($id)
     {
         $product = Product::with(['variants', 'subCategory', 'productImages'])->findOrFail($id);
-        $categories = Category::with('subCategories')->get();
 
-        return view('user.pages.product_detail', compact('product', 'categories'));
+        return view('user.pages.product_detail', compact('product'));
     }
 }

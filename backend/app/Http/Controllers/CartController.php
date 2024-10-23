@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartDetail;
-use App\Models\Category;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,10 +31,9 @@ class CartController extends Controller
 
             $total += $productVariant->listed_price * $detail->quantity;
         }
-        $categories = Category::with('subCategories')->get();
 
         // Trả về view với cartDetail và total
-        return view('user.pages.cart', compact('cartDetail', 'total', 'categories'));
+        return view('user.pages.cart', compact('cartDetail', 'total'));
     }
 
 
