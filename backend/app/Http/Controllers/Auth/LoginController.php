@@ -43,7 +43,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials) && Auth::user()->role === 'user') {
             Session::flash('success', 'Đăng nhập thành công!');
             return redirect()->intended('home'); // Điều hướng user về trang người dùng
-
+        }
         if (Auth::attempt($credentials)) {
             // Đăng nhập thành công, điều hướng đến trang chủ
             return redirect()->route('users.index'); // Hoặc bất kỳ trang nào bạn muốn
@@ -52,6 +52,7 @@ class LoginController extends Controller
 
         return redirect()->back()->withErrors(['email' => 'Thông tin đăng nhập không hợp lệ.']);
     }
+
 
     // Xử lý đăng xuất cho admin
     public function adminLogout()
