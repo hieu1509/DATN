@@ -76,6 +76,10 @@ class SubcategoryController extends Controller
             Storage::disk('public')->delete($subcategory->image);
         }
 
+        if ($subcategory->products()->count() > 0) {
+            return redirect()->back()->with('error', 'Không thể xóa danh mục này vì vẫn còn sản phẩm tồn tại.');
+        }
+
         $subcategory->delete();
         return redirect()->route('subcategories.index')->with('success', 'Xóa danh mục con thành công.');
     }

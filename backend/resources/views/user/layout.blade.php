@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>TechShop</title>
         <link rel="stylesheet" type="text/css" href="{{ asset('template2/assets/css/bootstrap.min.css') }}" media="all" />
         <link rel="stylesheet" type="text/css" href="{{ asset('template2/assets/css/font-awesome.min.css') }}" media="all" />
@@ -18,7 +19,9 @@
         
         <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,900" rel="stylesheet">
         <link rel="shortcut icon" href="{{ asset('template2/assets/images/fav-icon.png') }}">
+        @yield('css')
     </head>
 
     @yield('content')
+    @yield('js')
 </html>
