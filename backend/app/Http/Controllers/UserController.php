@@ -9,10 +9,18 @@ use App\Models\subCategory;
 use App\Models\Chip;
 use App\Models\Ram;
 use App\Models\Storage;
+use App\Models\User;
 
 
 class UserController extends Controller
 {
+    public function menu()
+    {
+        $categories = Category::with('subCategories')->get();
+
+        return view('user.partials.menu', compact('categories'));
+    }
+
     public function index()
     {
         $latestProducts = Product::with(['subCategory', 'variants'])
@@ -22,18 +30,82 @@ class UserController extends Controller
             ->get();
 
         $hotProducts = Product::with(['subCategory', 'variants'])
+            ->where('is_show_home', 1)
             ->where('is_hot', 1)
+            ->latest('created_at')
             ->take(12)
             ->get();
 
         $saleProducts = Product::with(['subCategory', 'variants'])
+            ->where('is_show_home', 1)
             ->where('is_sale', 1)
+            ->latest('created_at')
             ->take(12)
             ->get();
 
-        $categories = Category::with('subCategories')->get();
+        $randomProducts = Product::with(['subCategory', 'variants'])
+            ->where('is_show_home', 1)
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
 
-        return view('user.pages.home', compact('latestProducts', 'hotProducts', 'saleProducts', 'categories'));
+        $laptopProducts = Product::with(['subCategory', 'variants'])
+            ->whereHas('subCategory', function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('name', 'like', '%laptop%');
+                });
+            })
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
+        
+        $banphimProducts = Product::with(['subCategory', 'variants'])
+            ->whereHas('subCategory', function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('name', 'like', '%bàn phím%');
+                });
+            })
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
+
+        $chuotProducts = Product::with(['subCategory', 'variants'])
+            ->whereHas('subCategory', function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('name', 'like', '%chuột%');
+                });
+            })
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
+
+        $loaProducts = Product::with(['subCategory', 'variants'])
+            ->whereHas('subCategory', function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('name', 'like', '%loa%');
+                });
+            })
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
+
+        $taingheProducts = Product::with(['subCategory', 'variants'])
+            ->whereHas('subCategory', function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('name', 'like', '%tai nghe%');
+                });
+            })
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
+
+        return view('user.pages.home', compact('latestProducts', 'hotProducts', 'saleProducts', 'randomProducts'
+        , 'laptopProducts', 'banphimProducts', 'chuotProducts', 'loaProducts', 'taingheProducts'));
     }
 
     public function showSubCategories(SubCategory $subCategory)
@@ -47,6 +119,12 @@ class UserController extends Controller
             $products = Product::with(['subCategory', 'variants'])->paginate(20);
         }
 
+        $latestProducts = Product::with(['subCategory', 'variants'])
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
+
         // Lấy dữ liệu cần thiết cho bộ lọc
         $categories = Category::with('subCategories')->get();
         $sub_category = SubCategory::pluck('name', 'id')->all();
@@ -55,7 +133,7 @@ class UserController extends Controller
         $storages = Storage::pluck('name', 'id')->all();
 
         // Trả về view với tất cả dữ liệu cần thiết
-        return view('user.pages.product_category', compact('products', 'subCategory', 'categories', 'sub_category', 'chips', 'rams', 'storages'));
+        return view('user.pages.product_category', compact('products', 'subCategory', 'sub_category', 'chips', 'rams', 'storages', 'latestProducts'));
     }
 
     public function filter(Request $request)
@@ -65,7 +143,7 @@ class UserController extends Controller
 
         // Lọc theo danh mục con
         if ($request->filled('sub_category_id')) {
-            $query->where('sub_category_id', $request->input('sub_category_id'));
+            $query->where('is_show_home', 1)->where('sub_category_id', $request->input('sub_category_id'));
             $isFiltered = true;
         }
 
@@ -125,7 +203,7 @@ class UserController extends Controller
         }
 
         // Nếu không có lọc, lấy tất cả sản phẩm
-        $products = $isFiltered ? $query ->where('is_show_home', 1)->paginate(20) : Product::with(['subCategory', 'variants'])->where('is_show_home', 1)->paginate(20);
+        $products = $isFiltered ? $query->where('is_show_home', 1)->paginate(20) : Product::with(['subCategory', 'variants'])->where('is_show_home', 1)->paginate(20);
 
         // Lấy các thông tin khác (danh mục con, chip, RAM, dung lượng lưu trữ)
         $categories = Category::with('subCategories')->get();
@@ -142,6 +220,22 @@ class UserController extends Controller
         $product = Product::with(['variants', 'subCategory', 'productImages'])->findOrFail($id);
         $categories = Category::with('subCategories')->get();
 
-        return view('user.pages.product_detail', compact('product', 'categories'));
+        $relatedProducts = Product::where('sub_category_id', $product->sub_category_id)
+            ->where('id', '!=', $id)
+            ->take(16) 
+            ->get();
+
+        return view('user.pages.product_detail', compact('product', 'relatedProducts'));
+    }
+
+    public function getUserName($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        return view('user.partials.menu', ['userName' => $user->name]);
     }
 }
