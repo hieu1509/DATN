@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
     {
         // Tạo tài khoản admin chung
         User::create([
-            'name' => 'Admin',
+            'name' => 'TechShop',
             'email' => 'techshop014@gmail.com',
             'password' => Hash::make('techshop123'),
             'role' => 'admin',
