@@ -139,7 +139,7 @@ class ProductController extends Controller
                 })->exists();
         }
 
-        return view('admin.pages.products.detail', compact('product'));
+        return view('admin.pages.products.detail', compact('product', 'userHasPurchased'));
     }
 
 
