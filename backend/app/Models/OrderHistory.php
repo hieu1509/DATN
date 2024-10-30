@@ -23,6 +23,6 @@ class OrderHistory extends Model
     }
 
     public function order(){
-        return $this->hasOne(Order::class,'id');
+        return $this->hasOne(Order::class,'id','order_id');
     }
 }
