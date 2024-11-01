@@ -148,6 +148,7 @@
     <script src="{{ asset('velzon/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
 
     <!-- App js -->
+    @yield('js')
     <script src="{{ asset('velzon/assets/js/app.js') }}"></script>
 </body>
 

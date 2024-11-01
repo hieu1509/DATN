@@ -21,7 +21,7 @@
                     <i class="tm tm-order-tracking"></i>Theo dõi đơn hàng</a>
             </li>
             <li class="menu-item">
-                <a title="My Account" href="{{ route('login') }}">
+                <a title="My Account" href="{{ route('login.user') }}">
                     <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký</a>
             </li>
         </ul>
