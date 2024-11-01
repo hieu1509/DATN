@@ -167,3 +167,5 @@ Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('or
 // IPN của MoMo
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+
+Route::get('/vnpay_return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
