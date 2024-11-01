@@ -36,3 +36,5 @@ Route::apiResource('subcategories', SubcategoryController::class);
 Route::apiResource('promotions', PromotionController::class);
 // Route tùy chỉnh để áp dụng khuyến mãi
 Route::post('/promotions/apply', [PromotionController::class, 'applyPromotion']);
+
+//

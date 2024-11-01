@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
+
 use App\Models\Category;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,11 +36,13 @@ class AppServiceProvider extends ServiceProvider
             $view->with('categories', $categories);
         });
 
+
         // Tạo các vai trò và phân quyền
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         Permission::firstOrCreate(['name' => 'access admin panel']);
 
         // Gán quyền cho vai trò admin
         $adminRole->givePermissionTo('access admin panel');
+
     }
 }

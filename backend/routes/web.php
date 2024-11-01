@@ -18,7 +18,10 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\ReviewController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +40,7 @@ Route::post('register', [RegisterController::class, 'register'])->name('register
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'Login'])->name('login.post');
 Route::post('logout', [LoginController::class, 'Logout'])->name('logout');
+
 // Hiển thị form yêu cầu quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 // Gửi email đặt lại mật khẩu
@@ -47,7 +51,9 @@ Route::get('reset-password/{token}', [ResetPasswordController::class, 'showReset
 Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 // Các route yêu cầu quyền admin
 Route::group(['middleware' => ['admin']], function () {
+
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
+
     Route::get('admin/users', [UserController::class, 'index'])->name('admin.users'); // Quản lý người dùng
 });
 
@@ -160,8 +166,12 @@ Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('or
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
 
+
 //Review
 Route::middleware('auth')->group(function () {
     Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
+
+Route::get('/vnpay_return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
+

@@ -125,14 +125,11 @@
                                 <a href="{{ route('promotions.index') }}" class="nav-link" data-key="t-chat">Danh
                                     sách khuyến mại </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('promotions.create') }}" class="nav-link"
-                                    data-key="t-api-key">Thêm khuyến mại</a>
-                            </li>
                         </ul>
                     </div>
                 </li>
                 @endif
+
 
                 @if (Auth::check() && Auth::user()->role === 'admin')
                     <li class="nav-item">
@@ -145,6 +142,7 @@
                 @endif
 
                 @if (Auth::check() && Auth::user()->role === 'admin')
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/comment" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">

@@ -13,8 +13,11 @@ use App\Models\Storage;
 use App\Models\SubCategory;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+
+
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -48,7 +51,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         DB::beginTransaction();
-
+    
         try {
             // Tạo sản phẩm mới
             $product = Product::create([
@@ -65,13 +68,11 @@ class ProductController extends Controller
 
 
 
-
             // Xử lý ảnh đại diện
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('product', 'public');
                 $product->update(['image' => $imagePath]);
             }
-
 
 
 
@@ -106,7 +107,7 @@ class ProductController extends Controller
                     'quantity' => $request->quantity[$index],
                 ]);
             }
-
+    
             DB::commit();
             return redirect()->route('admins.products.index')->with('success', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
@@ -114,6 +115,9 @@ class ProductController extends Controller
             return back()->withErrors(['error' => 'Đã có lỗi xảy ra!']);
         }
     }
+
+    
+
 
 
 
@@ -130,6 +134,7 @@ class ProductController extends Controller
             return redirect()->route('admins.products.index')->with('error', 'Sản phẩm không tồn tại.');
         }
 
+
         // Kiểm tra xem người dùng đã đăng nhập và đã mua sản phẩm chưa
         $userHasPurchased = false;
         if (Auth::check()) {
@@ -140,7 +145,7 @@ class ProductController extends Controller
         }
 
         return view('admin.pages.products.detail', compact('product', 'userHasPurchased'));
-    }
+
 
 
     /**
@@ -199,7 +204,9 @@ class ProductController extends Controller
             }
 
 
+
             ProductVariant::where('product_id', $product->id)->delete();
+
 
 
 
@@ -225,6 +232,8 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['message' => 'Có lỗi xảy ra: ' . $e->getMessage()]);
         }
     }
+    
+
 
 
 
@@ -239,7 +248,9 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
 
             if ($product->image) {
+
                 $imagePath = public_path('storage/' . $product->image);
+
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
@@ -249,7 +260,9 @@ class ProductController extends Controller
             foreach ($productImages as $productImage) {
                 $imagePath = public_path('storage/' . $productImage->image_url);
                 if (file_exists($imagePath)) {
+
                     unlink($imagePath);
+
                 }
             }
 
