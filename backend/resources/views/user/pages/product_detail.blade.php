@@ -1213,8 +1213,7 @@
                                                                                         trên 5</span>
                                                                                 </div>
                                                                                 <p class="meta">
-                                                                                    <strong
-                                                                                        class="woocommerce-review__author">{{ $review->user->name }}</strong>
+                                                                                    <strong class="woocommerce-review__author">{{ $review->user ? $review->user->name : 'Người dùng ẩn danh' }}</strong>
                                                                                     <span
                                                                                         class="woocommerce-review__dash">&ndash;</span>
                                                                                     <time
