@@ -342,11 +342,14 @@
                                                                     <label for="payment_method_momo">Thanh toán qua
                                                                         Momo</label>
                                                                 </li>
+
+
                                                                 <li class="wc_payment_method payment_method_vnpay">
                                                                     <input type="radio" value="vnpay" name="payment_method" class="input-radio" id="payment_method_vnpay">
                                                                     <label for="payment_method_vnpay">Thanh toán qua VNPAY</label>
                                                                 </li>
                                                                 
+
                                                             </ul>
                                                         </div>
 

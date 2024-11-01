@@ -44,12 +44,26 @@ class OrderController extends Controller
             'order_comments' => 'required|string',
             'payment_method' => 'required|string',
         ]);
-    
+
         // Lấy giỏ hàng của người dùng
         $cart = Auth::user()->carts()->orderBy('id', 'desc')->first();
         if (!$cart) {
             return redirect()->route('cart.index')->with('error', 'Giỏ hàng của bạn trống.');
         }
+
+
+        // Lấy thông tin chi tiết giỏ hàng
+        $cartDetails = CartDetail::with(['productVariant.product'])
+            ->where('carts_id', $cart->id)
+            ->get();
+
+        // Tính tổng giá trị đơn hàng
+        $total_price = 0;
+        foreach ($cartDetails as $detail) {
+            $total_price += $detail->productVariant->listed_price * $detail->quantity;
+        }
+
+
     
         // Tính tổng giá trị đơn hàng
         $cartDetails = CartDetail::with(['productVariant.product'])
@@ -57,6 +71,7 @@ class OrderController extends Controller
             ->get();
         $total_price = $cartDetails->sum(fn($detail) => $detail->productVariant->listed_price * $detail->quantity);
     
+
         // Lưu đơn hàng
         $order = new Order();
         $order->code = uniqid();
@@ -67,6 +82,25 @@ class OrderController extends Controller
         $order->address = $request->billing_address_1 . ', ' . $request->billing_city;
         $order->note = $request->order_comments;
         $order->phone = $request->billing_phone;
+
+
+        $order->save();
+
+        // Xử lý thanh toán tương ứng với phương thức
+        if ($order->payment_type === 'cod') {
+            $order->save(); 
+            return redirect()->route('order.success', $order->id);
+        } elseif ($order->payment_type === 'momo') {
+            // Gọi phương thức thanh toán MoMo
+            $paymentResponse = $this->momo_payment($request, $order);
+            
+            // Kiểm tra phản hồi
+            if ($paymentResponse['success']) {
+                // Nếu có link payUrl, redirect tới đó
+                return redirect($paymentResponse['payUrl']);
+            } else {
+                // Nếu có lỗi, không lưu đơn hàng và quay lại với thông báo lỗi
+
         $order->save();
     
         // Xử lý thanh toán
@@ -80,13 +114,18 @@ class OrderController extends Controller
             if ($paymentResponse['success']) {
                 return redirect($paymentResponse['payUrl']);
             } else {
+
                 return redirect()->back()->with('error', 'Có lỗi xảy ra khi thanh toán: ' . $paymentResponse['message']);
             }
         }
     
+
+        // Mặc định redirect đến trang chi tiết đơn hàng
         return redirect()->route('order.detail', $order->id);
     }
+
     
+
 
     public function show($id)
     {
@@ -170,6 +209,7 @@ class OrderController extends Controller
             return ['success' => false, 'message' => 'Có lỗi xảy ra khi xử lý thanh toán.'];
         }
     }
+
     public function vnpay_payment($order)
 {
     // Lấy các thông tin cần thiết từ .env
@@ -256,6 +296,7 @@ public function vnpayReturn(Request $request)
 
     return redirect()->route('order.detail', $order->id)->with('error', 'Thanh toán không thành công.');
 }
+
 
     
     

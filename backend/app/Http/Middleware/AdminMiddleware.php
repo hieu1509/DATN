@@ -3,18 +3,25 @@
 namespace App\Http\Middleware;
 
 use Closure;
+
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
+
     public function handle(Request $request, Closure $next)
+
     {
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
 
-        return response()->json(['message' => 'Unauthorized.'], 403);
+
+        // Redirect về trang chính kèm thông báo lỗi nếu không phải Admin
+        return redirect('/')->withErrors(['access_denied' => 'Bạn không có quyền truy cập trang này.']);
+
     }
 }
 
