@@ -21,4 +21,13 @@ class OrderDetail extends Model
        'image',
 
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+    public function productVariant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'productvariant_id'); 
+    }
 }

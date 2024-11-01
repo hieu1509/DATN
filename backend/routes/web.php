@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
 use App\Http\Controllers\PromotionController;
@@ -7,12 +8,13 @@ use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoryController;
-use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -27,27 +29,34 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-// Đăng ký
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
+/// Đăng ký admin
+Route::get('register/admin', [RegisterController::class, 'showAdminRegistrationForm'])->name('register.admin');
+Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin.post');
 
-// Đăng nhập
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('register/user', [RegisterController::class, 'showUserRegistrationForm'])->name('register.user');
+Route::post('register/user', [RegisterController::class, 'registerUser'])->name('register.user.post');
+//Đăng nhập
+Route::get('login/admin', [LoginController::class, 'showAdminLoginForm'])->name('login.admin');
+Route::post('login/admin', [LoginController::class, 'adminLogin'])->name('login.admin.post');
 
-// Quên mật khẩu
+Route::get('login/user', [LoginController::class, 'showUserLoginForm'])->name('login.user');
+Route::post('login/user', [LoginController::class, 'userLogin'])->name('login.user.post');
+Route::post('admin/logout', [LoginController::class, 'adminLogout'])->name('logout.admin');
+Route::post('user/logout', [LoginController::class, 'userLogout'])->name('logout.user');
+
+// Hiển thị form yêu cầu quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Gửi email đặt lại mật khẩu
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
-
-// Danh sách sản phẩm
-Route::get('products', [ApiProductController::class, 'index']);
-Route::get('products/hot', [ApiProductController::class, 'hotProducts']);
-Route::get('products/sale', [ApiProductController::class, 'saleProducts']);
-Route::get('products/{id}', [ApiProductController::class, 'show']);
-Route::get('products/filter', [ApiProductController::class, 'filter']);
+// Hiển thị form đặt lại mật khẩu
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+// Xử lý đặt lại mật khẩu
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+// Các route yêu cầu quyền admin
+Route::group(['middleware' => ['admin']], function () {
+    Route::get('admins', [AdminController::class, 'index'])->name('admins');
+    Route::get('admin/users', [UserController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,7 +72,7 @@ Route::prefix('users')
         Route::get('/products/{id}', [UserController::class, 'show'])->name('products.show');
     });
 
-// Routes for Category and Subcategory
+// Routes for Category and Subcategory (admin)
 Route::resource('admin/pages/categories', CategoryController::class);
 Route::resource('subcategories', SubcategoryController::class);
 
@@ -121,10 +130,10 @@ Route::prefix('admins')
             });
     });
 
-// Promotions resource
+// Promotions resource (admin)
 Route::resource('promotions', PromotionController::class);
 
-// Cart routes
+// Cart routes (user)
 Route::prefix('cart')
     ->as('cart.')
     ->group(function () {
@@ -137,3 +146,24 @@ Route::prefix('cart')
         Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
     });
 
+// Hiển thị trang checkout
+// Route::get('/checkout', function () {
+//     return view('user.pages.checkout'); // Đường dẫn đến view checkout của bạn
+// })->name('checkout');
+
+
+
+// user
+// Route để hiển thị trang thanh toán
+Route::get('/promo', [OrderController::class, 'checkout'])->name('promo');
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+// Xử lý đặt hàng và thanh toán (phương thức POST)
+Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
+
+// Trang thành công sau khi thanh toán
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
+
+// IPN của MoMo
+Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
+// Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');

@@ -94,6 +94,18 @@
         margin-left: 5px;
         /* Khoảng cách bên trái giữa giá bán và giá gốc */
     }
+
+    .quantity-input {
+        width: 55px; /* Độ rộng của ô input */
+        height: 58px;
+        margin-right: 60px;
+        padding: 5px; /* Khoảng đệm bên trong */
+        border: 1px solid #ddd; /* Viền mỏng và màu xám nhẹ */
+        border-radius: 8px; /* Bo tròn 8px */
+        font-size: 16px; /* Cỡ chữ */
+        text-align: center; /* Căn giữa giá trị */
+        -moz-appearance: textfield; /* Loại bỏ mũi tên trong Firefox */
+    }
 </style>
 
 <body class="woocommerce-active single-product full-width normal">
@@ -208,9 +220,13 @@
                                         <div class="single-product-meta">
                                             <div class="brand">
                                                 <a href="#">
-                                                    <img alt="galaxy"
-                                                        src="{{ asset('storage/' . $product->subCategory->image) }}"
-                                                        alt="{{ $product->subCategory->name }} " width="80px">
+                                                    @if ($product->subCategory->image)
+                                                        <img alt=""
+                                                            src="{{ asset('storage/' . $product->subCategory->image) }}"
+                                                            alt="{{ $product->subCategory->name }} " width="80px">
+                                                    @else
+                                                        <span>Không có ảnh</span>
+                                                    @endif
                                                 </a>
                                             </div>
                                             <div class="cat-and-sku">
@@ -244,10 +260,14 @@
                                         <!-- .rating-and-sharing-wrapper -->
                                         <div class="woocommerce-product-details__short-description">
                                             <ul>
-                                                @foreach(explode(';', $product->description) as $spec)
-                                                @if(trim($spec) !== '')
-                                                <li>{{ trim($spec) }}</li>
-                                                @endif
+                                                @php
+                                                    $specifications = explode(';', $product->description);
+                                                @endphp
+
+                                                @foreach($specifications as $index => $spec)
+                                                    @if(trim($spec) !== '' && $index < 8) 
+                                                        <li>{{ trim($spec) }}</li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -255,22 +275,46 @@
                                         <div class="product-actions-wrapper">
                                             <form action="{{route('cart.store')}}" enctype="multipart/form-data" method="post" class="cart">
                                                 @csrf
-                                                <div class="card-container">
-                                                    @foreach($product->variants as $variant)
-                                                    <div class="card @if($variant->isActive) active @endif" onclick="selectCard(this)">
-                                                        <div class="card-content">
-                                                            <input type="hidden" name="variant_id" value="{{$variant->id}}">
-                                                            <strong class="chip-name">{{ $variant->chip->name }}</strong>
-                                                            <strong class="ram-name">{{ $variant->ram->name }}</strong>
-                                                            <strong class="storage-name">{{ $variant->storage->name }}</strong>
-                                                            <span class="price">{{ number_format($variant->listed_price, 0, ',', '.') }} đ</span>
-                                                            <span class="sale_price">{{ number_format($variant->sale_price, 0, ',', '.') }} đ</span>
+                                                    @if(count($product->variants) === 1)
+                                                        @php
+                                                            $singleVariant = $product->variants->first();
+                                                        @endphp
+                                                        <div class="product-actions">
+                                                            <input type="hidden" name="variant_id" value="{{ $singleVariant->id }}">
+                                                            <p class="price">
+                                                                <del>
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span class="woocommerce-Price-currencySymbol"></span>{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }} đ</span>
+                                                                </del>
+                                                                <ins>
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span class="woocommerce-Price-currencySymbol"></span>{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }} đ</span>
+                                                                </ins>
+                                                            </p>
                                                         </div>
+                                                    @else
+                                                    <div class="card-container">
+                                                        @foreach($product->variants as $variant)
+                                                            <div class="card @if($variant->isActive) active @endif" onclick="selectCard(this)">
+                                                                <div class="card-content">
+                                                                    <input type="hidden" name="variant_id" value="{{ $variant->id }}">
+                                                                    @if ($variant->chip->id != 1)
+                                                                        <strong class="chip-name">{{ $variant->chip->name }}</strong>
+                                                                    @endif
+                                                                    @if ($variant->ram->id != 1)
+                                                                        <strong class="ram-name">{{ $variant->ram->name }}</strong>
+                                                                    @endif
+                                                                    @if ($variant->storage->id != 1)
+                                                                        <strong class="storage-name">{{ $variant->storage->name }}</strong>
+                                                                    @endif
+                                                                    <span class="price">{{ number_format($variant->sale_price, 0, ',', '.') }} đ</span>
+                                                                    <span class="sale_price">{{ number_format($variant->listed_price, 0, ',', '.') }} đ</span>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
-                                                    @endforeach
-                                                </div>
-
-
+                                                    @endif
+                                                
                                                 <script>
                                                     const cards = document.querySelectorAll('.card');
 
@@ -289,13 +333,14 @@
                                                 </script>
                                                 <div class="product-actions">
                                                     <!-- .single-product-header -->
-
-                                                    <input type="text" name="quantity" id="">
+                                                    <div class="quantity ">
+                                                        <label for="quantity-input">Số lượng</label>
+                                                        <input class="quantity-input" type="number" name="quantity" id="" value="1" min="1">
+                                                    </div>
                                                     <button class="single_add_to_cart_button button alt"
-                                                        value="185" name="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
-
+                                                        value="185" name="add-to-cart" type="submit" style="border-radius: 8px; margin-top: 30px;">Thêm vào giỏ hàng</button>
                                                     <!-- .cart -->
-                                                    <a class="add-to-compare-link" href="compare.html">Add to compare</a>
+                                                    {{-- <a class="add-to-compare-link" href="compare.html">Add to compare</a> --}}
                                                 </div>
                                                 <!-- .product-actions -->
                                             </form>
@@ -303,516 +348,6 @@
                                         <!-- .product-actions-wrapper -->
                                     </div>
                                     <!-- .entry-summary -->
-                                </div>
-                                <!-- .single-product-wrapper -->
-                                <div class="tm-related-products-carousel section-products-carousel"
-                                    id="tm-related-products-carousel" data-ride="tm-slick-carousel"
-                                    data-wrap=".products"
-                                    data-slick="{&quot;slidesToShow&quot;:7,&quot;slidesToScroll&quot;:7,&quot;dots&quot;:true,&quot;arrows&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-left\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-right\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;appendArrows&quot;:&quot;#tm-related-products-carousel .custom-slick-nav&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:767,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1}},{&quot;breakpoint&quot;:780,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:5}}]}">
-                                    <section class="related">
-                                        <header class="section-header">
-                                            <h2 class="section-title">Related products</h2>
-                                            <nav class="custom-slick-nav"></nav>
-                                        </header>
-                                        <!-- .section-header -->
-                                        <div class="products">
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/5.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">XONE Wireless
-                                                        Controller</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/16.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 262.81</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Band Fitbit Flex</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/8.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Video & Air Quality
-                                                        Monitor
-                                                    </h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/11.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Xtreme ultimate
-                                                        splashproof
-                                                        portable speaker</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/10.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Xtreme ultimate
-                                                        splashproof
-                                                        portable speaker</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/15.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 399.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Band Fitbit Flex</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/6.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Gear Virtual Reality 3D
-                                                        with
-                                                        Bluetooth Glasses</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <span class="onsale">
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span
-                                                                class="woocommerce-Price-currencySymbol">$</span>150.04</span>
-                                                    </span>
-                                                    <img src="assets/images/products/14.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> 262.81</span>
-                                                        </ins>
-                                                        <del>
-                                                            <span class="amount">399.00</span>
-                                                        </del>
-                                                        <span class="amount"> </span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Band Fitbit Flex</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <span class="onsale">
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span
-                                                                class="woocommerce-Price-currencySymbol">$</span>150.04</span>
-                                                    </span>
-                                                    <img src="assets/images/products/2.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> 309.95</span>
-                                                        </ins>
-                                                        <del>
-                                                            <span class="amount">459.00</span>
-                                                        </del>
-                                                        <span class="amount"> </span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">ZenBook 3 Ultrabook 8GB
-                                                        512SSD
-                                                        W10</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <span class="onsale">
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span
-                                                                class="woocommerce-Price-currencySymbol">$</span>150.04</span>
-                                                    </span>
-                                                    <img src="assets/images/products/7.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> 789.95</span>
-                                                        </ins>
-                                                        <del>
-                                                            <span class="amount">999.00</span>
-                                                        </del>
-                                                        <span class="amount"> </span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Bluetooth on-ear
-                                                        PureBass
-                                                        Headphones</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/4.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">4K Action Cam with
-                                                        Wi-Fi & GPS
-                                                    </h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/3.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">On-ear Wireless NXTG
-                                                    </h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/13.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Drone WIFI FPV With 4K
-                                                    </h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/9.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Watch Stainless with
-                                                        Grey
-                                                        Suture Leather Strap</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/1.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Smart Watches 3 SWR50
-                                                    </h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                            <div class="product">
-                                                <div class="yith-wcwl-add-to-wishlist">
-                                                    <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
-                                                        Add to
-                                                        Wishlist</a>
-                                                </div>
-                                                <a href="single-product-fullwidth.html"
-                                                    class="woocommerce-LoopProduct-link">
-                                                    <img src="assets/images/products/12.jpg" width="224"
-                                                        height="197" class="wp-post-image" alt="">
-                                                    <span class="price">
-                                                        <ins>
-                                                            <span class="amount"> </span>
-                                                        </ins>
-                                                        <span class="amount"> 456.00</span>
-                                                    </span>
-                                                    <!-- /.price -->
-                                                    <h2 class="woocommerce-loop-product__title">Bbd 23-Inch Screen
-                                                        LED-Lit
-                                                        Monitorss Buds</h2>
-                                                </a>
-                                                <div class="hover-area">
-                                                    <a class="button add_to_cart_button" href="cart.html"
-                                                        rel="nofollow">Add
-                                                        to cart</a>
-                                                    <a class="add-to-compare-link" href="compare.html">Add to
-                                                        compare</a>
-                                                </div>
-                                            </div>
-                                            <!-- /.product-outer -->
-                                        </div>
-                                    </section>
-                                    <!-- .single-product-wrapper -->
                                 </div>
                                 <!-- .tm-related-products-carousel -->
                                 <div class="woocommerce-tabs wc-tabs-wrapper">
@@ -840,173 +375,60 @@
                                     <!-- /.ec-tabs -->
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab-accessories" role="tabpanel">
-                                            <div class="accessories">
-                                                <div class="accessories-wrapper">
-                                                    <div class="accessories-product columns-4">
-                                                        <div class="products">
-                                                            <div class="product">
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
-                                                                    href="single-product-fullwidth.html">
-                                                                    <img width="224" height="197" alt=""
-                                                                        class="attachment-shop_catalog size-shop_catalog wp-post-image"
-                                                                        src="assets/images/products/8.jpg">
-                                                                    <span class="price">
-                                                                        <del>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
-                                                                        </del>
-                                                                        <ins>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>997.00</span>
-                                                                        </ins>
-                                                                    </span>
-                                                                    <h2 class="woocommerce-loop-product__title">
-                                                                        60UH6150
-                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                </a>
-                                                                <div class="checkbox accessory-checkbox">
-                                                                    <label>
-                                                                        <input type="checkbox"
-                                                                            data-product-type="simple"
-                                                                            data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked="">
-                                                                        Remove
-                                                                    </label>
-                                                                </div>
+                                            <div class="tm-related-products-carousel section-products-carousel"
+                                            id="tm-related-products-carousel" data-ride="tm-slick-carousel"
+                                            data-wrap=".products"
+                                            data-slick="{&quot;slidesToShow&quot;:7,&quot;slidesToScroll&quot;:7,&quot;dots&quot;:true,&quot;arrows&quot;:true,&quot;prevArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-left\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;nextArrow&quot;:&quot;&lt;a href=\&quot;#\&quot;&gt;&lt;i class=\&quot;tm tm-arrow-right\&quot;&gt;&lt;\/i&gt;&lt;\/a&gt;&quot;,&quot;appendArrows&quot;:&quot;#tm-related-products-carousel .custom-slick-nav&quot;,&quot;responsive&quot;:[{&quot;breakpoint&quot;:767,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1}},{&quot;breakpoint&quot;:780,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:5}}]}">
+                                            <section class="related">
+                                                <header class="section-header">
+                                                    <h2 class="section-title">Sản phẩm liên quan</h2>
+                                                    <nav class="custom-slick-nav"></nav>
+                                                </header>
+                                                <!-- .section-header -->
+                                                <div class="products">
+                                                    @foreach ($relatedProducts as $product)
+                                                        <div class="product">
+                                                            <div class="yith-wcwl-add-to-wishlist">
+                                                                <a href="wishlist.html" rel="nofollow" class="add_to_wishlist">
+                                                                    Add to
+                                                                    Wishlist</a>
                                                             </div>
-                                                            <div class="product">
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
-                                                                    href="single-product-fullwidth.html">
-                                                                    <img width="224" height="197" alt=""
-                                                                        class="attachment-shop_catalog size-shop_catalog wp-post-image"
-                                                                        src="assets/images/products/16.jpg">
-                                                                    <span class="price">
-                                                                        <del>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
-                                                                        </del>
-                                                                        <ins>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>997.00</span>
-                                                                        </ins>
-                                                                    </span>
-                                                                    <h2 class="woocommerce-loop-product__title">
-                                                                        60UH6150
-                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                </a>
-                                                                <div class="checkbox accessory-checkbox">
-                                                                    <label>
-                                                                        <input type="checkbox"
-                                                                            data-product-type="simple"
-                                                                            data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked="">
-                                                                        Remove
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="product">
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
-                                                                    href="single-product-fullwidth.html">
-                                                                    <img width="224" height="197" alt=""
-                                                                        class="attachment-shop_catalog size-shop_catalog wp-post-image"
-                                                                        src="assets/images/products/14.jpg">
-                                                                    <span class="price">
-                                                                        <del>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
-                                                                        </del>
-                                                                        <ins>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>997.00</span>
-                                                                        </ins>
-                                                                    </span>
-                                                                    <h2 class="woocommerce-loop-product__title">
-                                                                        60UH6150
-                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                </a>
-                                                                <div class="checkbox accessory-checkbox">
-                                                                    <label>
-                                                                        <input type="checkbox"
-                                                                            data-product-type="simple"
-                                                                            data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked="">
-                                                                        Remove
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="product">
-                                                                <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
-                                                                    href="single-product-fullwidth.html">
-                                                                    <img width="224" height="197" alt=""
-                                                                        class="attachment-shop_catalog size-shop_catalog wp-post-image"
-                                                                        src="assets/images/products/4.jpg">
-                                                                    <span class="price">
-                                                                        <del>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>1,239.99</span>
-                                                                        </del>
-                                                                        <ins>
-                                                                            <span
-                                                                                class="woocommerce-Price-amount amount">
-                                                                                <span
-                                                                                    class="woocommerce-Price-currencySymbol">$</span>997.00</span>
-                                                                        </ins>
-                                                                    </span>
-                                                                    <h2 class="woocommerce-loop-product__title">
-                                                                        60UH6150
-                                                                        60-Inch 4K Ultra HD Smart LED TV</h2>
-                                                                </a>
-                                                                <div class="checkbox accessory-checkbox">
-                                                                    <label>
-                                                                        <input type="checkbox"
-                                                                            data-product-type="simple"
-                                                                            data-product-id="185" data-price="997.00"
-                                                                            class="product-check" checked="">
-                                                                        Remove
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /.products -->
-                                                    </div>
-                                                    <!-- .row -->
-                                                    <div class="accessories-product-total-price">
-                                                        <div class="total-price">
-                                                            <span class="total-price-html price">
-                                                                <span class="woocommerce-Price-amount amount">
-                                                                    <span
-                                                                        class="woocommerce-Price-currencySymbol">$</span>1,666.94
+                                                            <a href="{{ route('users.products.show', $product->id) }}"
+                                                                class="woocommerce-LoopProduct-link">
+                                                                @if ($product->image)
+                                                                    <img src="{{ Storage::url($product->image) }}" width="224"
+                                                                    height="197" class="wp-post-image" alt="$product->name">
+                                                                @else
+                                                                    <span>Không có ảnh</span>
+                                                                @endif
+                                                                <span class="price">
+                                                                    <ins>
+                                                                        <span class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
+                                                                    </ins>
+                                                                    <del>
+                                                                        <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
+                                                                    </del>
+                                                                    <span class="amount"> </span>
                                                                 </span>
-                                                            </span>
-                                                            <!-- .total-price-html -->
-                                                            <span>Bundle Price for Selected items</span>
+                                                                <!-- /.price -->
+                                                                <h2 class="woocommerce-loop-product__title">{{ $product->name }}</h2>
+                                                            </a>
+                                                            <div class="hover-area">
+                                                                <form action="{{route('cart.store')}}" enctype="multipart/form-data" method="post" class="cart">
+                                                                    @csrf
+                                                                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
+                                                                    <input type="hidden" name="quantity" id="" value="1">
+                                                                    <button type="submit" class="button add_to_cart_button">Thêm vào giỏ hàng</button>
+                                                                </form>
+                                                                {{-- <a class="add-to-compare-link" href="compare.html">Add to
+                                                                    compare</a> --}}
+                                                            </div>
                                                         </div>
-                                                        <!-- .total-price -->
-                                                        <div class="accessories-add-all-to-cart">
-                                                            <button class="button btn btn-primary add-all-to-cart"
-                                                                type="button">Add Bundle to cart</button>
-                                                        </div>
-                                                        <!-- .accessories-add-all-to-cart -->
-                                                    </div>
-                                                    <!-- .accessories-product-total-price -->
+                                                    @endforeach
                                                 </div>
-                                                <!-- .accessories-wrapper -->
+                                            </section>
+                                            <!-- .single-product-wrapper -->
                                             </div>
-                                            <!-- .accessories -->
                                         </div>
                                         <div class="tab-pane panel wc-tab" id="tab-description" role="tabpanel">
                                             <h2>Mô tả</h2>
@@ -1267,7 +689,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <section class="section-landscape-products-carousel recently-viewed"
+                                {{-- <section class="section-landscape-products-carousel recently-viewed"
                                     id="recently-viewed">
                                     <header class="section-header">
                                         <h2 class="section-title">Recently viewed products</h2>
@@ -1594,12 +1016,11 @@
                                         <!-- .container-fluid -->
                                     </div>
                                     <!-- .products-carousel -->
-                                </section>
+                                </section> --}}
                                 <!-- .section-landscape-products-carousel -->
                                 <section class="brands-carousel">
                                     <h2 class="sr-only">Brands Carousel</h2>
-                                    <div class="col-full" data-ride="tm-slick-carousel" data-wrap=".brands"
-                                        data-slick="{&quot;slidesToShow&quot;:6,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;responsive&quot;:[{&quot;breakpoint&quot;:400,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1}},{&quot;breakpoint&quot;:800,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:5}}]}">
+                                    <div class="col-full" data-ride="tm-slick-carousel" data-wrap=".brands" data-slick="{&quot;slidesToShow&quot;:6,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;responsive&quot;:[{&quot;breakpoint&quot;:400,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1}},{&quot;breakpoint&quot;:800,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:5}}]}">
                                         <div class="brands">
                                             <div class="item">
                                                 <a href="shop.html">
@@ -1610,9 +1031,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="apple"
-                                                            src="assets/images/brands/1.png">
+                                                        <img width="45" height="" class="img-responsive desaturate" alt="apple" src="{{ asset('template2/assets/images/18.png') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1626,9 +1045,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="bosch"
-                                                            src="assets/images/brands/2.png">
+                                                        <img width="55" height="" class="img-responsive desaturate" alt="bosch" src="{{ asset('template2/assets/images/11.png') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1642,9 +1059,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="cannon"
-                                                            src="assets/images/brands/3.png">
+                                                        <img width="55" height="" class="img-responsive desaturate" alt="cannon" src="{{ asset('template2/assets/images/12.png') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1658,9 +1073,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="connect"
-                                                            src="assets/images/brands/4.png">
+                                                        <img width="70" height="" class="img-responsive desaturate" alt="connect" src="{{ asset('template2/assets/images/20.jpg') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1674,9 +1087,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="galaxy"
-                                                            src="assets/images/brands/5.png">
+                                                        <img width="80" height="" class="img-responsive desaturate" alt="galaxy" src="{{ asset('template2/assets/images/14.png') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1690,9 +1101,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="gopro"
-                                                            src="assets/images/brands/6.png">
+                                                        <img width="80" height="" class="img-responsive desaturate" alt="gopro" src="{{ asset('template2/assets/images/15.png') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1706,9 +1115,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="handspot"
-                                                            src="assets/images/brands/7.png">
+                                                        <img width="100" height="" class="img-responsive desaturate" alt="handspot" src="{{ asset('template2/assets/images/13.jpg') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1722,9 +1129,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="kinova"
-                                                            src="assets/images/brands/8.png">
+                                                        <img width="100" height="" class="img-responsive desaturate" alt="kinova" src="{{ asset('template2/assets/images/19.jpg') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1738,9 +1143,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="nespresso"
-                                                            src="assets/images/brands/9.png">
+                                                        <img width="100" height="" class="img-responsive desaturate" alt="nespresso" src="{{ asset('template2/assets/images/21.jpg') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1754,9 +1157,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="samsung"
-                                                            src="assets/images/brands/10.png">
+                                                        <img width="70" height="" class="img-responsive desaturate" alt="samsung" src="{{ asset('template2/assets/images/23.jpg') }}">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1770,9 +1171,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="speedway"
-                                                            src="assets/images/brands/11.png">
+                                                        <img width="145" height="" class="img-responsive desaturate" alt="speedway" src="assets/images/brands/11.png">
                                                     </figure>
                                                 </a>
                                             </div>
@@ -1786,9 +1185,7 @@
                                                             </div>
                                                             <!-- /.info -->
                                                         </figcaption>
-                                                        <img width="145" height="50"
-                                                            class="img-responsive desaturate" alt="yoko"
-                                                            src="assets/images/brands/12.png">
+                                                        <img width="145" height="" class="img-responsive desaturate" alt="yoko" src="assets/images/brands/12.png">
                                                     </figure>
                                                 </a>
                                             </div>

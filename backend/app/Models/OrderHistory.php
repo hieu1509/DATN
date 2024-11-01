@@ -22,7 +22,8 @@ class OrderHistory extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
-    public function order(){
-        return $this->hasOne(Order::class,'id');
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }
