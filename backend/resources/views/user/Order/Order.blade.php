@@ -1,5 +1,6 @@
 @extends('user.layout')
 @section('css')
+
 <style>
     .product-number,
     .product-name,
@@ -186,6 +187,7 @@
     </td>
 
     {{-- <td style="text-align: center">
+
         <a href=""
             class="btn btn-warning d-inline-block me-1"><i
                 class="ri-pencil-fill fs-16"></i></a>
@@ -247,3 +249,4 @@
 
 </body>
 @endsection
+

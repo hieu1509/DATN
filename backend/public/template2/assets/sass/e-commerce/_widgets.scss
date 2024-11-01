@@ -352,6 +352,7 @@
 			span.amount {
 				font-weight: 500;
 			}
+
 			
 			$opacity: 0.5; // Biến cho độ mờ
 			$text-color: black; // Màu chữ
@@ -363,6 +364,7 @@
 				color: $text-color; // Sử dụng biến cho màu chữ
 				text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); // Tạo hiệu ứng bóng mờ
 			}
+
 
 			.star-rating {
 				margin-bottom: .3em;

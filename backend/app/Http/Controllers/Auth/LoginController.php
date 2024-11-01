@@ -5,44 +5,58 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+    // Hiển thị form đăng nhập
     public function showLoginForm()
     {
-        return view('auth.pages.login'); // Đường dẫn tới view đăng nhập
+        return view('auth.pages.login');
     }
 
+    // Xử lý đăng nhập
     public function login(Request $request)
     {
+        // Validate dữ liệu đầu vào
         $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string|min:8',
-        ], [
-            'email.required' => 'Email là bắt buộc.',
-            'email.email' => 'Email không đúng định dạng.',
-            'email.exists' => 'Email không tồn tại trong hệ thống.',
-            'password.required' => 'Mật khẩu là bắt buộc.',
-            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
         ]);
 
+        // Lấy thông tin đăng nhập
         $credentials = $request->only('email', 'password');
 
+        // Kiểm tra xác thực và phân quyền
         if (Auth::attempt($credentials)) {
-            // Đăng nhập thành công, điều hướng đến trang chủ
-            return redirect()->intended('dashboard'); // Hoặc bất kỳ trang nào bạn muốn
-        }
+            $user = Auth::user();
+        
+            // Kiểm tra quyền user trước, cho phép cả admin vào giao diện user
+            if ($user->role === 'user' || $user->role === 'admin') {
+                Session::flash('success', 'Đăng nhập thành công!');
+                return redirect()->route('users.index');
+            }
+        
+            // Kiểm tra quyền admin
+            if ($user->role === 'admin') {
+                Session::flash('success', 'Đăng nhập thành công với quyền admin!');
+                return redirect()->intended('admins');
+            }
+        
+            // Đăng xuất và thông báo nếu vai trò không hợp lệ
+            Auth::logout();
+            return redirect()->route('login')->withErrors(['email' => 'Tài khoản không được phân quyền hợp lệ.']);
+        }              
 
-        // Nếu đăng nhập không thành công, trở lại trang đăng nhập với thông báo lỗi
-        return back()->withErrors([
-            'email' => 'Thông tin đăng nhập không chính xác.',
-        ]);
+        // Trả về lỗi nếu thông tin đăng nhập không hợp lệ
+        return redirect()->back()->withErrors(['email' => 'Thông tin đăng nhập không hợp lệ.']);
     }
 
-
+    // Xử lý đăng xuất
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login'); // Chuyển hướng về trang đăng nhập
+        Session::flash('success', 'Bạn đã đăng xuất thành công!');
+        return redirect()->route('login'); 
     }
 }

@@ -13,6 +13,7 @@ class UpdateProductRequest extends FormRequest
 
     public function rules()
     { 
+
         return [
             'name' => 'required|string|max:255',
             'content' => 'required|string',
@@ -30,8 +31,10 @@ class UpdateProductRequest extends FormRequest
             'storage_id' => 'required|array|min:1',
             'storage_id.*' => 'required|exists:storages,id',
             'is_show_home' => 'required|boolean',
+
             'is_sale' => 'required|boolean', 
             'is_hot' => 'required|boolean', 
+
             'sub_category_id' => 'required|exists:sub_categories,id',
             'image' => 'nullable|image|max:2048',
             'images' => 'nullable|array',

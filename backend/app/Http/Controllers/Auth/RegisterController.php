@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -26,6 +26,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15|regex:/^[0-9]+$/', // Chỉ cho phép số
+            'role' => 'required|in:admin,user',
         ]);
 
         // Kiểm tra và trả về thông báo lỗi nếu có
@@ -33,20 +34,27 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Tạo người dùng mới
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'address' => $request->address ?? '',
-            'phone' => $request->phone ?? '', // Đảm bảo trường phone không bị null
-            'remember_token' => Str::random(10),
-        ]);
+        // Tạo người dùng mới với role được xác định
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'address' => $request->address ?? '',
+                'phone' => $request->phone ?? '',
+                'role' => $request->role,
+            ]);
+        } catch (\Exception $e) {
+            // Ghi nhật ký lỗi và hiển thị thông báo lỗi cho người dùng
+            Log::error('Error creating user: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Đã xảy ra lỗi trong quá trình tạo tài khoản.')->withInput();
+        }
 
-        // Đăng nhập sau khi đăng ký thành công
-        Auth::login($user);
-
-        // Chuyển hướng người dùng sau khi đăng ký thành công
-        return redirect()->route('home')->with('success', 'Đăng ký thành công!'); 
+        // Chuyển hướng người dùng sau khi đăng ký thành công, dựa trên vai trò
+        if ($user->role === 'admin') {
+            return redirect()->route('admins')->with('success', 'Đăng ký thành công! Bạn đã đăng nhập.');
+        } else {
+            return redirect()->route('users.index')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+        }
     }
 }

@@ -41,7 +41,7 @@
                                     <p class="text-muted">Đăng nhập để tiếp tục đến TechShop.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form method="POST" action="{{ route('login') }}">
+                                    <form method="POST" action="{{ route('login.post') }}">
                                         @csrf
 
                                         <div class="mb-3">

@@ -22,6 +22,7 @@
                     <i class="tm tm-order-tracking"></i>Theo dõi đơn hàng</a>
             </li>
             <li class="menu-item">
+
                 @if (Auth::check())
                     <a title="My Account" href="#">
                         <i class="tm tm-login-register"></i>{{ Auth::user()->name }}
@@ -31,6 +32,7 @@
                         <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký
                     </a>
                 @endif
+
             </li>
             @if(Auth::check())
             <li class="menu-item">

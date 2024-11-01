@@ -22,6 +22,7 @@ class OrderDetail extends Model
 
     ];
 
+
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -30,4 +31,5 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(ProductVariant::class, 'productvariant_id'); 
     }
+
 }
