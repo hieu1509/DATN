@@ -52,4 +52,15 @@ class Order extends Model
     return $this->belongsToMany(Product::class)->withPivot('quantity');
 }
 
+public function OrderDetail(){
+    return $this->hasMany(OrderDetail::class);
 }
+public function shipping(){
+    return $this->hasMany(Shipping::class,'id');
+}
+public function OrderHistory(){
+    return $this->hasOne(OrderHistory::class,);
+}
+}
+
+

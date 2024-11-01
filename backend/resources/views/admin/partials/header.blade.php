@@ -623,25 +623,6 @@
                     </div>
                 </div>
 
-                <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="m-0 fs-16 fw-semibold">
-                                <a href="{{ route('login.admin') }}" class="text-decoration-none">Đăng nhập</a>
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="m-0 fs-16 fw-semibold">
-                                <a href="{{ route('register.admin') }}" class="text-decoration-none">Đăng ký</a>
-                            </h6>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
@@ -688,7 +669,9 @@
                                 class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Lock screen</span></a>
                         <!-- Form đăng xuất cho Admin -->
-                        <form id="logout-admin-form" action="{{ route('logout.admin') }}" method="POST"
+
+                        <form id="logout-admin-form" action="{{ route('logout') }}" method="POST"
+
                             style="display: none;">
                             @csrf
                         </form>
