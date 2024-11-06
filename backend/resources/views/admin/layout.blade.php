@@ -149,6 +149,7 @@
 
     <!-- App js -->
     <script src="{{ asset('velzon/assets/js/app.js') }}"></script>
+    @yield('js')
 </body>
 
 </html>

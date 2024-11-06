@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\DonHangController as ControllersDonHangController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
@@ -125,6 +126,18 @@ Route::prefix('admins')
                 Route::get('/{id}/edit', [StorageController::class, 'edit'])->name('edit');
                 Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::prefix('orders')
+            ->as('orders.')
+            ->group(function () {
+                Route::get('/', [ControllersDonHangController::class, 'index'])->name('index');
+                Route::get('/create', [ControllersDonHangController::class, 'create'])->name('create');
+                Route::post('/store', [ControllersDonHangController::class, 'store'])->name('store');
+                Route::get('/show/{id}', [ControllersDonHangController::class, 'show'])->name('show');
+                Route::get('/{id}/edit', [ControllersDonHangController::class, 'edit'])->name('edit');
+                Route::put('/{id}/update', [ControllersDonHangController::class, 'update'])->name('update');
+                Route::delete('/{id}/destroy', [ControllersDonHangController::class, 'destroy'])->name('destroy');
             });
     });
 

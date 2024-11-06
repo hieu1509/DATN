@@ -45,19 +45,7 @@ class Order extends Model
     ];
 
 
-    protected $fillable = [
-        'code',
-        'payment_type',
-        'total_price',
-        'user_id',
-        'promotion_id',
-        'shipping_id',
-        'name',
-        'address',
-        'money_total',
-        'phone',
-        'note',
-    ];
+
 
     public function users()
     {
@@ -67,11 +55,19 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
-    public function orderDetails()
-    {
+
+    public function OrderDetail(){
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function shipping(){
+        return $this->hasMany(Shipping::class,'id');
+    }
+
+    public function OrderHistory(){
+        return $this->hasOne(OrderHistory::class,);
     }
 
 }
 
-}
+
