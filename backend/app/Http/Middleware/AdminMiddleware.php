@@ -17,5 +17,3 @@ class AdminMiddleware
         return redirect('/')->withErrors(['access_denied' => 'Bạn không có quyền truy cập trang này.']);
     }
 }
-
-

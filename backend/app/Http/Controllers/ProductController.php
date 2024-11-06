@@ -174,7 +174,7 @@ class ProductController extends Controller
                     'listed_price' => $request->listed_price[$index],
                     'sale_price' => $request->sale_price[$index],
                     'quantity' => $request->quantity[$index],
-                ]);
+                ]); 
             }
 
             DB::commit();

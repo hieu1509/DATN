@@ -12,9 +12,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\DonHangController as ControllersDonHangController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DonHangController as ControllersDonHangController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -127,7 +127,6 @@ Route::prefix('admins')
                 Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
             });
-
             Route::prefix('orders')
             ->as('orders.')
             ->group(function () {
@@ -195,4 +194,3 @@ Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail'
 // IPN của MoMo
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 // Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
-

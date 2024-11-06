@@ -10,4 +10,4 @@ class Shipping extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'cost'];
-}
+} 

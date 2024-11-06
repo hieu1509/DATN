@@ -23,6 +23,7 @@
             </li>
             <li class="menu-item">
 
+
                 @if (Auth::check())
                     <a title="My Account" href="#">
                         <i class="tm tm-login-register"></i>{{ Auth::user()->name }}
@@ -32,6 +33,10 @@
                         <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký
                     </a>
                 @endif
+
+
+                <a title="My Account" href="{{ route('login.user') }}">
+                    <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký</a>
 
             </li>
             @if(Auth::check())

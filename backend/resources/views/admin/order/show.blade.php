@@ -1,7 +1,4 @@
 <div>
-    <!-- When there is no desire, all things are at peace. - Laozi -->
-</div>
-<div>
     <!-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk -->
 </div>
 @extends('admin.layout')
