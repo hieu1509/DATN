@@ -44,12 +44,17 @@ class Order extends Model
           'note',
     ];
 
-    public function users(){
-        return $this->belongsTo(User::class,'user_id');
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function products()
-{
-    return $this->belongsToMany(Product::class)->withPivot('quantity');
-}
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 
 }

@@ -3,12 +3,12 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoryController;
-use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -16,9 +16,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\ReviewController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +34,14 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
+
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register'])->name('register.post');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'Login'])->name('login.post');
 Route::post('logout', [LoginController::class, 'Logout'])->name('logout');
+
 // Hiển thị form yêu cầu quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 // Gửi email đặt lại mật khẩu
@@ -47,9 +52,18 @@ Route::get('reset-password/{token}', [ResetPasswordController::class, 'showReset
 Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 // Các route yêu cầu quyền admin
 Route::group(['middleware' => ['admin']], function () {
+
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
-    Route::get('admin/users', [UserController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+
+    Route::get('admin/users', [UseradminController::class, 'index'])->name('admin.users'); // Quản lý người dùng
 });
+
+//Profile
+Route::get('/admin/pages/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/user/account', [ProfileController::class, 'account'])->name('user.profile')->middleware('auth');
+Route::get('/user/edit', [ProfileController::class, 'edit'])->name('user.edit_profile')->middleware('auth');
+Route::put('/user/update', [ProfileController::class, 'update'])->name('user.update')->middleware('auth');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -148,12 +162,18 @@ Route::prefix('cart')
 
 // user
 // Route để hiển thị trang thanh toán
+
 Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
+
+Route::get('/promo', [OrderController::class, 'checkout'])->name('promo');
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
 
 // Xử lý đặt hàng và thanh toán (phương thức POST)
 Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
 
 // Trang thành công sau khi thanh toán
+
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
 
 // IPN của MoMo
@@ -161,7 +181,22 @@ Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
 
 //Review
-Route::middleware('auth')->group(function () {
-    Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
-    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::middleware(['auth'])->group(function () {
+    // Route cho người dùng bình thường tạo review
+    Route::get('product/{productId}/review', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews/store/{product}', [ReviewController::class, 'store'])->name('reviews.store');
 });
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    // Route quản lý review trong admin
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+});
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
+
+// IPN của MoMo
+Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
+// Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');

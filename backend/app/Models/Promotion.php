@@ -15,8 +15,23 @@ class Promotion extends Model
 
     public function isValid()
     {
-        return $this->start_date <= now() &&
-               $this->end_date > now() &&
-               ($this->usage_limit === null || $this->used_count < $this->usage_limit);
+        $currentDate = now();
+        $isValid = $this->start_date <= $currentDate &&
+                   $this->end_date > $currentDate &&
+                   ($this->usage_limit === null || $this->used_count < $this->usage_limit);
+    
+        if (!$isValid) {
+            Log::warning('Promotion is not valid:', [
+                'code' => $this->code,
+                'start_date' => $this->start_date,
+                'end_date' => $this->end_date,
+                'usage_limit' => $this->usage_limit,
+                'used_count' => $this->used_count,
+                'current_date' => $currentDate,
+            ]);
+        }
+    
+        return $isValid;
     }
+    
 }

@@ -12,7 +12,9 @@ class CartDetail extends Model
     protected $fillable = [
         'carts_id',
         'product_variant_id',
-        'quantity', 
+
+        'quantity',
+
     ];
     public function productVariant()
     {
