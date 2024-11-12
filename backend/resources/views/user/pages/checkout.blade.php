@@ -339,15 +339,14 @@
                                                                         name="payment_method" class="input-radio"
                                                                         id="payment_method_momo">
                                                                     <label for="payment_method_momo">Thanh toán qua
-                                                                        Momo</label>
+                                                                        Momo đối với đơn hàng dưới 20 trệu </label>
                                                                 </li>
                                                                 <li class="wc_payment_method payment_method_vnpay">
                                                                     <input type="radio" value="vnpay" name="payment_method" class="input-radio" id="payment_method_vnpay">
                                                                     <label for="payment_method_vnpay">Thanh toán qua VNPAY</label>
                                                                 </li>
                                                             </ul>
-                                                        </div>
-
+                                                        </div>       
                                                         <div class="form-row place-order">
                                                             <button type="submit"
                                                                 class="button wc-forward text-center">Đặt hàng</button>
@@ -356,10 +355,10 @@
                                                 </div>
                                             </form>
                                             <script>
-                                                // Validate and handle form submission
+                                                // Valid
+                                                    const form = event.targate and handle form submission
                                                 document.querySelector('.place-order button[type="submit"]').addEventListener('click', function(event) {
-                                                    // Lấy form cha
-                                                    const form = event.target.closest('form');
+                                                    // Lấy form chaet.closest('form');
                                             
                                                     // Validate payment method
                                                     const selectedPaymentMethod = form.querySelector('input[name="payment_method"]:checked');

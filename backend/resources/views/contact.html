@@ -1,0 +1,60 @@
+@extends('user.layout')
+
+@section('content')
+
+
+<div class="page home page-template-default">
+    <div id="page" class="hfeed site">
+
+        @include('user.partials.header')
+        @include('user.partials.menu')
+
+        <!-- @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif -->
+
+        <div class="container">
+            <div class="contact-index" style="width: 100%; padding-top: 17%;">
+                <div class="contact-form">
+                    <h2>LIÊN HỆ & ĐÓNG GÓP</h2>
+                    <p style="padding-top: 4%;">Hãy để TECHSHOP – thương hiệu máy tính và laptop hàng đầu – đồng hành cùng bạn trong công việc và những khoảnh khắc đáng nhớ của cuộc sống.</p>
+                    <form action="{{ route('contact.submit') }}" method="POST">
+                        @csrf
+                        <div class="form-group" id="form-group1">
+                            <input type="text" name="name" placeholder="Họ tên (*)" >
+                            <input type="text" name="phone" placeholder="Điện thoại (*)" >
+                        </div>
+                        <div class="form-group" id="form-group2">
+                            <input type="email" name="email" placeholder="Email (*)" >
+                            <select name="chu_de">
+                                <option>Chủ Đề Bạn Muốn</option>
+                                <option value="liên hệ hỗ trợ">Liên Hệ Hỗ Trợ</option>
+                                <option value="đóng góp ý kiến">Đóng Góp Ý Kiến</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="form-group3">
+                            <input type="text" name="dia_chi" placeholder="Địa Chỉ" >
+                            <select name="phan_hoi">
+                                <option>Bạn muốn nhận phản hồi từ:</option>
+                                <option value="số điện thoại">Số Điện Thoại</option>
+                                <option value="gmail">Gmail</option>
+                            </select>
+                        </div>
+                        <textarea name="contact" placeholder="Lời nhắn"></textarea>
+                        <div class="form-footer">
+                            <p><img src="/image/Vector2.png" alt="hotline"> <span>Hotline: 1900 066 808</span></p>
+                            <button type="submit">Gửi Đi <3</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @include('user.partials.footer')
+    </div>
+
+    @include('user.partials.js')
+</div>
+@endsection

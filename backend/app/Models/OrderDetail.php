@@ -12,7 +12,7 @@ class OrderDetail extends Model
     protected $fillable = [
        'order_id',
        'product_variant_id',
-    //    'product_variant_id',
+       'product_variant_id',
        'quantity',
        'listed_price',
        'sale_price',
@@ -22,7 +22,14 @@ class OrderDetail extends Model
 
     ];
 
-    public function ProductVariant(){
-        return $this->belongsTo(ProductVariant::class,'product_variant_id');
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
+    public function productVariant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id'); 
+    }
+
 }

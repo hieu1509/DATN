@@ -37,7 +37,7 @@
                                                 </li>
         
                                                 <li class="woocommerce-order-overview__date date">
-                                                    Date:<strong>November 6, 2017</strong>
+                                                    Ngày đặt hàng :<strong>{{ $order->created_at }}</strong>
                                                 </li>
         
                                                 
@@ -46,7 +46,7 @@
                                                 </li>
         
                                                 <li class="woocommerce-order-overview__payment-method method">
-                                                        Payment method: <strong>Direct bank transfer</strong>
+                                                        Phương thức thanh toán: <strong>{{ $order->payment_type }}</strong>
                                                 </li>
                                                 
                                             </ul>

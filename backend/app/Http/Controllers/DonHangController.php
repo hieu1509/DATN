@@ -44,12 +44,11 @@ class DonHangController extends Controller
      */
     public function show(string $id)
     {
-        $donHang = Order::query()->findOrFail($id);
+        $donHang = Order::query()->findOrFail($id); 
         $user_id  = $donHang->user_id;
-
         $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
         $trangThaiThanhToan = Order::TRANG_THAI_THANH_TOAN;
-        $productDetails_id = $donHang->OrderDetail->pluck('product_variant_id')->toArray();
+        $productDetails_id = $donHang->orderDetails->pluck('product_variant_id')->toArray();// khóa 
         $productDetails = ProductVariant::whereIn('id', $productDetails_id)->get();
         // $orderDetails = $donHang->order->OrderDetail;
         // dd($productDetails);

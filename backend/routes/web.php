@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
@@ -194,3 +195,9 @@ Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail'
 // IPN của MoMo
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 // Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+
+
+// Contact 
+
+Route::get('/contact', [ContactController::class, 'Contact'])->name('Contact');
+Route::post('/MailContact', [ContactController::class, 'MailContact'])->name('MailContact');

@@ -44,7 +44,7 @@
                                                     <li>Số điện thoại: {{$donHang->phone}}</li>
                                                     <li>Địa chỉ: {{$donHang->address}}</li>
                                                     {{-- <li>Tài khoản: {{$donHang->user->role}}</li> --}}
-                                                    <li>Trạng thái đơn hàng : {{ $trangThaiDonHang[$donHang->OrderHistory->from_status] ?? 'Không xác định' }}</li>
+                                                    <li>Trạng thái đơn hàng : {{ $donHang->OrderHistory ? $trangThaiDonHang[$donHang->OrderHistory->from_status] : 'Không xác định' }}</li>
                                                     <li>Tiền hàng: {{number_format($donHang->total_price)}}</li>
                                                     {{-- <li>Tiền ship: {{number_format($donHang->shipping->cost)}}</li>   --}}
                                                     <li>Tổng tiền: {{number_format($donHang->money_total)}}</li>

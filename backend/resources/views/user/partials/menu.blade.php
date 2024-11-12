@@ -864,7 +864,7 @@
                             <a title="CAMERAS &amp; PHOTO" href="product-category.html">Tin tức</a>
                         </li>
                         <li class="menu-item animate-dropdown">
-                            <a title="PHONES &amp; TABLETS" href="product-category.html">Liên hệ</a>
+                            <a title="PHONES &amp; TABLETS" href="{{route('Contact')}}">Liên hệ</a>
                         </li>
                         <li class="menu-item animate-dropdown">
                             <a title="GAMES &amp; CONSOLES" href="product-category.html">Giới thiệu</a>
