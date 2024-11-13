@@ -33,5 +33,8 @@ class Promotion extends Model
     
         return $isValid;
     }
-    
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

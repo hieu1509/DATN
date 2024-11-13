@@ -44,21 +44,6 @@ class Order extends Model
           'note',
     ];
 
-
-    protected $fillable = [
-        'code',
-        'payment_type',
-        'total_price',
-        'user_id',
-        'promotion_id',
-        'shipping_id',
-        'name',
-        'address',
-        'money_total',
-        'phone',
-        'note',
-    ];
-
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -71,7 +56,18 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
-
+    public function orderHistories()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+    public function shipping()
+    {
+        return $this->belongsTo(Shipping::class);
+    }
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
+    }
 }
 
-}
+
