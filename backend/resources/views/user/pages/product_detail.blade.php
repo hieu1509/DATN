@@ -556,12 +556,13 @@
                                             {{-- Review --}}
                                             <div class="tab-pane" id="tab-reviews" role="tabpanel">
                                                 <div class="techmarket-advanced-reviews" id="reviews">
+                                                    <!-- Review Overview Section -->
                                                     <div class="advanced-review row">
                                                         <div class="advanced-review-rating">
                                                             <h2 class="based-title">Đánh giá
                                                                 ({{ $product->reviews->count() }})</h2>
 
-                                                            <!-- Hiển thị thông báo lỗi nếu có -->
+                                                            <!-- Error Message Display -->
                                                             @if ($errors->any())
                                                                 <div class="alert alert-danger">
                                                                     <ul>
@@ -572,7 +573,7 @@
                                                                 </div>
                                                             @endif
 
-                                                            <!-- Hiển thị đánh giá trung bình -->
+                                                            <!-- Average Rating -->
                                                             <div class="avg-rating">
                                                                 <span class="avg-rating-number">
                                                                     {{ $product->reviews->count() > 0 ? number_format($product->reviews->avg('rating'), 1) : 'Chưa có đánh giá' }}
@@ -584,26 +585,28 @@
                                                                 </div>
                                                             </div>
 
-                                                            <!-- Biểu đồ thống kê số lượng đánh giá -->
+                                                            <!-- Rating Histogram -->
                                                             <div class="rating-histogram">
                                                                 @foreach (range(5, 1, -1) as $i)
                                                                     <div class="rating-bar">
-                                                                        <div title="Rated {{ $i }} out of 5" class="star-rating">
-                                                                            <span style="width:{{ $i * 20 }}%"></span>
+                                                                        <div title="Rated {{ $i }} out of 5"
+                                                                            class="star-rating">
+                                                                            <span
+                                                                                style="width:{{ $i * 20 }}%"></span>
                                                                         </div>
                                                                         <div class="rating-count">
                                                                             {{ $product->reviews->where('rating', $i)->count() }}
                                                                         </div>
                                                                         <div class="rating-percentage-bar">
                                                                             <span class="rating-percentage"
-                                                                                  style="width:{{ $product->reviews->count() > 0 ? ($product->reviews->where('rating', $i)->count() / $product->reviews->count()) * 100 : 0 }}%"></span>
+                                                                                style="width:{{ $product->reviews->count() > 0 ? ($product->reviews->where('rating', $i)->count() / $product->reviews->count()) * 100 : 0 }}%"></span>
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
-                                                            </div>                                                           
+                                                            </div>
                                                         </div>
 
-                                                        <!-- Kiểm tra nếu người dùng đã đăng nhập -->
+                                                        <!-- Review Form Section (Only for logged-in users) -->
                                                         @if (Auth::check())
                                                             <div class="advanced-review-comment">
                                                                 <div id="review_form_wrapper">
@@ -611,7 +614,7 @@
                                                                         <div class="comment-respond" id="respond">
                                                                             <h3 class="comment-reply-title"
                                                                                 id="reply-title">Thêm đánh giá</h3>
-                                                                            <form novalidate="" class="comment-form"
+                                                                            <form novalidate class="comment-form"
                                                                                 id="commentform" method="POST"
                                                                                 action="{{ route('reviews.store', $product->id) }}">
                                                                                 @csrf
@@ -675,7 +678,7 @@
                                                         @endif
                                                     </div>
 
-                                                    <!-- Hiển thị các đánh giá -->
+                                                    <!-- Display Existing Reviews -->
                                                     <div id="comments">
                                                         <ol class="commentlist">
                                                             @foreach ($product->reviews as $review)
@@ -687,8 +690,7 @@
                                                                                     style="width:{{ $review->rating * 20 }}%">Rated
                                                                                     <strong
                                                                                         class="rating">{{ $review->rating }}</strong>
-                                                                                    out of 5
-                                                                                </span>
+                                                                                    out of 5</span>
                                                                             </div>
                                                                             <p class="meta">
                                                                                 <strong
@@ -711,56 +713,62 @@
                                                         </ol>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <!-- JavaScript for Star Rating -->
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        document.querySelectorAll('.stars a').forEach(star => {
+                                                            star.addEventListener('click', function(e) {
+                                                                e.preventDefault();
+                                                                var rating = this.dataset.rating;
+                                                                document.getElementById('rating').value = rating;
 
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    // Lắng nghe sự kiện click vào sao
-                                                    document.querySelectorAll('.stars a').forEach(star => {
-                                                        star.addEventListener('click', function(e) {
-                                                            e.preventDefault();
-                                                            var rating = this.dataset.rating; // Lấy rating từ data-attribute
-                                                            document.getElementById('rating').value =
-                                                            rating; // Cập nhật giá trị vào input ẩn
+                                                                // Update selected stars
+                                                                document.querySelectorAll('.stars a').forEach(star => star.classList.remove(
+                                                                    'selected'));
+                                                                this.classList.add('selected');
 
-                                                            // Cập nhật giao diện sao đã chọn
-                                                            document.querySelectorAll('.stars a').forEach(star => {
-                                                                star.classList.remove('selected');
+                                                                // Mark all stars up to the clicked one as selected
+                                                                let currentIndex = Array.from(this.parentNode.children).indexOf(this);
+                                                                for (let i = 0; i <= currentIndex; i++) {
+                                                                    this.parentNode.children[i].classList.add('selected');
+                                                                }
                                                             });
-                                                            this.classList.add('selected');
                                                         });
                                                     });
-                                                });
-                                            </script>
-                                            <style>
-                                                .stars a {
-                                                    color: #ccc;
-                                                    font-size: 20px;
-                                                    text-decoration: none;
-                                                    margin-right: 5px;
-                                                }
+                                                </script>
 
-                                                .stars a.selected,
-                                                .stars a:hover {
-                                                    color: gold;
-                                                }
+                                                <!-- CSS for Styling -->
+                                                <style>
+                                                    .stars a {
+                                                        color: #ccc;
+                                                        font-size: 20px;
+                                                        text-decoration: none;
+                                                        margin-right: 5px;
+                                                    }
 
-                                                .rating-bar {
-                                                    display: flex;
-                                                    align-items: center;
-                                                    margin-bottom: 10px;
-                                                }
+                                                    .stars a.selected,
+                                                    .stars a:hover {
+                                                        color: gold;
+                                                    }
 
-                                                .rating-percentage-bar {
-                                                    height: 5px;
-                                                    background-color: #f0f0f0;
-                                                }
+                                                    .rating-bar {
+                                                        display: flex;
+                                                        align-items: center;
+                                                        margin-bottom: 10px;
+                                                    }
 
-                                                .rating-percentage {
-                                                    height: 100%;
-                                                    background-color: gold;
-                                                }
-                                            </style>
+                                                    .rating-percentage-bar {
+                                                        height: 5px;
+                                                        background-color: #f0f0f0;
+                                                    }
+
+                                                    .rating-percentage {
+                                                        height: 100%;
+                                                        background-color: gold;
+                                                    }
+                                                </style>
+                                            </div>
+
                                         </div>
                                         {{-- <section class="section-landscape-products-carousel recently-viewed"
                                     id="recently-viewed">

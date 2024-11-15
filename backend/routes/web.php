@@ -15,13 +15,14 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\ReviewController;
-
+use App\Http\Controllers\UserNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -200,3 +201,11 @@ Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail'
 // IPN của MoMo
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 // Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+
+//Tin tức
+Route::resource('news', NewsController::class);
+Route::prefix('tins')->as('tins.')->group(function () {
+    Route::get('/', [UserNewsController::class, 'index'])->name('index');
+    Route::get('/{id}', [UserNewsController::class, 'show'])->name('show');
+});
+Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
