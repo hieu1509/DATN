@@ -42,6 +42,9 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @error('quantity')
+                                                            <span class="error-message" style="color: red;">{{ $message }}</span>
+                                                        @enderror
                                                         @foreach ($cartDetail as $detail)
                                                             <tr>
                                                                 <td class="product-image">

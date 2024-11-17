@@ -37,6 +37,7 @@
                                                 </li>
         
                                                 <li class="woocommerce-order-overview__date date">
+<<<<<<< HEAD
                                                     Ngày đặt hàng :<strong>{{ $order->created_at }}</strong>
                                                 </li>
         
@@ -47,8 +48,26 @@
         
                                                 <li class="woocommerce-order-overview__payment-method method">
                                                         Phương thức thanh toán: <strong>{{ $order->payment_type }}</strong>
+=======
+                                                    Ngày tạo: <strong>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</strong>
+                                                </li>
+        
+                                                <li class="woocommerce-order-overview__payment-method method">
+                                                    Phương thức thanh toán: <strong>{{$order->payment_type}}</strong>
+                                                </li>
+
+                                                <li class="woocommerce-order-overview__payment-method method">
+                                                    {{-- Trạng thái: <strong>{{ $orderStatus }}</strong> --}}
+>>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e
                                                 </li>
                                                 
+                                                <li class="woocommerce-order-overview__payment-method method">
+                                                    {{-- Trạng thái thanh toán: <strong>{{ $paymentStatus }}</strong> --}}
+                                                </li>
+                                            
+                                                <li class="woocommerce-order-overview__total total">
+                                                    Tổng cộng: <strong><span class="woocommerce-Price-amount amount">{{ number_format($order->money_total) }}<span class="woocommerce-Price-currencySymbol">₫</span></span></strong>
+                                                </li>
                                             </ul>
                                             <!-- .woocommerce-order-overview -->
         
@@ -89,26 +108,52 @@
         
                                                     <thead>
                                                         <tr>
-                                                            <th class="woocommerce-table__product-name product-name">Product</th>
-                                                            <th class="woocommerce-table__product-table product-total">Total</th>
+                                                            <th class="woocommerce-table__product-name product-name">Sản phẩm</th>
+                                                            <th class="woocommerce-table__product-table product-total">Giá</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach($order->orderDetails as $detail)
                                                             <tr class="cart_item">
                                                                 <td class="product-name">
-                                                                        <img src="{{ asset('storage/' . $detail->image) }}" alt="{{ $detail->name }}" style="width: 100px; height: auto; margin-right: 10px;">
-                                                                        {{ $detail->name }}
+                                                                    <img src="{{ asset('storage/' . $detail->image) }}" alt="{{ $detail->name }}" style="width: 100px; height: auto; margin-right: 10px;">{{ $detail->name }}
                                                                     <strong class="product-quantity">× {{ $detail->quantity }}</strong>
                                                                 </td>
                                                                 <td class="product-total">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span class="woocommerce-Price-currencySymbol">₫</span>
                                                                         {{ number_format($detail->sale_price * $detail->quantity, 0, ',', '.') }}
+                                                                        <span class="woocommerce-Price-currencySymbol">₫</span>
                                                                     </span>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
+                                                        <tr>
+                                                            <th class="woocommerce-table__product-name product-name">Shipping: {{number_format($order->shipping->cost, 0, ',', '.')}}đ - {{$order->shipping->name}} </th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="woocommerce-table__product-name product-name">
+                                                                @if($order->promotion)
+                                                                    @if($order->promotion->discount_type == 'fixed')
+                                                                        <!-- Nếu discount_type là 'fixed' thì hiển thị giảm giá theo tiền -->
+                                                                        <p>Giảm giá: {{ number_format($order->promotion->discount, 0) }}đ</p>
+                                                                    @elseif($order->promotion->discount_type == 'percentage')
+                                                                        <!-- Nếu discount_type là 'percentage' thì hiển thị phần trăm giảm giá -->
+                                                                        <p>Giảm giá: {{ $order->promotion->discount, }} %</p>
+                                                                    @else
+                                                                        <p>Không xác định loại giảm giá.</p>
+                                                                    @endif
+                                                                @else
+                                                                    <p>Không có mã giảm giá.</p>
+                                                                @endif
+                                                            
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><h4>Tổng:  <strong><span class="woocommerce-Price-amount amount">{{ number_format($order->money_total) }}<span class="woocommerce-Price-currencySymbol">₫</span></span></strong></h4></th>
+                                                            <th></th>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                                 <!-- .woocommerce-table -->

@@ -25,11 +25,13 @@
 
 
                 @if (Auth::check())
-                    <a title="My Account" href="#">
+
+                    <a title="My Account" href="{{ route('user.profile') }}">
                         <i class="tm tm-login-register"></i>{{ Auth::user()->name }}
                     </a>
                 @else
-                    <a title="My Account" href="{{ route('login.user') }}">
+                    <a title="My Account" href="{{ route('login') }}">
+
                         <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký
                     </a>
                 @endif
@@ -41,12 +43,16 @@
             </li>
             @if(Auth::check())
             <li class="menu-item">
-                <a title="Logout" href="{{ route('logout.user') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+
+                <a title="Logout" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+
                     <i class="tm tm-logout"></i>Đăng xuất
                 </a>
         
                 <!-- Form Đăng Xuất Ẩn -->
-                <form id="logout-form" action="{{ route('logout.user') }}" method="POST" style="display: none;">
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+
                     @csrf
                 </form>
             </li>

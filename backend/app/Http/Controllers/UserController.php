@@ -217,19 +217,21 @@ class UserController extends Controller
         }
 
         // Nếu không có lọc, lấy tất cả sản phẩm
-
         $products = $isFiltered ? $query->where('is_show_home', 1)->paginate(20) : Product::with(['subCategory', 'variants'])->where('is_show_home', 1)->paginate(20);
-
+        $latestProducts = Product::with(['subCategory', 'variants'])
+            ->where('is_show_home', 1)
+            ->latest('created_at')
+            ->take(12)
+            ->get();
         // Lấy các thông tin khác (danh mục con, chip, RAM, dung lượng lưu trữ)
         $categories = Category::with('subCategories')->get();
-
         $chips = Chip::pluck('name', 'id')->all();
         $rams = Ram::pluck('name', 'id')->all();
         $storages = Storage::pluck('name', 'id')->all();
         $sub_category = SubCategory::pluck('name', 'id')->all();
 
 
-        return view('user.pages.product_category', compact('sub_category', 'products', 'categories', 'chips', 'rams', 'storages'));
+        return view('user.pages.product_category', compact('sub_category', 'products', 'categories', 'chips', 'rams', 'storages', 'latestProducts'));
 
     }
 
@@ -258,4 +260,9 @@ class UserController extends Controller
         return view('user.partials.menu', ['userName' => $user->name]);
 
     }
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e
