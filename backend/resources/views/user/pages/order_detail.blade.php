@@ -37,18 +37,6 @@
                                                 </li>
         
                                                 <li class="woocommerce-order-overview__date date">
-<<<<<<< HEAD
-                                                    Ngày đặt hàng :<strong>{{ $order->created_at }}</strong>
-                                                </li>
-        
-                                                
-                                                <li class="woocommerce-order-overview__total total">
-                                                    Tổng cộng: <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">₫</span>{{ number_format($order->money_total) }}</span></strong>
-                                                </li>
-        
-                                                <li class="woocommerce-order-overview__payment-method method">
-                                                        Phương thức thanh toán: <strong>{{ $order->payment_type }}</strong>
-=======
                                                     Ngày tạo: <strong>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</strong>
                                                 </li>
         
@@ -58,7 +46,6 @@
 
                                                 <li class="woocommerce-order-overview__payment-method method">
                                                     {{-- Trạng thái: <strong>{{ $orderStatus }}</strong> --}}
->>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e
                                                 </li>
                                                 
                                                 <li class="woocommerce-order-overview__payment-method method">
@@ -139,7 +126,7 @@
                                                                         <p>Giảm giá: {{ number_format($order->promotion->discount, 0) }}đ</p>
                                                                     @elseif($order->promotion->discount_type == 'percentage')
                                                                         <!-- Nếu discount_type là 'percentage' thì hiển thị phần trăm giảm giá -->
-                                                                        <p>Giảm giá: {{ $order->promotion->discount, }} %</p>
+                                                                        <p>Giảm giá: {{ $order->promotion->discount }} %</p>
                                                                     @else
                                                                         <p>Không xác định loại giảm giá.</p>
                                                                     @endif

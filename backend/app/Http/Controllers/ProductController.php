@@ -1,8 +1,5 @@
 <?php
-<<<<<<< HEAD
-=======
 
->>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -176,11 +173,7 @@ class ProductController extends Controller
                     'listed_price' => $request->listed_price[$index],
                     'sale_price' => $request->sale_price[$index],
                     'quantity' => $request->quantity[$index],
-<<<<<<< HEAD
-                ]); 
-=======
                 ]);
->>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e
             }
 
             DB::commit();
@@ -230,9 +223,4 @@ class ProductController extends Controller
             return back()->withErrors(['error' => 'Không thể xóa sản phẩm!']);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e

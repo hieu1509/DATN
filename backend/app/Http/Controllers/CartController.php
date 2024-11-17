@@ -122,12 +122,10 @@ class CartController extends Controller
         $cartDetail->delete();
         return redirect()->back()->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công.');
     }
-<<<<<<< HEAD
 
 
     
 }
-=======
-}
 
->>>>>>> 1fe3e0b4cf34977290b283e185f6c89e5d53937e
+
+
