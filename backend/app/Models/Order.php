@@ -55,4 +55,18 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function orderHistories()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+    public function shipping()
+    {
+        return $this->belongsTo(Shipping::class);
+    }
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
+    }
 }
+

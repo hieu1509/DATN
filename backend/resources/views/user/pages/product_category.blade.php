@@ -204,7 +204,7 @@
                                                                 @else
                                                                     <span>Không có ảnh</span>
                                                                 @endif
-                                                                <span class="price">
+                                                                {{-- <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
                                                                         <span
                                                                             class="woocommerce-Price-currencySymbol"></span>
@@ -235,7 +235,16 @@
                                                                             } else {
                                                                                 echo 'Chưa có giá';
                                                                             }
-                                                                        @endphp</span>
+                                                                        @endphp</span> 
+                                                                </span> --}}
+                                                                <span class="price">
+                                                                    <ins>
+                                                                        <span class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
+                                                                    </ins>
+                                                                    <del>
+                                                                        <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
+                                                                    </del>
+                                                                    <span class="amount"> </span>
                                                                 </span>
                                                                 <h2 class="woocommerce-loop-product__title">
                                                                     {{ $product->name }}</h2>
@@ -2512,5 +2521,3 @@
 
     </body>
 @endsection
-
-

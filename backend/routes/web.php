@@ -22,7 +22,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\ReviewController;
+
+use App\Models\ProductVariant;
+
 use App\Http\Controllers\UserNewsController;
+
 
 
 /*
@@ -167,23 +171,17 @@ Route::prefix('cart')
 // user
 // Route để hiển thị trang thanh toán
 
-Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
+// Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
 
-Route::get('/promo', [OrderController::class, 'checkout'])->name('promo');
+// Route::post('/promo', [OrderController::class, 'checkout'])->name('promo');
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-
-
-// Xử lý đặt hàng và thanh toán (phương thức POST)
 Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
-
-// Trang thành công sau khi thanh toán
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
-
-// IPN của MoMo
+Route::get('/vnpay_return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
-Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
-
 //Review
 
 Route::middleware(['auth'])->group(function () {
@@ -203,6 +201,7 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.s
 /*Route::middleware('auth')->group(function () {
     Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
 });*/
 
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
@@ -219,3 +218,4 @@ Route::prefix('tins')->as('tins.')->group(function () {
     Route::get('/{id}', [UserNewsController::class, 'show'])->name('show');
 });
 Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
+

@@ -19,13 +19,20 @@
                             </span>
                             Thanh toán
                         </nav>
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                         <div class="content-area" id="primary">
                             <main class="site-main" id="main">
                                 <div class="type-page hentry">
                                     <div class="entry-content">
                                         <div class="woocommerce">
                                             <div class="woocommerce-info">
-                                                <form action="{{ route('promo') }}" method="GET">
+                                                <form action="{{ route('checkout') }}" method="POST">
+                                                    @csrf
                                                     <td class="actions" colspan="6">
                                                         <div class="coupon">
                                                             <label for="shipping_id">Chọn phương thức giao hàng:</label>
@@ -47,7 +54,7 @@
                                                 </form>
                                             </div>
                                             <form action="{{ route('checkout.place') }}"
-                                                class="checkout woocommerce-checkout" method="POST" name="checkout">
+                                                class="checkout woocommerce-checkout" method="POST">
                                                 @csrf
                                                 <div id="customer_details" class="col2-set">
                                                     <div class="col-1">
@@ -301,7 +308,7 @@
                                                                 <tr class="cart-subtotal">
                                                                     <th>Tổng giá trị sản phẩm</th>
                                                                     <td class="product-total">
-                                                                        {{ number_format($total_price, 0, ',', '.') }}
+                                                                        {{ number_format($totalPrice, 0, ',', '.') }}
                                                                         VND</td>
                                                                 </tr>
                                                                 <tr class="cart-subtotal">

@@ -15,30 +15,31 @@
             /* Padding cho container */
         }
 
-        .card {
-            box-sizing: border-box;
-            /* Bao gồm padding và border trong kích thước */
-            border: 2px solid transparent;
-            /* Đặt border mặc định là trong suốt */
-            border-radius: 8px;
-            /* Góc bo tròn */
-            padding: 15px;
-            /* Padding trong card */
-            background-color: #f9f9f9;
-            /* Màu nền nhẹ cho card */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            /* Bóng đổ nhẹ cho card */
-            text-align: center;
-            /* Căn giữa nội dung */
-            width: 180px;
-            /* Kích thước chiều rộng của card */
-            height: 180px;
-            /* Kích thước chiều cao của card */
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            /* Thêm hiệu ứng cho bóng đổ và màu viền */
-            cursor: pointer;
-            /* Đổi con trỏ khi hover */
-        }
+    .card {
+        box-sizing: border-box;
+        /* Bao gồm padding và border trong kích thước */
+        border: 2px solid transparent;
+        /* Đặt border mặc định là trong suốt */
+        border-radius: 8px;
+        /* Góc bo tròn */
+        /* padding: 15px; */
+        /* Padding trong card */
+        background-color: #f9f9f9;
+        /* Màu nền nhẹ cho card */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Bóng đổ nhẹ cho card */
+        text-align: center;
+        /* Căn giữa nội dung */
+        width: 180px;
+        /* Kích thước chiều rộng của card */
+        height: 190px;
+        /* Kích thước chiều cao của card */
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        /* Thêm hiệu ứng cho bóng đổ và màu viền */
+        cursor: pointer;
+        /* Đổi con trỏ khi hover */
+    }
+
 
         .card:hover {
             transform: translateY(-5px);
@@ -271,106 +272,105 @@
                                                         $specifications = explode(';', $product->description);
                                                     @endphp
 
-                                                    @foreach ($specifications as $index => $spec)
-                                                        @if (trim($spec) !== '' && $index < 8)
-                                                            <li>{{ trim($spec) }}</li>
-                                                        @endif
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            <!-- .woocommerce-product-details__short-description -->
-                                            <div class="product-actions-wrapper">
-                                                <form action="{{ route('cart.store') }}" enctype="multipart/form-data"
-                                                    method="post" class="cart">
-                                                    @csrf
-                                                    @if (count($product->variants) === 1)
-                                                        @php
-                                                            $singleVariant = $product->variants->first();
-                                                        @endphp
-                                                        <div class="product-actions">
-                                                            <input type="hidden" name="variant_id"
-                                                                value="{{ $singleVariant->id }}">
-                                                            <p class="price">
-                                                                <del>
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span
-                                                                            class="woocommerce-Price-currencySymbol"></span>{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}
-                                                                        đ</span>
-                                                                </del>
-                                                                <ins>
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span
-                                                                            class="woocommerce-Price-currencySymbol"></span>{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}
-                                                                        đ</span>
-                                                                </ins>
-                                                            </p>
-                                                        </div>
-                                                    @else
-                                                        <div class="card-container">
-                                                            @foreach ($product->variants as $variant)
-                                                                <div class="card @if ($variant->isActive) active @endif"
-                                                                    onclick="selectCard(this)">
-                                                                    <div class="card-content">
-                                                                        <input type="hidden" name="variant_id"
-                                                                            value="{{ $variant->id }}">
-                                                                        @if ($variant->chip->id != 1)
-                                                                            <strong
-                                                                                class="chip-name">{{ $variant->chip->name }}</strong>
-                                                                        @endif
-                                                                        @if ($variant->ram->id != 1)
-                                                                            <strong
-                                                                                class="ram-name">{{ $variant->ram->name }}</strong>
-                                                                        @endif
-                                                                        @if ($variant->storage->id != 1)
-                                                                            <strong
-                                                                                class="storage-name">{{ $variant->storage->name }}</strong>
-                                                                        @endif
-                                                                        <span
-                                                                            class="price">{{ number_format($variant->sale_price, 0, ',', '.') }}
-                                                                            đ</span>
-                                                                        <span
-                                                                            class="sale_price">{{ number_format($variant->listed_price, 0, ',', '.') }}
-                                                                            đ</span>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
+
+                                                @foreach($specifications as $index => $spec)
+                                                    @if(trim($spec) !== '' && $index < 8) 
+                                                        <li>{{ trim($spec) }}</li>
                                                     @endif
-
-                                                    <script>
-                                                        const cards = document.querySelectorAll('.card');
-
-                                                        cards.forEach(card => {
-                                                            card.addEventListener('click', (event) => {
-                                                                // Ngăn chặn hành vi mặc định của thẻ <a>
-                                                                event.preventDefault();
-
-                                                                // Xóa lớp active khỏi tất cả các card
-                                                                cards.forEach(c => c.classList.remove('active'));
-
-                                                                // Thêm lớp active vào card đã nhấn
-                                                                card.classList.add('active');
-                                                            });
-                                                        });
-                                                    </script>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        <!-- .woocommerce-product-details__short-description -->
+                                        <div class="product-actions-wrapper">
+                                            <form action="{{route('cart.store')}}" enctype="multipart/form-data" method="post" class="cart">
+                                                @csrf
+                                            
+                                                @if(count($product->variants) === 1)
+                                                    @php
+                                                        $singleVariant = $product->variants->first();
+                                                    @endphp
+                                                    <input type="hidden" name="variant_id" value="{{ $singleVariant->id }}">
                                                     <div class="product-actions">
-                                                        <!-- .single-product-header -->
-                                                        <div class="quantity ">
-                                                            <label for="quantity-input">Số lượng</label>
-                                                            <input class="quantity-input" type="number" name="quantity"
-                                                                id="" value="1" min="1">
-                                                        </div>
-                                                        <button class="single_add_to_cart_button button alt"
-                                                            value="185" name="add-to-cart" type="submit"
-                                                            style="border-radius: 8px; margin-top: 30px;">Thêm vào giỏ
-                                                            hàng</button>
-                                                        <!-- .cart -->
-                                                        {{-- <a class="add-to-compare-link" href="compare.html">Add to compare</a> --}}
+                                                        <p class="price">
+                                                            <del>{{ number_format($singleVariant->listed_price, 0, ',', '.') }} đ</del>
+                                                            <ins>{{ number_format($singleVariant->sale_price, 0, ',', '.') }} đ</ins>
+                                                            <p>
+                                                                Số lượng: 
+                                                                @if ($singleVariant->quantity <= 0)
+                                                                    <span style="color: red;">Hết hàng</span>
+                                                                @else
+                                                                    {{ $singleVariant->quantity }}
+                                                                @endif
+                                                            </p>
+                                                        </p>
                                                     </div>
-                                                    <!-- .product-actions -->
-                                                </form>
-                                            </div>
-                                            <!-- .product-actions-wrapper -->
+                                                @else
+                                                    <input type="hidden" name="variant_id" id="variant_id" value="">
+                                                    <div class="card-container">
+                                                        @foreach($product->variants as $variant)
+                                                            <div class="card @if($variant->isActive) active @endif" data-variant-id="{{ $variant->id }}" onclick="selectCard(this)">
+                                                                <div class="card-content">
+                                                                    @if ($variant->chip->id != 1)
+                                                                        <strong class="chip-name">{{ $variant->chip->name }}</strong>
+                                                                    @endif
+                                                                    @if ($variant->ram->id != 1)
+                                                                        <strong class="ram-name">{{ $variant->ram->name }}</strong>
+                                                                    @endif
+                                                                    @if ($variant->storage->id != 1)
+                                                                        <strong class="storage-name">{{ $variant->storage->name }}</strong>
+                                                                    @endif
+                                                                    <span class="price">{{ number_format($variant->sale_price, 0, ',', '.') }} đ</span>
+                                                                    <span class="sale_price">{{ number_format($variant->listed_price, 0, ',', '.') }} đ</span>
+                                                                    <p>
+                                                                        Số lượng: 
+                                                                        @if ($variant->quantity <= 0)
+                                                                            <span style="color: red;">Hết hàng</span>
+                                                                        @else
+                                                                            {{ $variant->quantity }}
+                                                                        @endif
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                            
+                                                <div class="product-actions">
+                                                    <div class="quantity">
+                                                        <label for="quantity-input">Số lượng</label>
+                                                        <input class="quantity-input" type="number" name="quantity" value="1" min="1">
+                                                    </div>
+                                                    <button class="single_add_to_cart_button button alt" name="add-to-cart" type="submit" style="border-radius: 8px; margin-top: 30px;">Thêm vào giỏ hàng</button>
+                                                </div>
+                                                @error('quantity')
+                                                    <span class="error-message" style="color: red;">{{ $message }}</span>
+                                                @enderror
+                                                <script>
+                                                    // Hàm để chọn và đánh dấu card là active
+                                                    function selectCard(card) {
+                                                        const cards = document.querySelectorAll('.card');
+                                                        cards.forEach(c => c.classList.remove('active'));
+                                            
+                                                        card.classList.add('active');
+                                            
+                                                        const variantId = card.getAttribute('data-variant-id');
+                                                        document.getElementById('variant_id').value = variantId;
+                                                    }
+                                            
+                                                    // Đảm bảo card đầu tiên được đánh dấu nếu đã có một biến thể active
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        const activeCard = document.querySelector('.card.active');
+                                                        if (!activeCard) {
+                                                            // Nếu không có card nào active, chọn card đầu tiên
+                                                            const firstCard = document.querySelector('.card');
+                                                            if (firstCard) {
+                                                                selectCard(firstCard); // Gọi hàm để đánh dấu card đầu tiên là active
+                                                            }
+                                                        }
+                                                    });
+                                                </script>
+                                            </form>                                      
+
                                         </div>
                                         <!-- .entry-summary -->
                                     </div>
@@ -669,7 +669,40 @@
                                                                                 </p>
                                                                             </form>
                                                                         </div>
-                                                                    </div>
+
+                                                                        <p class="comment-form-comment">
+                                                                            <label for="comment">Your Review</label>
+                                                                            <textarea aria-required="true" rows="8" cols="45" name="comment" id="comment"></textarea>
+                                                                        </p>
+                                                                        <p class="comment-form-author"> 
+                                                                            <label for="author">Name
+                                                                                <span class="required">*</span>
+                                                                            </label>
+                                                                            <input type="text" aria-required="true"
+                                                                                size="30" value=""
+                                                                                name="author" id="author">
+                                                                        </p>
+                                                                        <p class="comment-form-email">
+                                                                            <label for="email">Email
+                                                                                <span class="required">*</span>
+                                                                            </label>
+                                                                            <input type="text" aria-required="true"
+                                                                                size="30" value=""
+                                                                                name="email" id="email">
+                                                                        </p>
+                                                                        <p class="form-submit">
+                                                                            <input type="submit" value="Add Review"
+                                                                                class="submit" id="submit"
+                                                                                name="submit">
+                                                                            <input type="hidden" id="comment_post_ID"
+                                                                                value="185" name="comment_post_ID">
+                                                                            <input type="hidden" value="0"
+                                                                                id="comment_parent"
+                                                                                name="comment_parent">
+                                                                        </p>
+                                                                    </form>
+                                                                    <!-- /.comment-form -->
+
                                                                 </div>
                                                             </div>
                                                         @else

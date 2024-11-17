@@ -53,7 +53,7 @@
                                     <div class="banner large-banner text-in-right">
                                         <a href="#">
                                             <div style="background-size: cover; background-position: center center; background-image: url({{ asset('template2/assets/images/9.png ') }}); height: 259px;" class="banner-bg">
-                                                <div class="caption">
+                                                {{-- <div class="caption">
                                                     <div class="banner-info">
                                                         <h3 class="title">Laptop gaming học tốt
                                                             <br>
@@ -62,7 +62,7 @@
                                                     </div>
                                                     <!-- .banner-info -->
                                                     <span class="banner-action button">Xem</span>
-                                                </div>
+                                                </div> --}}
                                                 <!-- .caption -->
                                             </div>
                                             <!-- .banner-bg -->

@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Hiển thị giỏ hàng của người dùng.
      */
     public function index()
     {
-        $cart = Auth::user()->carts()->orderBy('id', 'desc')->first();
+        $cart = Auth::user()->carts()->latest()->first();
 
         if (!$cart) {
             return view('user.pages.cart', [
@@ -24,10 +24,8 @@ class CartController extends Controller
             ])->with('error', 'Giỏ hàng của bạn trống.');
         }
 
-        $carts_id = $cart->id;
-
         $cartDetail = CartDetail::with(['productVariant.product', 'productVariant.chip', 'productVariant.ram', 'productVariant.storage'])
-            ->where('carts_id', $carts_id)
+            ->where('carts_id', $cart->id)
             ->get();
 
         $total = $cartDetail->sum(function ($detail) {
@@ -38,64 +36,91 @@ class CartController extends Controller
         return view('user.pages.cart', compact('cartDetail', 'total'));
     }
 
-
     /**
-     * Store a newly created resource in storage.
+     * Thêm sản phẩm vào giỏ hàng.
      */
     public function store(Request $request)
     {
-        // Kiểm tra nếu người dùng chưa đăng nhập
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để mua hàng.');
         }
-
+    
         $variant_id = $request->variant_id;
         $quantity = $request->quantity;
-
-        // Tìm hoặc tạo giỏ hàng cho người dùng
-        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
-
-        // Kiểm tra xem biến thể sản phẩm có tồn tại không
+    
+        // Lấy biến thể sản phẩm
         $productVariant = ProductVariant::find($variant_id);
+    
         if (!$productVariant) {
             return redirect()->back()->with('error', 'Không có sản phẩm cần mua.');
         }
-
-        // Tìm hoặc thêm mới CartDetail cho biến thể sản phẩm
+    
+        // Kiểm tra số lượng sản phẩm trong kho của biến thể
+        if ($productVariant->quantity <= 0) {
+            return redirect()->back()->withErrors(['quantity' => 'Sản phẩm hiện tại không còn trong kho.']);
+        }
+    
+        // Kiểm tra nếu số lượng yêu cầu lớn hơn số lượng tồn kho
+        if ($productVariant->quantity < $quantity) {
+            return redirect()->back()->withErrors(['quantity' => 'Số lượng sản phẩm không đủ trong kho.']);
+        }
+    
+        // Tạo hoặc cập nhật giỏ hàng
+        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+    
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
         $cartDetail = CartDetail::firstOrNew([
             'carts_id' => $cart->id,
             'product_variant_id' => $variant_id,
         ]);
-
-        // Cập nhật số lượng cho biến thể cụ thể
+    
         $cartDetail->quantity = $cartDetail->exists ? $cartDetail->quantity + $quantity : $quantity;
         $cartDetail->save();
-
+    
         return redirect()->route('cart.index')->with('success', 'Thêm vào giỏ hàng thành công!');
     }
-
+    
     /**
-     * Update the specified resource in storage.
+     * Cập nhật số lượng sản phẩm trong giỏ hàng.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $cartDetail = CartDetail::findOrFail($id);
-
-        // Cập nhật số lượng từ request
-        $cartDetail->quantity = $request->quantity;
+    
+        // Lấy thông tin biến thể sản phẩm
+        $productVariant = ProductVariant::find($cartDetail->product_variant_id);
+    
+        if (!$productVariant) {
+            return redirect()->route('cart.index')->with('error', 'Sản phẩm không tồn tại.');
+        }
+    
+        $quantity = $request->quantity;
+    
+        // Kiểm tra số lượng trong kho
+        if ($productVariant->quantity <= 0) {
+            return redirect()->back()->withErrors(['quantity' => 'Sản phẩm hiện tại không còn trong kho.']);
+        }
+    
+        // Kiểm tra nếu số lượng yêu cầu lớn hơn số lượng tồn kho
+        if ($productVariant->quantity < $quantity) {
+            return redirect()->back()->withErrors(['quantity' => 'Số lượng sản phẩm không đủ trong kho.']);
+        }
+    
+        // Cập nhật số lượng giỏ hàng
+        $cartDetail->quantity = $quantity;
         $cartDetail->save();
-
+    
         return redirect()->back()->with('success', 'Cập nhật giỏ hàng thành công!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Xóa sản phẩm khỏi giỏ hàng.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $cartDetail = CartDetail::findOrFail($id);
         $cartDetail->delete();
-        return redirect()->back()->with('success', 'Xóa giỏ hàng thành công');
+        return redirect()->back()->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công.');
     }
 }
 
