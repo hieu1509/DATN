@@ -24,6 +24,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserNewsController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,7 +57,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
 
+
     Route::get('admin/users', [UseradminController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+
 });
 
 //Profile
@@ -182,6 +185,7 @@ Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
 
 //Review
+
 Route::middleware(['auth'])->group(function () {
     // Route cho người dùng bình thường tạo review
     Route::get('product/{productId}/review', [ReviewController::class, 'create'])->name('reviews.create');
@@ -196,11 +200,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
+/*Route::middleware('auth')->group(function () {
+    Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});*/
+
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
 // IPN của MoMo
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 // Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+
 
 //Tin tức
 Route::resource('news', NewsController::class);

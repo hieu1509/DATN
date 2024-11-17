@@ -43,7 +43,6 @@ class Order extends Model
           'phone',
           'note',
     ];
-
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -56,5 +55,4 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
-
 }
