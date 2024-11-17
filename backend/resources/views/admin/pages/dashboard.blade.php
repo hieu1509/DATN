@@ -87,7 +87,7 @@
                         <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-header border-0 align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Revenue</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">Thống kê</h4>
                                     <div class="ml-auto">
                                         <button id="btn-month" class="btn btn-primary btn-sm">Tháng</button>
                                         <button id="btn-year" class="btn btn-secondary btn-sm">Năm</button>
@@ -104,8 +104,6 @@
                             </div><!-- end card -->
                         </div><!-- end col -->
 
-
-
                         <div class="col-xl-4">
             
                         </div>
@@ -118,22 +116,6 @@
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Top 10 sản phẩm được mua nhiều nhất</h4>
                                     <div class="flex-shrink-0">
-                                        <div class="dropdown card-header-dropdown">
-                                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                <span class="fw-semibold text-uppercase fs-12">Sort by:
-                                                </span><span class="text-muted">Today<i
-                                                        class="mdi mdi-chevron-down ms-1"></i></span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Today</a>
-                                                <a class="dropdown-item" href="#">Yesterday</a>
-                                                <a class="dropdown-item" href="#">Last 7 Days</a>
-                                                <a class="dropdown-item" href="#">Last 30 Days</a>
-                                                <a class="dropdown-item" href="#">This Month</a>
-                                                <a class="dropdown-item" href="#">Last Month</a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
