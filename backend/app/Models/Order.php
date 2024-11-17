@@ -43,22 +43,6 @@ class Order extends Model
           'phone',
           'note',
     ];
-
-
-    protected $fillable = [
-        'code',
-        'payment_type',
-        'total_price',
-        'user_id',
-        'promotion_id',
-        'shipping_id',
-        'name',
-        'address',
-        'money_total',
-        'phone',
-        'note',
-    ];
-
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -71,7 +55,4 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
-
-}
-
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
@@ -14,11 +15,14 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserNewsController;
 
 
 /*
@@ -53,8 +57,17 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
 
-    Route::get('admin/users', [UserController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+
+    Route::get('admin/users', [UseradminController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+
 });
+
+//Profile
+Route::get('/admin/pages/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/user/account', [ProfileController::class, 'account'])->name('user.profile')->middleware('auth');
+Route::get('/user/edit', [ProfileController::class, 'edit'])->name('user.edit_profile')->middleware('auth');
+Route::put('/user/update', [ProfileController::class, 'update'])->name('user.update')->middleware('auth');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -172,10 +185,25 @@ Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
 
 //Review
-Route::middleware('auth')->group(function () {
+
+Route::middleware(['auth'])->group(function () {
+    // Route cho người dùng bình thường tạo review
+    Route::get('product/{productId}/review', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews/store/{product}', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    // Route quản lý review trong admin
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+});
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+/*Route::middleware('auth')->group(function () {
     Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
-});
+});*/
 
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
@@ -183,3 +211,11 @@ Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail'
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
 // Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
 
+
+//Tin tức
+Route::resource('news', NewsController::class);
+Route::prefix('tins')->as('tins.')->group(function () {
+    Route::get('/', [UserNewsController::class, 'index'])->name('index');
+    Route::get('/{id}', [UserNewsController::class, 'show'])->name('show');
+});
+Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
