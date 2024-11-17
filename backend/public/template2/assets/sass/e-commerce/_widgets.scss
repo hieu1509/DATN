@@ -1,7 +1,7 @@
 /**
  * Widgets
  */
-.product_list_widget {
+ .product_list_widget {
 	list-style: none;
 	margin-left: 0;
 
@@ -263,7 +263,7 @@
 
 #secondary {
 	.widget {
-		.widget-title, {
+		.widget-title {
 		    border-bottom: 1px solid #ebebeb;
 		    margin-bottom: 0.9em;
 		    padding-bottom: 0.25em;
@@ -352,7 +352,6 @@
 			span.amount {
 				font-weight: 500;
 			}
-
 
 			
 			$opacity: 0.5; // Biến cho độ mờ
@@ -543,7 +542,7 @@
 		        margin-bottom: 1.550em;
 			}
 		}
-
+	
 	}
 }
 

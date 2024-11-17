@@ -46,6 +46,7 @@ class User extends Authenticatable
     ];
 
 
+
     public function isAdmin()
     {
         return $this->role === 'admin';
@@ -61,6 +62,7 @@ class User extends Authenticatable
         return $this->role === $role;
     }
 
+
     public function ordermyorder(){
         return $this->hasMany(Order::class);
     }
@@ -74,5 +76,3 @@ class User extends Authenticatable
         return $this->hasMany(Cart::class);
     }
 }
-
-

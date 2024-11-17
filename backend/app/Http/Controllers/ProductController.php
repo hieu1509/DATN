@@ -140,7 +140,6 @@ class ProductController extends Controller
 
         $product = Product::with(['productImages', 'variants'])->findOrFail($id);
 
-
         $sub_categories = Subcategory::pluck('name', 'id')->all();
         $chips = Chip::pluck('name', 'id')->all();
         $rams = Ram::pluck('name', 'id')->all();
@@ -256,3 +255,4 @@ class ProductController extends Controller
         }
     }
 }
+

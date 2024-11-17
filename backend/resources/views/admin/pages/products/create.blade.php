@@ -47,13 +47,13 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="product-title-input">Tên sản phẩm</label>
                                     <input name="name" id="name" type="text" class="form-control"
-                                        id="product-title-input" value="" placeholder="Nhập tên sản phẩm" required>
+                                        id="product-title-input" value="{{ old('name') }}" placeholder="Nhập tên sản phẩm" required>
                                     <div class="invalid-feedback">Nhập tên sản phẩm.</div>
                                 </div>
                                 <div>
                                     <label>Mô tả</label>
 
-                                    <textarea name="content" id="ckeditor-classic">
+                                    <textarea name="content" id="ckeditor-classic">{{ old('content') }}
                                 </textarea>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                             </div>
                             <div class="card-body">
                                 <label class="text-muted mb-2">Thông số kỹ thuật sản phẩm</label>
-                                <textarea name="description" id="description" class="form-control" placeholder="" rows="12"></textarea>
+                                <textarea name="description" id="description" class="form-control" placeholder="" rows="12">{{ old('description') }}</textarea>
                             </div>
                             <!-- end card body -->
                         </div>
@@ -287,7 +287,7 @@
                                                 <label class="form-label" for="listed_price">Giá</label>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text" id="product-price-addon">$</span>
-                                                    <input name="listed_price[]" type="number" class="form-control"
+                                                    <input name="listed_price[]" value="{{ old('listed_price[]') }}" type="number" class="form-control"
                                                         placeholder="Giá" required>
                                                 </div>
                                             </div>
@@ -297,7 +297,7 @@
                                                 <label class="form-label" for="sale_price">Giá khuyến mãi</label>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">%</span>
-                                                    <input name="sale_price[]" type="number" class="form-control"
+                                                    <input name="sale_price[]" value="{{ old('sale_price[]') }}" type="number" class="form-control"
                                                         placeholder="Khuyến mãi">
                                                 </div>
                                             </div>
@@ -305,7 +305,7 @@
                                         <div class="col-lg-2">
                                             <div class="mb-3">
                                                 <label class="form-label" for="quantity">Số lượng</label>
-                                                <input name="quantity[]" type="number" class="form-control"
+                                                <input name="quantity[]" value="{{ old('quantity[]') }}" type="number" class="form-control"
                                                     placeholder="Số lượng">
                                             </div>
                                         </div>

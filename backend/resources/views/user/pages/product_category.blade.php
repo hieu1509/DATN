@@ -204,7 +204,7 @@
                                                                 @else
                                                                     <span>Không có ảnh</span>
                                                                 @endif
-                                                                <span class="price">
+                                                                {{-- <span class="price">
                                                                     <span class="woocommerce-Price-amount amount">
                                                                         <span
                                                                             class="woocommerce-Price-currencySymbol"></span>
@@ -235,16 +235,30 @@
                                                                             } else {
                                                                                 echo 'Chưa có giá';
                                                                             }
-                                                                        @endphp</span>
+                                                                        @endphp</span> 
+                                                                </span> --}}
+                                                                <span class="price">
+                                                                    <ins>
+                                                                        <span class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
+                                                                    </ins>
+                                                                    <del>
+                                                                        <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
+                                                                    </del>
+                                                                    <span class="amount"> </span>
                                                                 </span>
                                                                 <h2 class="woocommerce-loop-product__title">
                                                                     {{ $product->name }}</h2>
                                                             </a>
                                                             <!-- .woocommerce-LoopProduct-link -->
                                                             <div class="hover-area">
-                                                                <a class="button" href="cart.html">Thêm vào giỏ hàng</a>
-                                                                <a class="add-to-compare-link" href="compare.html">Add to
-                                                                    compare</a>
+                                                                <form action="{{route('cart.store')}}" enctype="multipart/form-data" method="post" class="cart">
+                                                                    @csrf
+                                                                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
+                                                                    <input type="hidden" name="quantity" id="" value="1">
+                                                                    <button type="submit" class="button add_to_cart_button">Thêm vào giỏ hàng</button>
+                                                                </form>
+                                                                {{-- <a class="add-to-compare-link" href="compare.html">Add to
+                                                                    compare</a> --}}
                                                             </div>
                                                             <!-- .hover-area -->
                                                         </div>
@@ -2376,12 +2390,14 @@
                                         <span class="gamma widget-title">Chip</span>
                                         <ul>
                                             @foreach ($chips as $key => $item)
-                                                <li class="wc-layered-nav-term">
-                                                    <input type="checkbox" name="chip_id[]"
-                                                        id="chip_{{ $key }}" value="{{ $key }}"
-                                                        {{ in_array($key, request('chip_id', [])) ? 'checked' : '' }}>
-                                                    <label for="chip_{{ $key }}">{{ $item }}</label>
-                                                </li>
+                                                @if ($key != 1) 
+                                                    <li class="wc-layered-nav-term">
+                                                        <input type="checkbox" name="chip_id[]"
+                                                            id="chip_{{ $key }}" value="{{ $key }}"
+                                                            {{ in_array($key, request('chip_id', [])) ? 'checked' : '' }}>
+                                                        <label for="chip_{{ $key }}">{{ $item }}</label>
+                                                    </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
@@ -2390,12 +2406,14 @@
                                         <span class="gamma widget-title">Ram</span>
                                         <ul>
                                             @foreach ($rams as $key => $item)
+                                            @if ($key != 1) 
                                                 <li class="wc-layered-nav-term">
                                                     <input type="checkbox" name="ram_id[]" id="ram_{{ $key }}"
                                                         value="{{ $key }}"
                                                         {{ in_array($key, request('ram_id', [])) ? 'checked' : '' }}>
                                                     <label for="ram_{{ $key }}">{{ $item }}</label>
                                                 </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
@@ -2404,12 +2422,14 @@
                                         <span class="gamma widget-title">Storage</span>
                                         <ul>
                                             @foreach ($storages as $key => $item)
+                                            @if ($key != 1) 
                                                 <li class="wc-layered-nav-term">
                                                     <input type="checkbox" name="storage_id[]"
                                                         id="storage_{{ $key }}" value="{{ $key }}"
                                                         {{ in_array($key, request('storage_id', [])) ? 'checked' : '' }}>
                                                     <label for="storage_{{ $key }}">{{ $item }}</label>
                                                 </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
@@ -2425,7 +2445,7 @@
                             <div class="widget widget_techmarket_products_carousel_widget">
                                 <section id="single-sidebar-carousel" class="section-products-carousel">
                                     <header class="section-header">
-                                        <h2 class="section-title">Latest Products</h2>
+                                        <h2 class="section-title">Sản phẩm mới nhất</h2>
                                         <nav class="custom-slick-nav"></nav>
                                     </header>
                                     <!-- .section-header -->
@@ -2434,29 +2454,31 @@
                                         <div class="container-fluid">
                                             <div class="woocommerce columns-1">
                                                 <div class="products">
+                                                    @foreach ($latestProducts as $product)
                                                     <div class="landscape-product-widget product">
-                                                        <a class="woocommerce-LoopProduct-link"
-                                                            href="single-product-fullwidth.html">
+                                                        <a class="woocommerce-LoopProduct-link" href="{{ route('users.products.show', $product->id) }}">
                                                             <div class="media">
-                                                                <img class="wp-post-image"
-                                                                    src="assets/images/products/sm-1.jpg" alt="">
+                                                                @if ($product->image)
+                                                                    <img src="{{ Storage::url($product->image) }}" class="wp-post-image" alt="$product->name">
+                                                                @else
+                                                                    <span>Không có ảnh</span>
+                                                                @endif
                                                                 <div class="media-body">
                                                                     <span class="price">
                                                                         <ins>
-                                                                            <span class="amount"> 50.99</span>
+                                                                            <span class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
                                                                         </ins>
                                                                         <del>
-                                                                            <span class="amount">26.99</span>
+                                                                            <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
                                                                         </del>
+                                                                        <span class="amount"> </span>
                                                                     </span>
                                                                     <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">S100
-                                                                        Wireless Bluetooth Speaker – Neon Green</h2>
+                                                                    <h2 class="woocommerce-loop-product__title">{{ $product->name }}</h2>
                                                                     <div class="techmarket-product-rating">
                                                                         <div title="Rated 0 out of 5" class="star-rating">
                                                                             <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
-                                                                                5</span>
+                                                                                <strong class="rating">0</strong> out of 5</span>
                                                                         </div>
                                                                         <span class="review-count">(0)</span>
                                                                     </div>
@@ -2468,108 +2490,7 @@
                                                         </a>
                                                         <!-- .woocommerce-LoopProduct-link -->
                                                     </div>
-                                                    <div class="landscape-product-widget product">
-                                                        <a class="woocommerce-LoopProduct-link"
-                                                            href="single-product-fullwidth.html">
-                                                            <div class="media">
-                                                                <img class="wp-post-image"
-                                                                    src="assets/images/products/sm-2.jpg" alt="">
-                                                                <div class="media-body">
-                                                                    <span class="price">
-                                                                        <ins>
-                                                                            <span class="amount"> 50.99</span>
-                                                                        </ins>
-                                                                        <del>
-                                                                            <span class="amount">26.99</span>
-                                                                        </del>
-                                                                    </span>
-                                                                    <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">S100
-                                                                        Wireless Bluetooth Speaker – Neon Green</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
-                                                                            <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
-                                                                                5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(0)</span>
-                                                                    </div>
-                                                                    <!-- .techmarket-product-rating -->
-                                                                </div>
-                                                                <!-- .media-body -->
-                                                            </div>
-                                                            <!-- .media -->
-                                                        </a>
-                                                        <!-- .woocommerce-LoopProduct-link -->
-                                                    </div>
-                                                    <div class="landscape-product-widget product">
-                                                        <a class="woocommerce-LoopProduct-link"
-                                                            href="single-product-fullwidth.html">
-                                                            <div class="media">
-                                                                <img class="wp-post-image"
-                                                                    src="assets/images/products/sm-3.jpg" alt="">
-                                                                <div class="media-body">
-                                                                    <span class="price">
-                                                                        <ins>
-                                                                            <span class="amount"> 50.99</span>
-                                                                        </ins>
-                                                                        <del>
-                                                                            <span class="amount">26.99</span>
-                                                                        </del>
-                                                                    </span>
-                                                                    <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">S100
-                                                                        Wireless Bluetooth Speaker – Neon Green</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
-                                                                            <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
-                                                                                5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(0)</span>
-                                                                    </div>
-                                                                    <!-- .techmarket-product-rating -->
-                                                                </div>
-                                                                <!-- .media-body -->
-                                                            </div>
-                                                            <!-- .media -->
-                                                        </a>
-                                                        <!-- .woocommerce-LoopProduct-link -->
-                                                    </div>
-                                                    <div class="landscape-product-widget product">
-                                                        <a class="woocommerce-LoopProduct-link"
-                                                            href="single-product-fullwidth.html">
-                                                            <div class="media">
-                                                                <img class="wp-post-image"
-                                                                    src="assets/images/products/sm-4.jpg" alt="">
-                                                                <div class="media-body">
-                                                                    <span class="price">
-                                                                        <ins>
-                                                                            <span class="amount"> 50.99</span>
-                                                                        </ins>
-                                                                        <del>
-                                                                            <span class="amount">26.99</span>
-                                                                        </del>
-                                                                    </span>
-                                                                    <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">S100
-                                                                        Wireless Bluetooth Speaker – Neon Green</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
-                                                                            <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of
-                                                                                5</span>
-                                                                        </div>
-                                                                        <span class="review-count">(0)</span>
-                                                                    </div>
-                                                                    <!-- .techmarket-product-rating -->
-                                                                </div>
-                                                                <!-- .media-body -->
-                                                            </div>
-                                                            <!-- .media -->
-                                                        </a>
-                                                        <!-- .woocommerce-LoopProduct-link -->
-                                                    </div>
+                                                @endforeach
                                                 </div>
                                                 <!-- .products -->
                                             </div>
