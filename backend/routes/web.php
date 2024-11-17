@@ -155,6 +155,9 @@ Route::prefix('cart')
         Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
         Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
+        Route::put('/editOrder/{id}', [DonHangController::class, 'editOrder'])->name('editOrder');
+        Route::get('/myordetail/{id}', [DonHangController::class, 'myordetail'])->name('myordetail');
+
     });
 
 // Hiển thị trang checkout

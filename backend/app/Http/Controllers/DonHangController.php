@@ -48,10 +48,12 @@ class DonHangController extends Controller
         $user_id  = $donHang->user_id;
         $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
         $trangThaiThanhToan = Order::TRANG_THAI_THANH_TOAN;
-        $productDetails_id = $donHang->orderDetails->pluck('product_variant_id')->toArray();// khóa 
+        $productDetails_id = $donHang->orderDetails->pluck('productvariant_id')->toArray();// khóa 
         $productDetails = ProductVariant::whereIn('id', $productDetails_id)->get();
         // $orderDetails = $donHang->order->OrderDetail;
-        // dd($productDetails);
+        // dd($donHang);
+
+    
         return view('admin.order.show', compact('donHang', 'trangThaiDonHang', 'trangThaiThanhToan', 'productDetails',));
     }
 
@@ -93,4 +95,7 @@ class DonHangController extends Controller
     {
         //
     }
+
+
+   
 }

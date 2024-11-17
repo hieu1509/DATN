@@ -97,4 +97,7 @@ class CartController extends Controller
         $cartDetail->delete();
         return redirect()->back()->with('success', 'Xóa giỏ hàng thành công');
     }
+
+
+    
 }

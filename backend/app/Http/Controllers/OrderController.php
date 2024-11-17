@@ -172,8 +172,8 @@ public function placeOrder(Request $request)
     $orderHistory = new OrderHistory();
     $orderHistory->order_id = $order->id;
     $orderHistory->user_id = Auth::id();
-    $orderHistory->from_status = null;
-    $orderHistory->to_status = $order->status;
+    $orderHistory->from_status = Order::CHO_XAC_NHA;
+    $orderHistory->to_status = Order::CHUA_THANH_TOAN;
     $orderHistory->note = 'Đơn hàng đã được tạo';
     $orderHistory->datetime = now();
     $orderHistory->save();
