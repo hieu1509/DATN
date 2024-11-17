@@ -260,4 +260,5 @@ class UserController extends Controller
         return view('user.partials.menu', ['userName' => $user->name]);
 
     }
+
 }

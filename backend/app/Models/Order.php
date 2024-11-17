@@ -43,7 +43,6 @@ class Order extends Model
           'phone',
           'note',
     ];
-
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -56,6 +55,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
     public function orderHistories()
     {
         return $this->hasMany(OrderHistory::class);
@@ -69,5 +69,4 @@ class Order extends Model
         return $this->belongsTo(Promotion::class);
     }
 }
-
 

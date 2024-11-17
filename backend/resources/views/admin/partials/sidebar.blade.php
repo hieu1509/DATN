@@ -145,7 +145,7 @@
 
                 @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/comment" role="button" aria-expanded="false"
+                    <a class="nav-link menu-link" href="{{ route('admin.reviews.index') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">
                         <i class=" ri-chat-3-line"></i> <span data-key="t-authentication">Bình luận</span>
                     </a>
@@ -167,6 +167,27 @@
                         aria-controls="sidebarCharts">
                         <i class="ri-pie-chart-line"></i> <span data-key="t-charts"> Thống kê </span>
                     </a>
+                </li>
+                @endif
+
+                @if (Auth::check() && Auth::user()->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApp2" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApp2">
+                        <i class="  ri-book-line"></i> <span data-key="t-apps">Tin tức</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarApp2">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('news.index') }}" class="nav-link" data-key="t-chat">Danh
+                                    sách tin tức</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('news.create') }}" class="nav-link" data-key="t-api-key">Thêm
+                                    tin tức</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 @endif
 
