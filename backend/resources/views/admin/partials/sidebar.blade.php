@@ -161,14 +161,14 @@
                 </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                <!-- @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/statistic" role="button" aria-expanded="false"
                         aria-controls="sidebarCharts">
                         <i class="ri-pie-chart-line"></i> <span data-key="t-charts"> Thống kê </span>
                     </a>
                 </li>
-                @endif
+                @endif -->
 
                 @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">

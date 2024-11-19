@@ -126,7 +126,7 @@
                                                                         <p>Giảm giá: {{ number_format($order->promotion->discount, 0) }}đ</p>
                                                                     @elseif($order->promotion->discount_type == 'percentage')
                                                                         <!-- Nếu discount_type là 'percentage' thì hiển thị phần trăm giảm giá -->
-                                                                        <p>Giảm giá: {{ $order->promotion->discount, }} %</p>
+                                                                        <p>Giảm giá: {{ $order->promotion->discount }} %</p>
                                                                     @else
                                                                         <p>Không xác định loại giảm giá.</p>
                                                                     @endif

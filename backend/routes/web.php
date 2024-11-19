@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\view\UseradminController;
@@ -95,9 +96,7 @@ Route::resource('subcategories', SubcategoryController::class);
 Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
-        Route::get('/', function () {
-            return view('admin.pages.dashboard');
-        });
+        Route::get('/', [DashboardController::class, 'Dashboard']);
 
         Route::prefix('products')
             ->as('products.')
