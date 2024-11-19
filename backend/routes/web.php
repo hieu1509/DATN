@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\DonHangController as ControllersDonHangController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
@@ -143,6 +144,18 @@ Route::prefix('admins')
                 Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
             });
+
+            Route::prefix('orders')
+            ->as('orders.')
+            ->group(function () {
+                Route::get('/', [ControllersDonHangController::class, 'index'])->name('index');
+                Route::get('/create', [ControllersDonHangController::class, 'create'])->name('create');
+                Route::post('/store', [ControllersDonHangController::class, 'store'])->name('store');
+                Route::get('/show/{id}', [ControllersDonHangController::class, 'show'])->name('show');
+                Route::get('/{id}/edit', [ControllersDonHangController::class, 'edit'])->name('edit');
+                Route::put('/{id}/update', [ControllersDonHangController::class, 'update'])->name('update');
+                Route::delete('/{id}/destroy', [ControllersDonHangController::class, 'destroy'])->name('destroy');
+            });
     });
 
 // Promotions resource (admin)
@@ -159,6 +172,9 @@ Route::prefix('cart')
         Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
         Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
+        Route::put('/editOrder/{id}', [DonHangController::class, 'editOrder'])->name('editOrder');
+        Route::get('/myordetail/{id}', [DonHangController::class, 'myordetail'])->name('myordetail');
+
     });
 
 // Hiển thị trang checkout
