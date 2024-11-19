@@ -40,7 +40,7 @@
 
                 </li> <!-- end Dashboard Menu -->
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
@@ -59,9 +59,9 @@
                         </ul>
                     </div>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApp" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApp">
@@ -80,9 +80,9 @@
                         </ul>
                     </div>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
@@ -101,18 +101,18 @@
                         </ul>
                     </div>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admins.chips.index') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-file-copy-line"></i> <span data-key="t-authentication">Thuộc tính</span>
                     </a>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarForms">
@@ -138,9 +138,9 @@
                         </ul>
                     </div>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('admin.users') }}" role="button"
                             aria-expanded="false" aria-controls="sidebarAuth">
@@ -148,34 +148,34 @@
                             <span data-key="t-authentication">Khách hàng</span>
                         </a>
                     </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/comment" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">
                         <i class=" ri-chat-3-line"></i> <span data-key="t-authentication">Bình luận</span>
                     </a>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('admins.orders.index')}}" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">
                         <i class="ri-shopping-cart-line"></i> <span data-key="t-authentication">Đơn hàng</span>
                     </a>
                 </li>
-                {{-- @endif --}}
+                @endif
 
-                {{-- @if (Auth::check() && Auth::user()->role === 'admin') --}}
+                @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/statistic" role="button" aria-expanded="false"
                         aria-controls="sidebarCharts">
                         <i class="ri-pie-chart-line"></i> <span data-key="t-charts"> Thống kê </span>
                     </a>
                 </li>
-                {{-- @endif --}}
+                @endif
 
             </ul>
         </div>

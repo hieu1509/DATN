@@ -127,7 +127,7 @@
     <script src="{{ asset('velzon/assets/js/plugins.js') }}"></script>
 
     <!-- apexcharts -->
-    <script src="{{ asset('velzon/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <!-- <script src="{{ asset('velzon/assets/libs/apexcharts/apexcharts.min.js') }}"></script> -->
 
     <!-- Vector map-->
     <script src="{{ asset('velzon/assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>

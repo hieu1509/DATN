@@ -39,4 +39,9 @@ class ProductVariant extends Model
         return $this->belongsTo(Storage::class, 'storage_id');
     }
 
+    public function orderDetail()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
 }
