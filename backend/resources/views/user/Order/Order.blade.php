@@ -164,14 +164,14 @@
                                                                 <td data-title="bank" class="product-bank">
                                                                     <span class="woocommerce-Price-amount amount">
                                                                         <span
-                                                                            class="woocommerce-Price-currencySymbol">{{ $TrangThaiDonHang[$items->from_status] }}
+                                                                            class="woocommerce-Price-currencySymbol">{{ $TrangThaiDonHang[$items->to_status] }}
                                                                         </span>
                                                                 </td>   
 
                                                                 <td data-title="delivery" class="product-delivery">
                                                                     <span class="woocommerce-Price-amount amount">
                                                                         <span
-                                                                            class="woocommerce-Price-currencySymbol">{{ $TrangThaiThanhToan[$items->to_status] }}
+                                                                            class="woocommerce-Price-currencySymbol">{{ $TrangThaiThanhToan[$items->from_status] }}
                                                                         </span>
                                                                 </td>
                                                                 <td data-title="Total" class="product-subtotal">
@@ -184,28 +184,30 @@
                                                                 </td>
 
                                                                 <td data-title="cancel" class="product-cancel">
-                                                                    <a href="">view</a>
+                                                                    <a href="{{ route('order.detail', $items->order->id) }}">
+                                                                        view
+                                                                    </a>
                                                                     <form action="{{ route('cart.editOrder', $items->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         @method('PUT')
-                                                                        @if ($items->from_status === $typeChoXacNha)
-                                                                            <input type="hidden" name="from_status"
+                                                                        @if ($items->to_status === $typeChoXacNha)
+                                                                            <input type="hidden" name="to_status"
                                                                                 value="huy_hang">
                                                                             <button type="submit">Hủy hàng</button>
                 
-                                                                        @elseif($items->from_status === $typeDaXacNhan)
-                                                                            <input type="hidden" name="from_status"
+                                                                        @elseif($items->to_status === $typeDaXacNhan)
+                                                                            <input type="hidden" name="to_status"
                                                                                 value="da_nhan_hang">
                                                                             <button type="submit">Đã nhận hàng</button>
                                                                         
-                                                                        @elseif($items->from_status === $typeDangChuanBi)
-                                                                        <input type="hidden" name="from_status"
+                                                                        @elseif($items->to_status === $typeDangChuanBi)
+                                                                        <input type="hidden" name="to_status"
                                                                             value="da_nhan_hang">
                                                                         <button type="submit">Đã nhận hàng</button>
                                                                    
-                                                                    @elseif($items->from_status === $typeDangVanChuyen)
-                                                                    <input type="hidden" name="from_status"
+                                                                    @elseif($items->to_status === $typeDangVanChuyen)
+                                                                    <input type="hidden" name="to_status"
                                                                         value="da_nhan_hang">
                                                                     <button type="submit">Đã nhận hàng</button>
                                                                 @endif

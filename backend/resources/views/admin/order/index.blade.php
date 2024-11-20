@@ -44,7 +44,7 @@
 
 
                                             <td>{{ $item->datetime }}</td>
-                                            <td>{{ $trangThaiDonHang[$item->from_status] ?? 'Không xác định' }}</td>
+                                            <td>{{ $trangThaiDonHang[$item->to_status] ?? 'Không xác định' }}</td>
                                             <td>{{ number_format($item->order->money_total) }}</td>
                                             <td>
                                                 <form action="{{ route('admins.orders.update', $item->id) }}"
@@ -56,7 +56,7 @@
                                                         data-default-value="{{ $item->order_status }}">
                                                         @foreach ($trangThaiDonHang as $key => $value)
                                                             <option value="{{ $key }}"
-                                                                {{ $item->from_status == $key ? 'selected' : '' }}
+                                                                {{ $item->to_status == $key ? 'selected' : '' }}
                                                                 {{ $key == 'huy_hang' ? 'disabled' : '' }}>
                                                                 {{ $value }}
                                                             </option>

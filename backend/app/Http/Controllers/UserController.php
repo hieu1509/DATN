@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\subCategory;
+use App\Models\Subcategory;
 use App\Models\Chip;
 use App\Models\Ram;
 use App\Models\Storage;
@@ -19,101 +19,56 @@ class UserController extends Controller
 
     public function menu()
     {
-
-        $categories = Category::with('subCategories')->get();
+        $categories = Category::with('subCategories')->get();;
 
         return view('user.partials.menu', compact('categories'));
     }
 
     public function index()
     {
-        $latestProducts = Product::with(['subCategory', 'variants'])
-            ->where('is_show_home', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
-        $hotProducts = Product::with(['subCategory', 'variants'])
-
-            ->where('is_show_home', 1)
-            ->where('is_hot', 1)
-            ->latest('created_at')
-
-            ->take(12)
-            ->get();
-
-        $saleProducts = Product::with(['subCategory', 'variants'])
-
-            ->where('is_show_home', 1)
-            ->where('is_sale', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
-        $randomProducts = Product::with(['subCategory', 'variants'])
-            ->where('is_show_home', 1)
-            ->inRandomOrder()
-            ->take(3)
-            ->get();
-
-        $laptopProducts = Product::with(['subCategory', 'variants'])
-            ->whereHas('subCategory', function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('name', 'like', '%laptop%');
+        // Truy vấn chung để tránh lặp lại mã
+        $commonQuery = function ($categoryName = null) {
+            $query = Product::with(['subCategory', 'variants'])
+                ->where('is_show_home', 1)
+                ->latest('created_at')
+                ->take(12);
+    
+            if ($categoryName) {
+                $query->whereHas('subCategory', function ($subQuery) use ($categoryName) {
+                    $subQuery->whereHas('category', function ($catQuery) use ($categoryName) {
+                        $catQuery->where('name', 'like', '%' . $categoryName . '%');
+                    });
                 });
-            })
+            }
+    
+            return $query;
+        };
+    
+        // Sắp xếp sản phẩm theo rating trung bình từ cao đến thấp
+        $highRatedProducts = Product::with(['subCategory', 'variants', 'reviews'])
             ->where('is_show_home', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-        
-        $banphimProducts = Product::with(['subCategory', 'variants'])
-            ->whereHas('subCategory', function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('name', 'like', '%bàn phím%');
-                });
+            ->get()
+            ->sortByDesc(function ($product) {
+                return $product->reviews->avg('rating');
             })
-            ->where('is_show_home', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
-        $chuotProducts = Product::with(['subCategory', 'variants'])
-            ->whereHas('subCategory', function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('name', 'like', '%chuột%');
-                });
-            })
-            ->where('is_show_home', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
-        $loaProducts = Product::with(['subCategory', 'variants'])
-            ->whereHas('subCategory', function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('name', 'like', '%loa%');
-                });
-            })
-            ->where('is_show_home', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
-        $taingheProducts = Product::with(['subCategory', 'variants'])
-            ->whereHas('subCategory', function ($query) {
-                $query->whereHas('category', function ($query) {
-                    $query->where('name', 'like', '%tai nghe%');
-                });
-            })
-            ->where('is_show_home', 1)
-            ->latest('created_at')
-            ->take(12)
-            ->get();
-
-        return view('user.pages.home', compact('latestProducts', 'hotProducts', 'saleProducts', 'randomProducts'
-        , 'laptopProducts', 'banphimProducts', 'chuotProducts', 'loaProducts', 'taingheProducts'));
-
+            ->take(12); 
+    
+        $latestProducts = $commonQuery()->get();
+        $hotProducts = $commonQuery()->where('is_hot', 1)->get();
+        $saleProducts = $commonQuery()->where('is_sale', 1)->get();
+        $randomProducts = $commonQuery()->inRandomOrder()->take(3)->get();
+    
+        // Sản phẩm theo danh mục
+        $laptopProducts = $commonQuery('laptop')->get();
+        $banphimProducts = $commonQuery('bàn phím')->get();
+        $chuotProducts = $commonQuery('chuột')->get();
+        $loaProducts = $commonQuery('loa')->get();
+        $taingheProducts = $commonQuery('tai nghe')->get();
+    
+        return view('user.pages.home', compact(
+            'latestProducts', 'hotProducts', 'saleProducts', 'randomProducts', 'highRatedProducts',
+            'laptopProducts', 'banphimProducts', 'chuotProducts', 'loaProducts', 'taingheProducts'
+        ));
     }
 
     public function showSubCategories(SubCategory $subCategory)
@@ -153,6 +108,12 @@ class UserController extends Controller
         $query = Product::with(['subCategory', 'variants']);
         $isFiltered = false;
 
+        // Lọc theo tên sản phẩm
+        if ($request->has('name') && !empty($request->input('name'))) {
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->input('name')) . '%']);
+            $isFiltered = true;
+        }
+
         // Lọc theo danh mục con
         if ($request->filled('sub_category_id')) {
 
@@ -161,35 +122,34 @@ class UserController extends Controller
             $isFiltered = true;
         }
 
-        // Lọc theo giá (có thể chỉ nhập min_price hoặc max_price)
-        $minPrice = $request->input('min_price');
-        $maxPrice = $request->input('max_price');
-
-        // Nếu chỉ nhập min_price và là giá trị hợp lệ (số)
-        if (is_numeric($minPrice)) {
-            $query->whereHas('variants', function ($q) use ($minPrice) {
-                $q->where('sale_price', '>=', $minPrice)
-                    ->orWhere('listed_price', '>=', $minPrice);
-            });
+        // Lọc theo khoảng giá dựa trên lựa chọn từ checkbox
+        $priceRange = $request->input('price_range');
+        if ($priceRange) {
             $isFiltered = true;
-        }
-
-        // Nếu chỉ nhập max_price và là giá trị hợp lệ (số)
-        if (is_numeric($maxPrice)) {
-            $query->whereHas('variants', function ($q) use ($maxPrice) {
-                $q->where('sale_price', '<=', $maxPrice)
-                    ->orWhere('listed_price', '<=', $maxPrice);
+            $query->whereHas('variants', function ($q) use ($priceRange) {
+                switch ($priceRange) {
+                    case 'below_10':
+                        $q->where('sale_price', '<', 10000000)
+                        ->orWhere('listed_price', '<', 10000000);
+                        break;
+                    case '10_15':
+                        $q->whereBetween('sale_price', [10000000, 15000000])
+                        ->orWhereBetween('listed_price', [10000000, 15000000]);
+                        break;
+                    case '15_20':
+                        $q->whereBetween('sale_price', [15000000, 20000000])
+                        ->orWhereBetween('listed_price', [15000000, 20000000]);
+                        break;
+                    case '20_30':
+                        $q->whereBetween('sale_price', [20000000, 30000000])
+                        ->orWhereBetween('listed_price', [20000000, 30000000]);
+                        break;
+                    case 'above_30':
+                        $q->where('sale_price', '>', 30000000)
+                        ->orWhere('listed_price', '>', 30000000);
+                        break;
+                }
             });
-            $isFiltered = true;
-        }
-
-        // Nếu cả min_price và max_price đều được nhập và là số hợp lệ
-        if (is_numeric($minPrice) && is_numeric($maxPrice)) {
-            $query->whereHas('variants', function ($q) use ($minPrice, $maxPrice) {
-                $q->whereBetween('sale_price', [$minPrice, $maxPrice])
-                    ->orWhereBetween('listed_price', [$minPrice, $maxPrice]);
-            });
-            $isFiltered = true;
         }
 
         // Lọc theo chip

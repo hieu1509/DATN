@@ -7,7 +7,7 @@
                 <img src="{{ asset('velzon/assets/images/logo-sm.png') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('velzon/assets/images/logo-dark.png') }}" alt="" height="17">
+                <img src="{{ asset('velzon/assets/images/1.png') }}" alt="" height="50px">
             </span>
         </a>
         <!-- Light Logo-->
@@ -16,7 +16,7 @@
                 <img src="{{ asset('velzon/assets/images/logo-sm.png') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('velzon/assets/images/logo-light.png') }}" alt="" height="17">
+                <img src="{{ asset('velzon/assets/images/1.png') }}" alt="" height="50px">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -121,20 +121,14 @@
                     <div class="collapse menu-dropdown" id="sidebarForms">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-
                                 <a href="{{ route('promotions.index') }}" class="nav-link" data-key="t-chat">Danh
                                     sách khuyến mại </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('promotions.create') }}" class="nav-link"
                                     data-key="t-api-key">Thêm khuyến mại</a>
-
-                                <a href="{{route('promotions.index')}}" class="nav-link" data-key="t-chat">Danh sách khuyến mại </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('promotions.create') }}" class="nav-link" data-key="t-api-key">Thêm khuyến mại</a>
-
-                            </li>
+                      
                         </ul>
                     </div>
                 </li>
@@ -152,7 +146,7 @@
 
                 @if (Auth::check() && Auth::user()->role === 'admin')
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/comment" role="button" aria-expanded="false"
+                    <a class="nav-link menu-link" href="{{ route('admin.reviews.index')}}" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">
                         <i class=" ri-chat-3-line"></i> <span data-key="t-authentication">Bình luận</span>
                     </a>

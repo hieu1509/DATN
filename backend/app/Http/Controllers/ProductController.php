@@ -20,11 +20,58 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Product::query()->with(['subCategory', 'variants'])->latest('id')->paginate(6);
-
-        return view('admin.pages.products.list', compact('data'));
+        // Khởi tạo query
+        $query = Product::query()->with(['subCategory', 'variants']);
+    
+        // Lọc theo danh mục con
+        if ($request->has('sub_category_id') && $request->sub_category_id) {
+            $query->where('sub_category_id', $request->sub_category_id);
+        }
+    
+        // Lọc theo chip
+        if ($request->has('chip_id') && $request->chip_id) {
+            $query->whereHas('variants', function ($variantQuery) use ($request) {
+                $variantQuery->where('chip_id', $request->chip_id);
+            });
+        }
+    
+        // Lọc theo RAM
+        if ($request->has('ram_id') && $request->ram_id) {
+            $query->whereHas('variants', function ($variantQuery) use ($request) {
+                $variantQuery->where('ram_id', $request->ram_id);
+            });
+        }
+    
+        // Lọc theo bộ nhớ (Storage)
+        if ($request->has('storage_id') && $request->storage_id) {
+            $query->whereHas('variants', function ($variantQuery) use ($request) {
+                $variantQuery->where('storage_id', $request->storage_id);
+            });
+        }
+    
+        // Lọc theo trạng thái (is_hot, is_sale, is_show_home)
+        if ($request->has('is_hot') && $request->is_hot !== null) {
+            $query->where('is_hot', $request->is_hot);
+        }
+        if ($request->has('is_sale') && $request->is_sale !== null) {
+            $query->where('is_sale', $request->is_sale);
+        }
+        if ($request->has('is_show_home') && $request->is_show_home !== null) {
+            $query->where('is_show_home', $request->is_show_home);
+        }
+    
+        // Phân trang
+        $data = $query->latest('id')->paginate(6);
+    
+        // Truyền thêm dữ liệu cho bộ lọc
+        $subCategories = SubCategory::pluck('name', 'id')->all();
+        $chips = Chip::pluck('name', 'id')->all();
+        $rams = Ram::pluck('name', 'id')->all();
+        $storages = Storage::pluck('name', 'id')->all();
+    
+        return view('admin.pages.products.list', compact('data', 'subCategories', 'chips', 'rams', 'storages'));
     }
 
     /**

@@ -13,11 +13,11 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\view\DonHangController;
+use App\Http\Controllers\view\DonHangController ;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\DonHangController as ControllersDonHangController;
+use App\Http\Controllers\DonHangController as DonHangController2;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
@@ -147,13 +147,13 @@ Route::prefix('admins')
             Route::prefix('orders')
             ->as('orders.')
             ->group(function () {
-                Route::get('/', [ControllersDonHangController::class, 'index'])->name('index');
-                Route::get('/create', [ControllersDonHangController::class, 'create'])->name('create');
-                Route::post('/store', [ControllersDonHangController::class, 'store'])->name('store');
-                Route::get('/show/{id}', [ControllersDonHangController::class, 'show'])->name('show');
-                Route::get('/{id}/edit', [ControllersDonHangController::class, 'edit'])->name('edit');
-                Route::put('/{id}/update', [ControllersDonHangController::class, 'update'])->name('update');
-                Route::delete('/{id}/destroy', [ControllersDonHangController::class, 'destroy'])->name('destroy');
+                Route::get('/', [DonHangController::class, 'index'])->name('index');
+                Route::get('/create', [DonHangController::class, 'create'])->name('create');
+                Route::post('/store', [DonHangController::class, 'store'])->name('store');
+                Route::get('/show/{id}', [DonHangController::class, 'show'])->name('show');
+                Route::get('/{id}/edit', [DonHangController::class, 'edit'])->name('edit');
+                Route::put('/{id}/update', [DonHangController::class, 'update'])->name('update');
+                Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
             });
     });
 
@@ -170,9 +170,9 @@ Route::prefix('cart')
         Route::get('/{id}/edit', [CartController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
-        Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
-        Route::put('/editOrder/{id}', [DonHangController::class, 'editOrder'])->name('editOrder');
-        Route::get('/myordetail/{id}', [DonHangController::class, 'myordetail'])->name('myordetail');
+        Route::get('/myorder', [DonHangController2::class, 'index'])->name('myorder');
+        Route::put('/editOrder/{id}', [DonHangController2::class, 'editOrder'])->name('editOrder');
+        Route::get('/myordetail/{id}', [DonHangController2::class, 'myordetail'])->name('myordetail');
 
     });
 
@@ -218,13 +218,6 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.s
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 });*/
-
-Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
-
-// IPN của MoMo
-Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
-// Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
-
 
 //Tin tức
 Route::resource('news', NewsController::class);

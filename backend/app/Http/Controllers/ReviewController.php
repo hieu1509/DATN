@@ -44,43 +44,43 @@ class ReviewController extends Controller
         return view('reviews.create', compact('product'));
     }
 
-    public function store(StoreReviewRequest $request)
+    public function store(Request $request, $product_id)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để đánh giá.');
+        // Kiểm tra xem người dùng có đăng nhập chưa
+        if (auth()->guest()) {
+            return redirect()->route('login');
         }
+
+        $user = auth()->user(); // Lấy thông tin người dùng
 
         // Kiểm tra nếu người dùng đã mua sản phẩm
-        $hasPurchased = Order::where('user_id', Auth::id())
-            ->whereHas('orderItems', function ($query) use ($request) {
-                $query->where('product_id', $request->product_id);
-            })
-            ->exists();
+        // $hasPurchased = Order::where('user_id', Auth::id())
+        //     ->whereHas('orderDetails', function ($query) use ($product_id) {
+        //         $query->where('productvariant_id', $product_id);
+        //     })
+        //     ->exists();
 
-        if (!$hasPurchased) {
-            return back()->with('error', 'Bạn phải mua sản phẩm này trước khi đánh giá.');
-        }
+        // if (!$hasPurchased) {
+        //     return back()->with('error', 'Bạn phải mua sản phẩm này trước khi đánh giá.');
+        // }
 
-        // Lưu review vào cơ sở dữ liệu
-        $review = new Review();
-        $review->user_id = Auth::id();
-        $review->product_id = $request->product_id;
-        $review->rating = $request->rating;
-        $review->comment = $request->comment;
-        $review->author = Auth::user()->name;
-        $review->email = Auth::user()->email;
 
-        // Kiểm tra nếu có phản hồi
-        if ($request->has('parent_id')) {
-            $review->parent_id = $request->parent_id;
-        }
+        // Kiểm tra dữ liệu đầu vào
+        $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'comment' => 'nullable|string',
+        ]);
 
-        $review->save();
+        // Tạo mới bình luận và đánh giá
+        Review::create([
+            'user_id' => auth()->id(),
+            'product_id' => $product_id,
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+        ]);
 
-        return back()->with('success', 'Cảm ơn bạn đã đánh giá sản phẩm!');
+        return redirect()->back()->with('success', 'Cảm ơn bạn đã đánh giá sản phẩm!');
     }
-
-
 
 
     public function destroy(Review $review)
@@ -92,5 +92,5 @@ class ReviewController extends Controller
 
         $review->delete();
         return redirect()->back()->with('success', 'Bình luận đã được xóa');
-    }
+}
 }

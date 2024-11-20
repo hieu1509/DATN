@@ -18,8 +18,8 @@
         <!-- .nav -->
         <ul id="menu-top-bar-right" class="nav menu-top-bar-right">
             <li class="hidden-sm-down menu-item animate-dropdown">
-                <a title="Track Your Order" href="track-your-order.html">
-                    <i class="tm tm-order-tracking"></i>Theo dõi đơn hàng</a>
+                <a title="Track Your Order" href="{{ route('cart.myorder')}}">
+                    <i class="tm tm-order-tracking"></i>Lịch sử đơn hàng</a>
             </li>
             <li class="menu-item">
 

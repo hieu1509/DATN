@@ -45,11 +45,11 @@
                                                 </li>
 
                                                 <li class="woocommerce-order-overview__payment-method method">
-                                                    {{-- Trạng thái: <strong>{{ $orderStatus }}</strong> --}}
+                                                    Trạng thái: <strong>{{ $orderStatus }}</strong>
                                                 </li>
                                                 
                                                 <li class="woocommerce-order-overview__payment-method method">
-                                                    {{-- Trạng thái thanh toán: <strong>{{ $paymentStatus }}</strong> --}}
+                                                    Trạng thái thanh toán: <strong>{{ $paymentStatus }}</strong>
                                                 </li>
                                             
                                                 <li class="woocommerce-order-overview__total total">
@@ -115,11 +115,12 @@
                                                             </tr>
                                                         @endforeach
                                                         <tr>
-                                                            <th class="woocommerce-table__product-name product-name">Shipping: {{number_format($order->shipping->cost, 0, ',', '.')}}đ - {{$order->shipping->name}} </th>
-                                                            <th></th>
+                                                            <td  class="cart_item"></td>
+                                                            <td class="woocommerce-table__product-name product-name">Shipping: {{number_format($order->shipping->cost, 0, ',', '.')}}đ - {{$order->shipping->name}} </td>
                                                         </tr>
                                                         <tr>
-                                                            <th class="woocommerce-table__product-name product-name">
+                                                            <td  class="cart_item"></td>
+                                                            <td class="woocommerce-table__product-name product-name">
                                                                 @if($order->promotion)
                                                                     @if($order->promotion->discount_type == 'fixed')
                                                                         <!-- Nếu discount_type là 'fixed' thì hiển thị giảm giá theo tiền -->
@@ -134,12 +135,11 @@
                                                                     <p>Không có mã giảm giá.</p>
                                                                 @endif
                                                             
-                                                            </th>
-                                                            <th></th>
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <th><h4>Tổng:  <strong><span class="woocommerce-Price-amount amount">{{ number_format($order->money_total) }}<span class="woocommerce-Price-currencySymbol">₫</span></span></strong></h4></th>
-                                                            <th></th>
+                                                            <td  class="cart_item"></td>
+                                                            <th><h5>Tổng:  <strong><span class="woocommerce-Price-amount amount">{{ number_format($order->money_total) }}<span class="woocommerce-Price-currencySymbol">₫</span></span></strong></h5></th>
                                                         </tr>
                                                     </tbody>
                                                 </table>

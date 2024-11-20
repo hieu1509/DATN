@@ -249,22 +249,38 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        // Lấy đơn hàng cùng với chi tiết đơn hàng, sản phẩm, phương thức giao hàng và mã khuyến mãi
-        $order = Order::with(['orderDetails.productVariant.product', 'shipping', 'promotion', 'orderHistories'])
-        ->find($id);
+        // Lấy đơn hàng với các mối quan hệ cần thiết
+        $order = Order::with([
+            'orderDetails.productVariant.product',
+            'shipping',
+            'promotion',
+            'orderHistories'
+        ])->find($id);
     
-        // Kiểm tra xem đơn hàng có tồn tại không
+        // Kiểm tra nếu đơn hàng không tồn tại
         if (!$order) {
             return redirect()->route('orders.index')->with('error', 'Đơn hàng không tồn tại.');
         }
-
-        $orderStatus = Order::TRANG_THAI_DON_HANG[$order->orderHistories->to_status] ?? 'Không xác định';
+    
+        // Lấy lịch sử đơn hàng chính xác theo id đơn hàng
+        $latestHistory = $order->orderHistories->where('order_id', $id)->first();
+    
+        // Nếu không tìm thấy lịch sử đơn hàng
+        if (!$latestHistory) {
+            return redirect()->route('orders.index')->with('error', 'Lịch sử đơn hàng không tồn tại.');
+        }
+    
+        // Trạng thái đơn hàng
+        $orderStatus = Order::TRANG_THAI_DON_HANG[$latestHistory->to_status] ?? 'Không xác định';
+    
         // Trạng thái thanh toán
-        $paymentStatus = Order::TRANG_THAI_THANH_TOAN[$order->orderHistories->from_status] ?? 'Không xác định';
-
+        $paymentStatus = Order::TRANG_THAI_THANH_TOAN[$latestHistory->from_status] ?? 'Không xác định';
+    
         // Trả về view với thông tin đơn hàng và chi tiết
         return view('user.pages.order_detail', compact('order', 'orderStatus', 'paymentStatus'));
     }
+    
+    
     
     public function logOrderHistory($order)
     {
@@ -306,7 +322,7 @@ class OrderController extends Controller
         $orderInfo = "Thanh toán đơn hàng #" . $order->code;
         $amount = $order->total_price;
         $orderId = $order->code;
-        $redirectUrl = route('order.success', $order->id);
+        $redirectUrl = route('order.detail', $order->id);
         $ipnUrl = route('order.ipn');
         $extraData = "";
     
@@ -361,7 +377,7 @@ class OrderController extends Controller
         $vnp_TmnCode = "7E31XY46"; 
         $vnp_HashSecret = "JO04I54AIVQB65LX3BDM4SQ95Y6JEZFH"; 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = route('order.success', $order->id);
+        $vnp_Returnurl = route('order.detail', $order->id);
         $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
         
@@ -453,7 +469,7 @@ class OrderController extends Controller
             if ($request->vnp_ResponseCode == '00') {
                 $order->status = 'paid';
                 $order->save();
-                return redirect()->route('order.success', $order->id);
+                return redirect()->route('order.detail', $order->id);
             }
             $order->status = 'failed';
             $order->save();

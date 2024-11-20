@@ -95,10 +95,9 @@
                                 <i class="tm tm-breadcrumbs-arrow-right"></i>
                             </span>
                             @if (isset($subCategory))
-                                
-                            Danh mục: {{ $subCategory->name }}
+                                Danh mục: {{ $subCategory->name }}
                             @endif
-                            
+
                         </nav>
                         <!-- .woocommerce-breadcrumb -->
                         <div id="primary" class="content-area">
@@ -113,8 +112,7 @@
                                     <!-- .handheld-sidebar-toggle -->
                                     <h1 class="woocommerce-products-header__title page-title">
                                         @if (isset($subCategory))
-                                
-                                        Danh mục: {{ $subCategory->name }}
+                                            Danh mục: {{ $subCategory->name }}
                                         @endif
                                     </h1>
                                     <ul role="tablist" class="shop-view-switcher nav nav-tabs">
@@ -239,10 +237,12 @@
                                                                 </span> --}}
                                                                 <span class="price">
                                                                     <ins>
-                                                                        <span class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
+                                                                        <span
+                                                                            class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
                                                                     </ins>
                                                                     <del>
-                                                                        <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
+                                                                        <span
+                                                                            class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
                                                                     </del>
                                                                     <span class="amount"> </span>
                                                                 </span>
@@ -251,11 +251,17 @@
                                                             </a>
                                                             <!-- .woocommerce-LoopProduct-link -->
                                                             <div class="hover-area">
-                                                                <form action="{{route('cart.store')}}" enctype="multipart/form-data" method="post" class="cart">
+                                                                <form action="{{ route('cart.store') }}"
+                                                                    enctype="multipart/form-data" method="post"
+                                                                    class="cart">
                                                                     @csrf
-                                                                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()->id }}">
-                                                                    <input type="hidden" name="quantity" id="" value="1">
-                                                                    <button type="submit" class="button add_to_cart_button">Thêm vào giỏ hàng</button>
+                                                                    <input type="hidden" name="variant_id"
+                                                                        value="{{ $product->variants->first()->id }}">
+                                                                    <input type="hidden" name="quantity" id=""
+                                                                        value="1">
+                                                                    <button type="submit"
+                                                                        class="button add_to_cart_button">Thêm vào giỏ
+                                                                        hàng</button>
                                                                 </form>
                                                                 {{-- <a class="add-to-compare-link" href="compare.html">Add to
                                                                     compare</a> --}}
@@ -264,7 +270,7 @@
                                                         </div>
                                                     @endforeach
                                                 @else
-                                                    <p>Không có sản phẩm nào trong danh mục này.</p>
+                                                    <p>Không có sản phẩm nào phù hợp.</p>
                                                 @endif
                                                 <!-- .product -->
                                             </div>
@@ -2361,17 +2367,36 @@
 
                                 <form action="{{ route('users.filter') }}" method="GET">
                                     <div class="widget woocommerce widget_price_filter" id="woocommerce_price_filter-2">
-                                        <p>
-                                            <span class="gamma widget-title">Lọc theo giá</span>
-                                        <div class="price_slider_amount">
-                                            <input type="text" placeholder="Giá tối thiếu"
-                                                value="{{ request('min_price') }}" name="min_price" id="min_price"
-                                                style="width: 100%;">
-                                            <input type="text" placeholder="Giá tối đa"
-                                                value="{{ request('max_price') }}" name="max_price" id="max_price"
-                                                style="width: 100%;">
-                                        </div>
-                                        </p>
+                                        <span class="gamma widget-title">Lọc theo giá</span>
+                                        <div class="price_filter">
+                                            <ul>
+                                                <li class="wc-layered-nav-term">
+                                                    <input type="radio" name="price_range" id="price_below_10" value="below_10"
+                                                        {{ request('price_range') == 'below_10' ? 'checked' : '' }}>
+                                                    <label for="price_below_10">Dưới 10 triệu</label>
+                                                </li>
+                                                <li class="wc-layered-nav-term">
+                                                    <input type="radio" name="price_range" id="price_10_15" value="10_15"
+                                                        {{ request('price_range') == '10_15' ? 'checked' : '' }}>
+                                                    <label for="price_10_15">10 - 15 triệu</label>
+                                                </li>
+                                                <li class="wc-layered-nav-term">
+                                                    <input type="radio" name="price_range" id="price_15_20" value="15_20"
+                                                        {{ request('price_range') == '15_20' ? 'checked' : '' }}>
+                                                    <label for="price_15_20">15 - 20 triệu</label>
+                                                </li>
+                                                <li class="wc-layered-nav-term">
+                                                    <input type="radio" name="price_range" id="price_20_30" value="20_30"
+                                                        {{ request('price_range') == '20_30' ? 'checked' : '' }}>
+                                                    <label for="price_20_30">20 - 30 triệu</label>
+                                                </li>
+                                                <li class="wc-layered-nav-term">
+                                                    <input type="radio" name="price_range" id="price_above_30" value="above_30"
+                                                        {{ request('price_range') == 'above_30' ? 'checked' : '' }}>
+                                                    <label for="price_above_30">Trên 30 triệu</label>
+                                                </li>
+                                            </ul>
+                                        </div>  
                                     </div>
 
                                     <div class="widget woocommerce widget_layered_nav maxlist-more">
@@ -2390,7 +2415,7 @@
                                         <span class="gamma widget-title">Chip</span>
                                         <ul>
                                             @foreach ($chips as $key => $item)
-                                                @if ($key != 1) 
+                                                @if ($key != 1)
                                                     <li class="wc-layered-nav-term">
                                                         <input type="checkbox" name="chip_id[]"
                                                             id="chip_{{ $key }}" value="{{ $key }}"
@@ -2406,13 +2431,13 @@
                                         <span class="gamma widget-title">Ram</span>
                                         <ul>
                                             @foreach ($rams as $key => $item)
-                                            @if ($key != 1) 
-                                                <li class="wc-layered-nav-term">
-                                                    <input type="checkbox" name="ram_id[]" id="ram_{{ $key }}"
-                                                        value="{{ $key }}"
-                                                        {{ in_array($key, request('ram_id', [])) ? 'checked' : '' }}>
-                                                    <label for="ram_{{ $key }}">{{ $item }}</label>
-                                                </li>
+                                                @if ($key != 1)
+                                                    <li class="wc-layered-nav-term">
+                                                        <input type="checkbox" name="ram_id[]"
+                                                            id="ram_{{ $key }}" value="{{ $key }}"
+                                                            {{ in_array($key, request('ram_id', [])) ? 'checked' : '' }}>
+                                                        <label for="ram_{{ $key }}">{{ $item }}</label>
+                                                    </li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -2422,13 +2447,14 @@
                                         <span class="gamma widget-title">Storage</span>
                                         <ul>
                                             @foreach ($storages as $key => $item)
-                                            @if ($key != 1) 
-                                                <li class="wc-layered-nav-term">
-                                                    <input type="checkbox" name="storage_id[]"
-                                                        id="storage_{{ $key }}" value="{{ $key }}"
-                                                        {{ in_array($key, request('storage_id', [])) ? 'checked' : '' }}>
-                                                    <label for="storage_{{ $key }}">{{ $item }}</label>
-                                                </li>
+                                                @if ($key != 1)
+                                                    <li class="wc-layered-nav-term">
+                                                        <input type="checkbox" name="storage_id[]"
+                                                            id="storage_{{ $key }}" value="{{ $key }}"
+                                                            {{ in_array($key, request('storage_id', [])) ? 'checked' : '' }}>
+                                                        <label
+                                                            for="storage_{{ $key }}">{{ $item }}</label>
+                                                    </li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -2439,7 +2465,7 @@
                                     <a href="{{ route('users.filter') }}"><button type="button">Xóa</button></a>
 
                                 </form>
-                                
+
                             </div>
 
                             <div class="widget widget_techmarket_products_carousel_widget">
@@ -2455,42 +2481,49 @@
                                             <div class="woocommerce columns-1">
                                                 <div class="products">
                                                     @foreach ($latestProducts as $product)
-                                                    <div class="landscape-product-widget product">
-                                                        <a class="woocommerce-LoopProduct-link" href="{{ route('users.products.show', $product->id) }}">
-                                                            <div class="media">
-                                                                @if ($product->image)
-                                                                    <img src="{{ Storage::url($product->image) }}" class="wp-post-image" alt="$product->name">
-                                                                @else
-                                                                    <span>Không có ảnh</span>
-                                                                @endif
-                                                                <div class="media-body">
-                                                                    <span class="price">
-                                                                        <ins>
-                                                                            <span class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
-                                                                        </ins>
-                                                                        <del>
-                                                                            <span class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
-                                                                        </del>
-                                                                        <span class="amount"> </span>
-                                                                    </span>
-                                                                    <!-- .price -->
-                                                                    <h2 class="woocommerce-loop-product__title">{{ $product->name }}</h2>
-                                                                    <div class="techmarket-product-rating">
-                                                                        <div title="Rated 0 out of 5" class="star-rating">
-                                                                            <span style="width:0%">
-                                                                                <strong class="rating">0</strong> out of 5</span>
+                                                        <div class="landscape-product-widget product">
+                                                            <a class="woocommerce-LoopProduct-link"
+                                                                href="{{ route('users.products.show', $product->id) }}">
+                                                                <div class="media">
+                                                                    @if ($product->image)
+                                                                        <img src="{{ Storage::url($product->image) }}"
+                                                                            class="wp-post-image" alt="$product->name">
+                                                                    @else
+                                                                        <span>Không có ảnh</span>
+                                                                    @endif
+                                                                    <div class="media-body">
+                                                                        <span class="price">
+                                                                            <ins>
+                                                                                <span
+                                                                                    class="amount">{{ number_format($product->variants->first()->sale_price, 0, ',', '.') }}đ</span>
+                                                                            </ins>
+                                                                            <del>
+                                                                                <span
+                                                                                    class="amount">{{ number_format($product->variants->first()->listed_price, 0, ',', '.') }}đ</span>
+                                                                            </del>
+                                                                            <span class="amount"> </span>
+                                                                        </span>
+                                                                        <!-- .price -->
+                                                                        <h2 class="woocommerce-loop-product__title">
+                                                                            {{ $product->name }}</h2>
+                                                                        <div class="techmarket-product-rating">
+                                                                            <div title="Rated 0 out of 5"
+                                                                                class="star-rating">
+                                                                                <span style="width:0%">
+                                                                                    <strong class="rating">0</strong> out
+                                                                                    of 5</span>
+                                                                            </div>
+                                                                            <span class="review-count">(0)</span>
                                                                         </div>
-                                                                        <span class="review-count">(0)</span>
+                                                                        <!-- .techmarket-product-rating -->
                                                                     </div>
-                                                                    <!-- .techmarket-product-rating -->
+                                                                    <!-- .media-body -->
                                                                 </div>
-                                                                <!-- .media-body -->
-                                                            </div>
-                                                            <!-- .media -->
-                                                        </a>
-                                                        <!-- .woocommerce-LoopProduct-link -->
-                                                    </div>
-                                                @endforeach
+                                                                <!-- .media -->
+                                                            </a>
+                                                            <!-- .woocommerce-LoopProduct-link -->
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                                 <!-- .products -->
                                             </div>

@@ -9,7 +9,6 @@ use App\Models\OrderHistory;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\SubCategory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +20,9 @@ class DashboardController extends Controller
 
         $totalBoughtProduct = OrderDetail::sum('quantity');
 
-        $donhangdahuy = OrderHistory::query()->where('from_status', Order::HUY_HANG)->count();
+        $donhangdahuy = OrderHistory::query()->where('to_status', Order::HUY_HANG)->count();
 
-        $donhangdangchoxuly = OrderHistory::query()->where('from_status', Order::CHO_XAC_NHA)->count();
+        $donhangdangchoxuly = OrderHistory::query()->where('to_status', Order::CHO_XAC_NHA)->count();
 
         $tongdonhang = OrderHistory::count();
 
@@ -44,7 +43,7 @@ class DashboardController extends Controller
             // ở đây là nối các bảng 
             ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
             // ở đây là nối các bảng 
-            ->join('order_details', 'product_variants.id', '=', 'order_details.product_variant_id')
+            ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
             // ở đây là nối các bảng 
             ->groupBy('sub_categories.name', 'sub_categories.id')
             // nhóm nó theo name và id  
@@ -92,7 +91,7 @@ class DashboardController extends Controller
 
         $top5Users = Order::select('orders.user_id', 'users.name', 'users.phone', 'users.address', 'users.email')
             ->selectRaw('SUM(order_details.quantity) as total')
-            ->selectRaw('COUNT(order_details.product_variant_id) as SoLanMua')
+            ->selectRaw('COUNT(order_details.productvariant_id) as SoLanMua')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id') // Kết hợp bảng order_details
             ->join('users', 'users.id', '=', 'orders.user_id') // Kết hợp bảng users
             ->whereMonth('orders.created_at', Carbon::now()->month)
@@ -150,7 +149,7 @@ class DashboardController extends Controller
             // ở đây là nối các bảng 
             ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
             // ở đây là nối các bảng 
-            ->join('order_details', 'product_variants.id', '=', 'order_details.product_variant_id')
+            ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
             // ở đây là nối các bảng 
             ->groupBy('sub_categories.name', 'sub_categories.id')
             // nhóm nó theo name và id  
@@ -169,6 +168,6 @@ class DashboardController extends Controller
         // Lưu mảng tổng sản phẩm vào biến cho JavaScript
         $totalSales = array_column($percentages, 'percent'); // Lấy ra mảng tổng sản phẩm
         // dd($totalSales);
-        return view('admin.pages.dashboard', compact('totalmoney', 'totalBoughtProduct', 'phantramdahuy', 'donhangdangchoxuly', 'tongdonhang', 'phantramdahuy', 'phantramdangchoxuly', 'totalProduct', 'top10Category', 'top5LastestComment', 'top5productbought', 'top5Users', 'monthlySales', 'percentages', 'totalSales', 'YearSales'));
+        return view('admin.pages.dashboard', compact('totalmoney', 'totalBoughtProduct', 'donhangdahuy', 'donhangdangchoxuly', 'tongdonhang', 'phantramdahuy', 'phantramdangchoxuly', 'totalProduct', 'top10Category', 'top5LastestComment', 'top5productbought', 'top5Users', 'monthlySales', 'percentages', 'totalSales', 'YearSales'));
     }
 }

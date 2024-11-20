@@ -41,7 +41,7 @@ class ProductVariant extends Model
 
     public function orderDetail()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'productvariant_id', 'id');
     }
 
 }
