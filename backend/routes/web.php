@@ -1,24 +1,37 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChipController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RamController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\TemsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoryController;
-use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\view\DonHangController;
+use App\Http\Controllers\view\DonHangController ;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\DonHangController as DonHangController2;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\ReviewController;
+
+use App\Models\ProductVariant;
+
+use App\Http\Controllers\UserNewsController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +44,14 @@ use App\Http\Controllers\ReviewController;
 |
 */
 
+
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register'])->name('register.post');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'Login'])->name('login.post');
 Route::post('logout', [LoginController::class, 'Logout'])->name('logout');
+
 // Hiển thị form yêu cầu quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 // Gửi email đặt lại mật khẩu
@@ -47,9 +62,20 @@ Route::get('reset-password/{token}', [ResetPasswordController::class, 'showReset
 Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 // Các route yêu cầu quyền admin
 Route::group(['middleware' => ['admin']], function () {
+
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
-    Route::get('admin/users', [UserController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+
+
+    Route::get('admin/users', [UseradminController::class, 'index'])->name('admin.users'); // Quản lý người dùng
+
 });
+
+//Profile
+Route::get('/admin/pages/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/user/account', [ProfileController::class, 'account'])->name('user.profile')->middleware('auth');
+Route::get('/user/edit', [ProfileController::class, 'edit'])->name('user.edit_profile')->middleware('auth');
+Route::put('/user/update', [ProfileController::class, 'update'])->name('user.update')->middleware('auth');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,9 +99,7 @@ Route::resource('subcategories', SubcategoryController::class);
 Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
-        Route::get('/', function () {
-            return view('admin.pages.dashboard');
-        });
+        Route::get('/', [DashboardController::class, 'Dashboard']);
 
         Route::prefix('products')
             ->as('products.')
@@ -121,6 +145,18 @@ Route::prefix('admins')
                 Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
             });
+
+            Route::prefix('orders')
+            ->as('orders.')
+            ->group(function () {
+                Route::get('/', [DonHangController::class, 'index'])->name('index');
+                Route::get('/create', [DonHangController::class, 'create'])->name('create');
+                Route::post('/store', [DonHangController::class, 'store'])->name('store');
+                Route::get('/show/{id}', [DonHangController::class, 'show'])->name('show');
+                Route::get('/{id}/edit', [DonHangController::class, 'edit'])->name('edit');
+                Route::put('/{id}/update', [DonHangController::class, 'update'])->name('update');
+                Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
+            });
     });
 
 // Promotions resource (admin)
@@ -136,7 +172,10 @@ Route::prefix('cart')
         Route::get('/{id}/edit', [CartController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [CartController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [CartController::class, 'destroy'])->name('destroy');
-        Route::get('/myorder', [DonHangController::class, 'index'])->name('myorder');
+        Route::get('/myorder', [DonHangController2::class, 'index'])->name('myorder');
+        Route::put('/editOrder/{id}', [DonHangController2::class, 'editOrder'])->name('editOrder');
+        Route::get('/myordetail/{id}', [DonHangController2::class, 'myordetail'])->name('myordetail');
+
     });
 
 // Hiển thị trang checkout
@@ -148,20 +187,50 @@ Route::prefix('cart')
 
 // user
 // Route để hiển thị trang thanh toán
-Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
 
-// Xử lý đặt hàng và thanh toán (phương thức POST)
+// Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
+
+// Route::post('/promo', [OrderController::class, 'checkout'])->name('promo');
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
-// Trang thành công sau khi thanh toán
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
-
-// IPN của MoMo
+Route::get('/vnpay_return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
-Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
-
 //Review
-Route::middleware('auth')->group(function () {
+
+Route::middleware(['auth'])->group(function () {
+    // Route cho người dùng bình thường tạo review
+    Route::get('product/{productId}/review', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews/store/{product}', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    // Route quản lý review trong admin
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+});
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+/*Route::middleware('auth')->group(function () {
     Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+});*/
+
+//Tin tức
+Route::resource('news', NewsController::class);
+Route::prefix('tins')->as('tins.')->group(function () {
+    Route::get('/', [UserNewsController::class, 'index'])->name('index');
+    Route::get('/{id}', [UserNewsController::class, 'show'])->name('show');
 });
+Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
+
+// Giới thiệu
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');;
+
+// Chính sách bảo mật và điều khoản
+Route::get('/terms', [TemsController::class, 'index'])->name('terms.index');;

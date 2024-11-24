@@ -32,7 +32,6 @@ class UpdateProductRequest extends FormRequest
             'storage_id.*' => 'required|exists:storages,id',
             'is_show_home' => 'required|boolean',
 
-
             'is_sale' => 'required|boolean', 
             'is_hot' => 'required|boolean', 
 

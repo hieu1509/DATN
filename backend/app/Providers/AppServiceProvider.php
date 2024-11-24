@@ -4,9 +4,14 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Category;
+
+
+use Illuminate\Pagination\Paginator;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,11 +32,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Paginator::useBootstrapFive();
+
+
         // Sử dụng View Composer để chia sẻ $categories với menu.blade.php
         View::composer('user.partials.menu', function ($view) {
             $categories = Category::with('subCategories')->get();
             $view->with('categories', $categories);
         });
+
 
         // Tạo các vai trò và phân quyền
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
@@ -39,5 +49,6 @@ class AppServiceProvider extends ServiceProvider
 
         // Gán quyền cho vai trò admin
         $adminRole->givePermissionTo('access admin panel');
+
     }
 }

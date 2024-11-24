@@ -3193,9 +3193,11 @@ select {
   table.shop_table_responsive tbody tr td,
   table.shop_table_responsive tbody tr th {
 
+
     text-align: left; }
 
     text-align: center; }
+
 
   .site-header {
     padding-top: 2.617924em;
@@ -21237,7 +21239,9 @@ table.cart {
     font-size: 0.938em;
 
 
+
     text-align: center;
+
 
     border: none;
     text-transform: none;
@@ -21264,7 +21268,9 @@ table.cart {
     font-size: 0.875em;
 
 
+
     text-align: center;
+
 
     line-height: 1.5em;
     letter-spacing: -0.01em;
@@ -21311,7 +21317,9 @@ table.cart {
     font-size: 1em;
 
 
+
     text-align: center;
+
 
     line-height: 1.5em;
     font-weight: 500;

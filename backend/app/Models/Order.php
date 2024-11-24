@@ -43,13 +43,30 @@ class Order extends Model
           'phone',
           'note',
     ];
-
-    public function users(){
-        return $this->belongsTo(User::class,'user_id');
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function products()
-{
-    return $this->belongsToMany(Product::class)->withPivot('quantity');
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
+    public function orderHistories()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+    public function shipping()
+    {
+        return $this->belongsTo(Shipping::class);
+    }
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
+    }
 }
 
-}
