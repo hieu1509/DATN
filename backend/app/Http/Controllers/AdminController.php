@@ -17,4 +17,5 @@ class AdminController extends Controller
         // Hiển thị trang cài đặt
         return view('admin.settings');
     }
+    // 
 }
