@@ -4,6 +4,32 @@
 <div class="page-content">
     <div class="container-fluid">
         <div class="row">
+            <form method="POST" action="{{route('admins.fillterYear')}}" class="mb-4">
+                @csrf
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-2">
+                        <label for="start-date" class="me-2">Chọn năm:</label>
+                        <input type="year" id="years" name="years" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="start-date" class="me-2">Ngày bắt đầu:</label>
+                        <input type="date" id="start-date" name="start_date" class="form-control">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="end-date" class="me-2">Ngày kết thúc:</label>
+                        <input type="date" id="end-date" name="end_date" class="form-control">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-10 mt-4">Lọc</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Kết thúc bộ lọc -->
+
+        <div class="row">
             <div class="col">
                 <div class="h-100">
                     <div class="row">
@@ -51,7 +77,7 @@
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                <i class="bx bx-shopping-bag text-info"></i>
+                                                <i class="bx bx-hourglass text-info"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -77,7 +103,7 @@
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                <i class="bx bx-user-circle text-warning"></i>
+                                            <i class="bx bx-x-circle text-warning"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -89,18 +115,15 @@
                         <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-header border-0 align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Thống kê </h4>
-                                    <div class="ml-auto">
-                                        <button id="btn-month" class="btn btn-primary btn-sm">Tháng</button>
-                                        <button id="btn-year" class="btn btn-secondary btn-sm">Năm</button>
-                                    </div>
-                                </div><!-- end card header -->
+                                    <h4 class="card-title mb-0 flex-grow-1">
+                                        Thống kê doanh số - năm {{ $years }}
+                                    </h4>
+                                </div>
 
                                 <div class="card-body p-0 pb-2">
                                     <div class="card-body">
                                         <!-- Biểu đồ -->
                                         <div id="monthly-sales-column" data-colors='["--vz-danger", "--vz-info", "--vz-success"]' class="apex-charts" dir="ltr"></div>
-                                        <div id="yearly-sales-column" data-colors='["--vz-danger", "--vz-info", "--vz-success"]' class="apex-charts" dir="ltr" style="display: none;"></div>
                                     </div>
                                 </div><!-- end card body -->
                             </div><!-- end card -->
@@ -110,23 +133,6 @@
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Top 5 sản phẩm được mua nhiều nhất</h4>
-                                    <div class="flex-shrink-0">
-                                        <!-- <div class="dropdown card-header-dropdown">
-                                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                <span class="fw-semibold text-uppercase fs-12">Sort by:</span><span class="text-muted">Today<i
-                                                        class="mdi mdi-chevron-down ms-1"></i></span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Today</a>
-                                                <a class="dropdown-item" href="#">Yesterday</a>
-                                                <a class="dropdown-item" href="#">Last 7 Days</a>
-                                                <a class="dropdown-item" href="#">Last 30 Days</a>
-                                                <a class="dropdown-item" href="#">This Month</a>
-                                                <a class="dropdown-item" href="#">Last Month</a>
-                                            </div>
-                                        </div> -->
-                                    </div>
                                 </div>
 
                                 <div class="card-body">
@@ -142,28 +148,28 @@
                                                                     alt="" class="img-fluid d-block" />
                                                             </div>
                                                             <div>
-                                                                <h5 class="fs-14 my-1"><a
+                                                                <h5 class="fs-12 my-1"><a
                                                                         href="apps-ecommerce-product-details.html"
                                                                         class="text-reset">{{ $top5productboughts['name'] }}</a>
                                                                 </h5>
-                                                                <span class="text-muted">24 Apr 2021</span>
+
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <h5 class="fs-14 my-1 fw-normal"></h5>
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <h5 class="fs-14 my-1 fw-normal">
                                                             {{ $top5productboughts['total'] }}
                                                         </h5>
-                                                        <span class="text-muted">Orders</span>
+                                                        <span class="fs-12 text-muted">Orders</span>
                                                     </td>
                                                     <td>
                                                         <h5 class="fs-14 my-1 fw-normal">
                                                             {{ $top5productboughts['stock'] }}
                                                         </h5>
-                                                        <span class="text-muted">Stock</span>
+                                                        <span class="fs-12 text-muted">Stock</span>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -195,7 +201,6 @@
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Khách hàng tiền năng</h4>
-                                    <h4 class="card-title mb-0 me-3">Tháng: {{ \Carbon\Carbon::now()->format('m') }}</h4> <!-- Hiển thị tháng dạng số -->
                                 </div><!-- end card header -->
 
                                 <div class="card-body">
@@ -246,86 +251,68 @@
                             </div> <!-- .card-->
                         </div> <!-- .col-->
                     </div> <!-- end row-->
-
                 </div> <!-- end .h-100-->
-
             </div> <!-- end col -->
 
-            <div class="col-auto layout-rightside-col">
-                <div class="overlay"></div>
-                <div class="layout-rightside">
-                    <div class="card h-100 rounded-0">
-                        <div class="card-body p-0">
+            <!-- Bình luận -->
+            <div class="position-relative">
+                <!-- Nút mũi tên -->
+                <button class="btn btn-primary toggle-arrow"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#recentCommentsPanel"
+                    aria-controls="recentCommentsPanel"
+                    style="position: fixed; top: 12%; right: 0; transform: translateY(-50%); z-index: 1050; border-radius: 0.375rem 0 0 0.375rem; padding: 10px;">
+                    <i class="ri-arrow-left-s-line"></i>
+                </button>
 
-
-                            <div class="p-3 mt-2">
-                                <h6 class="text-muted mb-3 text-uppercase fw-semibold">Top 10 danh mục sản phẩm bán được
-                                    nhiều nhất
-                                </h6>
-
-                                <ol class="ps-3 text-muted">
-                                    @foreach ($top10Category as $top10Categorys)
-                                    <li class="py-1">
-                                        <a href="#" class="text-muted">{{ $top10Categorys->name }}<span
-                                                class="float-end">số lượng đã bán được:
-                                                {{ $top10Categorys->total }}</span></a>
-                                    </li>
-                                    @endforeach
-
-                                </ol>
-                            </div>
-                            <div class="p-3">
-                                <h6 class="text-muted mb-3 text-uppercase fw-semibold">Các bình luận gần đây
-                                </h6>
-                                <!-- Swiper -->
-                                <div class="swiper vertical-swiper" style="height: 250px;">
-                                    <div class="swiper-wrapper">
-                                        @foreach ($top5LastestComment as $top5LastestComments)
-                                        <div class="swiper-slide">
-                                            <div class="card border border-dashed shadow-none">
-                                                <div class="card-body">
-                                                    <div class="d-flex">
-                                                        <div class="flex-shrink-0 avatar-sm">
-                                                            <div class="avatar-title bg-light rounded">
-                                                                <img src="assets/images/companies/img-1.png"
-                                                                    alt="" height="30">
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex-grow-1 ms-3">
-                                                            <div>
-                                                                <p
-                                                                    class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                    {{ $top5LastestComments->comment }}
-                                                                </p>
-                                                                <div class="fs-11 align-middle text-warning">
-                                                                    @for ($i = 0; $i < 5; $i++)
-                                                                        <i class="ri-star-fill"
-                                                                        style="color: {{ $i < $top5LastestComments->rating ? 'gold' : 'gray' }}"></i>
-                                                                        @endfor
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="text-end mb-0 text-muted">
-                                                                - by <cite
-                                                                    title="Source Title">{{ $top5LastestComments->user->name }}</cite>
-                                                            </div>
-                                                        </div>
+                <!-- Bảng Offcanvas -->
+                <div class="offcanvas offcanvas-end"
+                    tabindex="-1"
+                    id="recentCommentsPanel"
+                    aria-labelledby="recentCommentsPanelLabel"
+                    style="width: 300px;">
+                    <div class="offcanvas-header">
+                        <h5 id="recentCommentsPanelLabel" class="text-uppercase fw-semibold">Các bình luận gần đây</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="swiper vertical-swiper" style="height: 250px;">
+                            <div class="swiper-wrapper">
+                                @foreach ($top5LastestComment as $top5LastestComments)
+                                <div class="swiper-slide">
+                                    <div class="card border border-dashed shadow-none">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 avatar-sm">
+                                                    <div class="avatar-title bg-light rounded">
+                                                        <img src="assets/images/companies/img-1.png" alt="" height="30">
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <p class="text-muted mb-1 fst-italic text-truncate-two-lines">
+                                                        {{ $top5LastestComments->comment }}
+                                                    </p>
+                                                    <div class="fs-11 align-middle text-warning">
+                                                        @for ($i = 0; $i < 5; $i++)
+                                                            <i class="ri-star-fill" style="color: {{ $i < $top5LastestComments->rating ? 'gold' : 'gray' }}"></i>
+                                                            @endfor
+                                                    </div>
+                                                    <div class="text-end mb-0 text-muted">
+                                                        - by <cite title="Source Title">{{ $top5LastestComments->user->name }}</cite>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        @endforeach
-
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div> <!-- end card-->
-                </div> <!-- end .rightbar-->
-
-            </div> <!-- end col -->
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 @endsection
@@ -380,11 +367,13 @@
 
         // Dữ liệu cho biểu đồ cột
         // Dữ liệu mẫu cho biểu đồ cột với 12 phần
-        // Cấu hình cho biểu đồ tháng
+        // Nhãn các tháng
         const monthlyLabels = [
             'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
             'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
         ];
+
+        // Tùy chọn cấu hình cho biểu đồ
         const monthlyOptions = {
             chart: {
                 type: 'bar',
@@ -393,7 +382,7 @@
             colors: ['#FF4560', '#008FFB', '#00E396'],
             series: [{
                 name: 'Doanh Số Hàng Tháng',
-                data: @json($monthlySales) // Dữ liệu từ backend
+                data: @json($monthlySalesData) // Dữ liệu từ backend
             }],
             xaxis: {
                 categories: monthlyLabels,
@@ -410,67 +399,9 @@
             },
         };
 
-        // Cấu hình cho biểu đồ năm
-        const yearlyLabels = ['2020', '2021', '2022', '2023', '2024'];
-        const yearlyOptions = {
-            chart: {
-                type: 'bar',
-                height: 350,
-            },
-            colors: ['#008FFB', '#008FFB', '#00E396'],
-            series: [{
-                name: 'Doanh Số Hàng Năm',
-                data: @json($YearSales) // Dữ liệu từ backend
-            }],
-            xaxis: {
-                categories: yearlyLabels,
-            },
-            yaxis: {
-                title: {
-                    text: 'Doanh Số',
-                },
-            },
-            tooltip: {
-                y: {
-                    formatter: (val) => val + ' sản phẩm'
-                }
-            },
-        };
-
-        // Khởi tạo và render hai biểu đồ
-        let monthlyChart = new ApexCharts(document.querySelector("#monthly-sales-column"), monthlyOptions);
-        let yearlyChart = new ApexCharts(document.querySelector("#yearly-sales-column"), yearlyOptions);
-
-        // Render biểu đồ tháng
+        // Khởi tạo và render biểu đồ
+        const monthlyChart = new ApexCharts(document.querySelector("#monthly-sales-column"), monthlyOptions);
         monthlyChart.render();
-
-        // Render biểu đồ năm
-        yearlyChart.render();
-
-        // Đảm bảo rằng biểu đồ theo tháng hiển thị khi người dùng chọn
-        document.getElementById('btn-month').addEventListener('click', () => {
-            // Ẩn biểu đồ năm và hiển thị biểu đồ tháng
-            document.getElementById('monthly-sales-column').style.display = 'block';
-            document.getElementById('yearly-sales-column').style.display = 'none';
-        });
-
-        // Đảm bảo rằng biểu đồ theo năm hiển thị khi người dùng chọn
-        document.getElementById('btn-year').addEventListener('click', () => {
-            // Ẩn biểu đồ tháng và hiển thị biểu đồ năm
-            document.getElementById('monthly-sales-column').style.display = 'none';
-            document.getElementById('yearly-sales-column').style.display = 'block';
-
-            // Nếu biểu đồ năm đã được render, hủy bỏ và render lại
-            if (yearlyChart) {
-                yearlyChart.destroy(); // Hủy bỏ biểu đồ năm hiện tại
-            }
-
-            // Render lại biểu đồ năm
-            yearlyChart = new ApexCharts(document.querySelector("#yearly-sales-column"), yearlyOptions);
-            yearlyChart.render();
-        });
-
-
     });
 </script>
 @endsection

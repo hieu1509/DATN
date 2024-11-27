@@ -79,6 +79,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // Danh sách người dùng
 Route::prefix('users')
     ->as('users.')
@@ -98,6 +99,7 @@ Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'Dashboard']);
+        Route::post('/fillterYear',[DashboardController::class,'Dashboard'])->name('fillterYear');
 
         Route::prefix('products')
             ->as('products.')

@@ -22,17 +22,14 @@
                     <i class="tm tm-order-tracking"></i>Lịch sử đơn hàng</a>
             </li>
             <li class="menu-item">
-
                 @if (Auth::check())
-
-                    <a title="My Account" href="{{ route('user.profile') }}">
-                        <i class="tm tm-login-register"></i>{{ Auth::user()->name }}
-                    </a>
+                <a title="My Account" href="{{ route('user.profile') }}">
+                    <i class="tm tm-login-register"></i>{{ Auth::user()->name }}
+                </a>
                 @else
-                    <a title="My Account" href="{{ route('login') }}">
-
-                        <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký
-                    </a>
+                <a title="My Account" href="{{ route('login') }}">
+                    <i class="tm tm-login-register"></i>Đăng nhập & Đăng ký
+                </a>
                 @endif
 
             </li>
@@ -43,7 +40,7 @@
 
                     <i class="tm tm-logout"></i>Đăng xuất
                 </a>
-        
+
                 <!-- Form Đăng Xuất Ẩn -->
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -51,7 +48,15 @@
                     @csrf
                 </form>
             </li>
-        @endif
+            @endif
+            <!-- sang trang quản trị -->
+            @if (Auth::check() && Auth::user()->role === 'admin')
+            <li class="menu-item">
+                <a href="{{ route('admins.') }}">
+                    Trang quản trị
+                </a>
+            </li>
+            @endif
         </ul>
         <!-- .nav -->
     </div>
