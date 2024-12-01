@@ -119,10 +119,10 @@
             <!-- .header-compare -->
             <ul class="header-wishlist nav navbar-nav">
                 <li class="nav-item">
-                    <a href="wishlist.html" class="nav-link">
+                    <a href="{{ route('wishlist.index') }}" class="nav-link">
                         <i class="tm tm-favorites"></i>
-                        <span id="top-cart-wishlist-count" class="value">3</span>
-                    </a>
+                        <span id="top-cart-wishlist-count" class="value"></span>
+                    </a>                    
                 </li>
             </ul>
             <!-- .header-wishlist -->

@@ -20,6 +20,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DonHangController as DonHangController2;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\view\UseradminController;
+use App\Http\Controllers\WishlistItemController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
@@ -76,7 +77,7 @@ Route::put('/user/update', [ProfileController::class, 'update'])->name('user.upd
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('');
 });
 
 
@@ -228,4 +229,16 @@ Route::prefix('tins')->as('tins.')->group(function () {
     Route::get('/{id}', [UserNewsController::class, 'show'])->name('show');
 });
 Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
+
+
+// sp yêu thích
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistItemController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/add/{productId}', [WishlistItemController::class, 'addToWishlist'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{productId}', [WishlistItemController::class, 'removeFromWishlist'])->name('wishlist.remove');
+
+
+
+});
+
 
