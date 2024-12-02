@@ -237,6 +237,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/wishlist/add/{productId}', [WishlistItemController::class, 'addToWishlist'])->name('wishlist.add');
     Route::delete('/wishlist/remove/{productId}', [WishlistItemController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
+    Route::get('/admin/orders', [DonHangController::class, 'index'])->name('admins.orders.index');
 
 
 });

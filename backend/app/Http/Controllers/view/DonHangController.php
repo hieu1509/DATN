@@ -11,18 +11,40 @@ use Illuminate\Http\Request;
 class DonHangController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $listDonHang = OrderHistory::query()->with('order')->orderByDesc('id')->get();
-        // dd($listDonHang);
-        $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
-        foreach ($trangThaiDonHang as $key => $value) {
-            $key_trang_thai = $key;
-            $value_trang_thai = $value;
+        $query = OrderHistory::query()->with('order');
+    
+        // Lọc theo khoảng thời gian (từ ngày - đến ngày)
+        if ($request->has('from_date') && $request->has('to_date')) {
+            $query->whereBetween('created_at', [
+                $request->from_date,
+                $request->to_date,
+            ]);
         }
-
-        return view('admin.order.index', compact('listDonHang', 'trangThaiDonHang', 'key_trang_thai', 'value_trang_thai'));
+    
+        // Lọc theo trạng thái đơn hàng
+        if ($request->has('filter_status') && $request->filter_status !== '' && $request->filter_status !== 'all') {
+            $query->where('to_status', $request->filter_status);
+        }
+    
+        // Tìm kiếm theo mã sản phẩm hoặc thông tin liên quan
+        if ($request->has('search') && $request->search !== '') {
+            $searchTerm = $request->search;
+            $query->whereHas('order', function ($query) use ($searchTerm) {
+                $query->where('code', 'LIKE', '%' . $searchTerm . '%')
+                      ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+    
+        $listDonHang = $query->orderByDesc('id')->get();
+        $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
+    
+        return view('admin.order.index', compact('listDonHang', 'trangThaiDonHang'));
     }
+    
+    
+    
 
     /**
      * Show the form for creating a new resource.

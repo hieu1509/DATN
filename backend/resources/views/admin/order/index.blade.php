@@ -9,9 +9,104 @@
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title align-content-center mb-0">Danh sách đơn hàng </h5>
 
+
                 </div><!-- end card header -->
 
                 <div class="card-body">
+                    <form action="{{ route('admins.orders.index') }}" method="GET" class="mb-3">
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                                <label for="from_date" class="form-label">Từ ngày</label>
+                                <input type="date" name="from_date" id="from_date" class="form-control"
+                                    value="{{ request('from_date') }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="to_date" class="form-label">Đến ngày</label>
+                                <input type="date" name="to_date" id="to_date" class="form-control"
+                                    value="{{ request('to_date') }}">
+                            </div>
+                       
+                            <div class="col-md-3">
+                                <label for="search" class="form-label">Tìm kiếm</label>
+                                <input type="text" name="search" id="search" class="form-control"
+                                    placeholder="Tìm kiếm mã đơn hàng, tên khách hàng..." value="{{ request('search') }}">
+                            </div>
+                            <div class="col-md-3 mt-1">
+                                <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                            </div>
+                        </div>
+                    </form>
+                    {{-- <div class="status-filter d-flex align-items-center">
+                        <a href="{{ route('admins.orders.index', ['filter_status' => 'all']) }}"
+                            class="btn btn-outline-primary me-2 {{ request('filter_status') == 'all' ? 'active' : '' }}">
+                            <i class="fas fa-list"></i> Tất cả
+                        </a>
+                        @foreach ($trangThaiDonHang as $key => $value)
+                            <a href="{{ route('admins.orders.index', ['filter_status' => $key]) }}"
+                                class="btn btn-outline-primary me-2 {{ request('filter_status') == $key ? 'active' : '' }}">
+                                <i class="{{ getIconForStatus($key) }}"></i> {{ $value }}
+                            </a>
+                        @endforeach
+                    </div>
+                    @php
+                        function getIconForStatus($status)
+                        {
+                            $icons = [
+                                'pending' => 'fas fa-hourglass-half', // Chờ xử lý
+                                'completed' => 'fas fa-check-circle', // Hoàn thành
+                                'canceled' => 'fas fa-times-circle', // Hủy
+                                // Thêm các trạng thái khác
+                            ];
+                            return $icons[$status] ?? 'fas fa-question-circle';
+                        }
+                    @endphp --}}
+                    <div class="card-body pt-0">
+                        <div>
+                            <ul class="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">
+                               
+                                <li class="nav-item">
+                                    <a href="{{ route('admins.orders.index', ['filter_status' => 'all']) }}"
+                                        class="nav-link py-3 All {{ request('filter_status') == 'all' ? 'active' : '' }}" 
+                                        id="All" role="tab" aria-selected="{{ request('filter_status') == 'all' ? 'true' : 'false' }}">
+                                        <i class="fas fa-list me-1 align-bottom"></i> Tất cả đơn hàng 
+                                    </a>
+                                </li>
+                    
+                                
+                                @foreach ($trangThaiDonHang as $key => $value)
+                                    <li class="nav-item">
+                                        <a href="{{ route('admins.orders.index', ['filter_status' => $key]) }}"
+                                            class="nav-link py-3 {{ request('filter_status') == $key ? 'active' : '' }}" 
+                                            id="{{ ucfirst($key) }}" role="tab" 
+                                            aria-selected="{{ request('filter_status') == $key ? 'true' : 'false' }}">
+                                            <i class="{{ getIconForStatus($key) }} me-1 align-bottom"></i> {{ $value }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    @php
+                    function getIconForStatus($status)
+                    {
+                        $icons = [
+                            'pending' => 'fas fa-hourglass-half', // Chờ xử lý
+                            'completed' => 'fas fa-check-circle', // Hoàn thành
+                            'canceled' => 'fas fa-times-circle', // Hủy
+                            'delivered' => 'fas fa-truck', // Đã giao hàng
+                            'processing' => 'fas fa-cogs', // Đang xử lý
+                            'on_hold' => 'fas fa-pause-circle', // Tạm giữ
+                            'refunded' => 'fas fa-undo-alt', // Hoàn tiền
+                            'failed' => 'fas fa-exclamation-triangle', // Thất bại
+                            'draft' => 'fas fa-file-alt', // Bản nháp
+                        ];
+                
+                        return $icons[$status] ?? 'fas fa-question-circle'; // Default icon
+                    }
+                @endphp
+                
+                    
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -24,6 +119,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
+
                             <table class="table table-striped mb-0">
 
                                 <thead>
