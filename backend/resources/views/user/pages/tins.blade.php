@@ -14,7 +14,7 @@
             <div class="col-full">
                 <div class="row">
                     <nav class="woocommerce-breadcrumb">
-                        <a href="home-v1.html">Trang chủ
+                        <a href="{{ route('users.index') }}">Trang chủ
                             <i class="fa fa-angle-right"></i>
                         </span>
                         Tin tức
@@ -52,7 +52,7 @@
                                             <p>{{ Str::limit($item->content, 100) }}</p>
                                         </div>
                                         <div class="post-readmore">
-                                            <a class="btn btn-primary" href="{{ route('show', $item->id) }}">Xem thêm</a>
+                                            <a class="btn btn-primary" href="{{ route('tins.show', $item->id) }}">Xem thêm</a>
                                         </div>
                                     </div>
                                 </article>
@@ -96,7 +96,7 @@
                                                 </div>
                                             </a>
                                             <div class="post-content">
-                                                <a href="{{ route('show', $post->id) }}" class="post-name">{{ $post->title }}</a>
+                                                <a href="{{ route('tins.show', $post->id) }}" class="post-name">{{ $post->title }}</a>
                                             </div>
                                         </div>
                                     @endforeach

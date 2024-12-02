@@ -56,7 +56,7 @@ class UserController extends Controller
         $latestProducts = $commonQuery()->get();
         $hotProducts = $commonQuery()->where('is_hot', 1)->get();
         $saleProducts = $commonQuery()->where('is_sale', 1)->get();
-        $randomProducts = $commonQuery()->inRandomOrder()->take(3)->get();
+        $randomProducts = $commonQuery()->inRandomOrder()->take(5)->get();
     
         // Sản phẩm theo danh mục
         $laptopProducts = $commonQuery('laptop')->get();

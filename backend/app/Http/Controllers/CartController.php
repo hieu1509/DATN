@@ -122,5 +122,43 @@ class CartController extends Controller
         $cartDetail->delete();
         return redirect()->back()->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công.');
     }
+
+    public function getCartHeader()
+    {
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'message' => 'Bạn cần đăng nhập để xem giỏ hàng.']);
+        }
+
+        $cart = Auth::user()->carts()->orderBy('id', 'desc')->first();
+
+        if (!$cart) {
+            return response()->json(['success' => true, 'cartItems' => [], 'total' => 0]);
+        }
+
+        $cartDetails = CartDetail::with(['productVariant.product'])
+            ->where('carts_id', $cart->id)
+            ->get();
+
+        $total = 0;
+        $items = [];
+
+        foreach ($cartDetails as $detail) {
+            $productVariant = $detail->productVariant;
+
+            $items[] = [
+                'id' => $detail->id,
+                'product_name' => $productVariant->product->name,
+                'image' => $productVariant->product->image,
+                'quantity' => $detail->quantity,
+                'price' => $productVariant->sale_price,
+                'subtotal' => $productVariant->sale_price * $detail->quantity,
+            ];
+
+            $total += $productVariant->sale_price * $detail->quantity;
+        }
+
+        return response()->json(['success' => true, 'cartItems' => $items, 'total' => $total]);
+    }
+
 }
 

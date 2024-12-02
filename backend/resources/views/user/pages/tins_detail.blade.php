@@ -14,7 +14,7 @@
             <div class="col-full">
                 <div class="row">
                     <nav class="woocommerce-breadcrumb">
-                        <a href="{{ url('/') }}">Trang chủ</a>
+                        <a href="{{ route('users.index') }}">Trang chủ</a>
                         <span class="delimiter"><i class="tm tm-breadcrumbs-arrow-right"></i></span>
                         <a href="{{ route('news.index') }}">Tin tức</a>
                         <span class="delimiter"><i class="tm tm-breadcrumbs-arrow-right"></i></span>

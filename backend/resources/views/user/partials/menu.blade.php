@@ -127,68 +127,33 @@
             </ul>
             <!-- .header-wishlist -->
             <ul id="site-header-cart" class="site-header-cart menu">
-                <li class="animate-dropdown dropdown ">
-                    <a class="cart-contents" href="cart.html" data-toggle="dropdown"
-                        title="View your shopping cart">
+                <li class="animate-dropdown dropdown">
+                    <a class="cart-contents" href="{{ route('cart.index') }}" data-toggle="dropdown" title="View your shopping cart">
                         <i class="tm tm-shopping-bag"></i>
-                            
-                        <span class="count"></span>
-                    
-                        @if (empty($cartDetail2))
-                        
-                        @else
-                            <span class="amount">
-                                <span class="price-label">Giỏ hàng</span>{{ number_format($total, 0, ',', '.') }}đ</span>
-                        @endif
+                        <span class="count">0</span>
+                        <span class="amount">
+                            <span class="price-label">Giỏ hàng</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-mini-cart">
                         <li>
                             <div class="widget woocommerce widget_shopping_cart">
                                 <div class="widget_shopping_cart_content">
-                                    @if(isset($cartDetail2) && !$cartDetail->isEmpty())
-                                        
-                                            <ul class="woocommerce-mini-cart cart_list product_list_widget ">
-                                                @foreach($cartDetail2 as $detail)
-                                                <li class="woocommerce-mini-cart-item mini_cart_item">
-                                                    <a href="#" class="remove" aria-label="Remove this item"
-                                                        data-product_id="65" data-product_sku="">×</a>
-                                                    <a href="single-product-sidebar.html">
-                                                        <img src="assets/images/products/mini-cart1.jpg"
-                                                            class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
-                                                            alt="">{{ $detail->productVariant->product->name }}&nbsp;
-                                                    </a>
-                                                    <span class="quantity">{{ $detail->quantity }} ×
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span class="woocommerce-Price-currencySymbol"></span>{{ number_format($detail->productVariant->sale_price ?? $detail->productVariant->listed_price, 0, ',', '.') }} đ</span>
-                                                    </span>
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        
-                                        <!-- .cart_list -->
-                                        <p class="woocommerce-mini-cart__total total">
-                                            <strong>Tổng cộng:</strong>
-                                            <span class="woocommerce-Price-amount amount">
-                                                <span class="woocommerce-Price-currencySymbol"></span>{{ number_format($total, 0, ',', '.') }} đ</span>
-                                        </p>
-                                        <p class="woocommerce-mini-cart__buttons buttons">
-                                            <a href="{{ route('cart.index') }}" class="button wc-forward">Xem giỏ hàng</a>
-                                            {{-- <a href="checkout.html" class="button checkout wc-forward">Thanh toán</a> --}}
-                                            <form action="{{ route('checkout') }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                <a href="#" class="button checkout wc-forward" onclick="this.closest('form').submit(); return false;">Thanh toán</a>
-                                            </form>                                            
-                                        </p>
-                                    @else
-                                        <p class="text-center">Giỏ hàng của đang bạn trống.</p>
-                                    @endif
+                                    <ul class="woocommerce-mini-cart cart_list product_list_widget">
+                                        <!-- Sản phẩm sẽ được cập nhật qua JavaScript -->
+                                    </ul>
+                                    <p class="woocommerce-mini-cart__total total">
+                                        <strong>Tổng cộng:</strong>
+                                        <span class="woocommerce-Price-amount amount">
+                                            <span class="woocommerce-Price-currencySymbol"></span>0.00</span>VND
+                                    </p>
+                                    <p class="woocommerce-mini-cart__buttons buttons">
+                                        <a href="{{ route('cart.index') }}" class="button wc-forward">Xem giỏ hàng</a>
+                                        <a href="{{ route('checkout') }}" class="button checkout wc-forward">Thanh toán</a>
+                                    </p>
                                 </div>
-                                <!-- .widget_shopping_cart_content -->
                             </div>
-                            <!-- .widget_shopping_cart -->
                         </li>
                     </ul>
-                    <!-- .dropdown-menu-mini-cart -->
                 </li>
             </ul>
             <!-- .site-header-cart -->
@@ -1146,3 +1111,63 @@
     </div>
     <!-- .handheld-only -->
 </header>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function loadCartHeader() {
+            fetch("{{ route('cart.header') }}")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const cartList = document.querySelector(".woocommerce-mini-cart");
+                        const cartTotal = document.querySelector(".woocommerce-mini-cart__total .woocommerce-Price-amount");
+                        const cartCount = document.querySelector(".cart-contents .count");
+
+                        cartList.innerHTML = "";
+                        cartCount.textContent = data.cartItems.length;
+                        cartTotal.innerHTML = `<span class="woocommerce-Price-currencySymbol"></span>${data.total.toFixed(2)}`;
+
+                        data.cartItems.forEach(item => {
+                            cartList.innerHTML += `
+                                <li class="woocommerce-mini-cart-item mini_cart_item">
+                                    <a href="#" class="remove" data-id="${item.id}">×</a>
+                                    <a href="#">
+                                        <img src="${item.image}" alt="${item.product_name}">
+                                        ${item.product_name}
+                                    </a>
+                                    <span class="quantity">${item.quantity} ×
+                                        <span class="woocommerce-Price-amount amount">
+                                            <span class="woocommerce-Price-currencySymbol"></span>${item.price.toFixed(2)}
+                                        </span>
+                                    </span>
+                                </li>
+                            `;
+                        });
+                    }
+                });
+        }
+
+        loadCartHeader();
+
+        document.addEventListener("click", function (e) {
+            if (e.target.matches(".add-to-cart-button")) {
+                e.preventDefault();
+                const productId = e.target.dataset.productId;
+
+                fetch("{{ route('cart.store') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ variant_id: productId, quantity: 1 })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            loadCartHeader();
+                        }
+                    });
+            }
+        });
+    });
+</script>

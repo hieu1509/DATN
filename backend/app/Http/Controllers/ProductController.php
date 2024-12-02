@@ -25,6 +25,36 @@ class ProductController extends Controller
         // Khởi tạo query
         $query = Product::query()->with(['subCategory', 'variants']);
     
+        // Lọc theo giá
+        if ($request->has('price_range') && $request->price_range !== null) {
+            switch ($request->price_range) {
+                case 'under_1m':
+                    $query->whereHas('variants', function ($variantQuery) {
+                        $variantQuery->where('sale_price', '<', 1000000);
+                    });
+                    break;
+                case '1m_5m':
+                    $query->whereHas('variants', function ($variantQuery) {
+                        $variantQuery->whereBetween('sale_price', [1000000, 5000000]);
+                    });
+                    break;
+                case '5m_15m':
+                    $query->whereHas('variants', function ($variantQuery) {
+                        $variantQuery->whereBetween('sale_price', [5000000, 15000000]);
+                    });
+                    break;
+                case '15m_25m':
+                    $query->whereHas('variants', function ($variantQuery) {
+                        $variantQuery->whereBetween('sale_price', [15000000, 25000000]);
+                    });
+                    break;
+                case 'above_25m':
+                    $query->whereHas('variants', function ($variantQuery) {
+                        $variantQuery->where('sale_price', '>', 25000000);
+                    });
+                    break;
+            }
+        }
         // Lọc theo danh mục con
         if ($request->has('sub_category_id') && $request->sub_category_id) {
             $query->where('sub_category_id', $request->sub_category_id);
@@ -209,10 +239,12 @@ class ProductController extends Controller
                 }
             }
 
-            ProductVariant::where('product_id', $product->id)->delete();
+           // Lấy danh sách các variant hiện tại
+            $currentVariants = ProductVariant::where('product_id', $product->id)->get();
 
+            // Duyệt qua các biến thể gửi từ request
             foreach ($request->chip_id as $index => $chipId) {
-                ProductVariant::create([
+                $variantData = [
                     'product_id' => $product->id,
                     'chip_id' => $chipId,
                     'ram_id' => $request->ram_id[$index],
@@ -220,7 +252,27 @@ class ProductController extends Controller
                     'listed_price' => $request->listed_price[$index],
                     'sale_price' => $request->sale_price[$index],
                     'quantity' => $request->quantity[$index],
-                ]);
+                ];
+
+                if (isset($currentVariants[$index])) {
+                    // Cập nhật bản ghi nếu tồn tại
+                    $currentVariants[$index]->update($variantData);
+                } else {
+                    // Tạo mới nếu không tồn tại
+                    ProductVariant::create($variantData);
+                }
+            }
+
+            // Xóa các bản ghi dư thừa
+            if (count($currentVariants) > count($request->chip_id)) {
+                $excessVariants = $currentVariants->slice(count($request->chip_id));
+                foreach ($excessVariants as $variant) {
+                    // Kiểm tra nếu không có dữ liệu liên quan trước khi xóa
+                    if ($variant->cartsDetails()->exists()) {
+                        throw new \Exception('Không thể xóa biến thể vì đang được tham chiếu.');
+                    }
+                    $variant->delete();
+                }
             }
 
             DB::commit();

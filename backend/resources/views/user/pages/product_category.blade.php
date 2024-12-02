@@ -90,12 +90,14 @@
                 <div class="col-full">
                     <div class="row">
                         <nav class="woocommerce-breadcrumb">
-                            <a href="home-v1.html">Trang chủ</a>
+                            <a href="{{ route('users.index') }}">Trang chủ</a>
                             <span class="delimiter">
                                 <i class="tm tm-breadcrumbs-arrow-right"></i>
                             </span>
                             @if (isset($subCategory))
-                                Danh mục: {{ $subCategory->name }}
+                                Danh mục: {{ $subCategory->name }}  
+                            @else
+                                Danh sách sản phẩm 
                             @endif
 
                         </nav>
@@ -115,7 +117,7 @@
                                             Danh mục: {{ $subCategory->name }}
                                         @endif
                                     </h1>
-                                    <ul role="tablist" class="shop-view-switcher nav nav-tabs">
+                                    {{-- <ul role="tablist" class="shop-view-switcher nav nav-tabs">
                                         <li class="nav-item">
                                             <a href="#grid" title="Grid View" data-toggle="tab" class="nav-link active">
                                                 <i class="tm tm-grid-small"></i>
@@ -144,9 +146,9 @@
                                                 <i class="tm tm-listing-small"></i>
                                             </a>
                                         </li>
-                                    </ul>
+                                    </ul> --}}
                                     <!-- .shop-view-switcher -->
-                                    <form class="form-techmarket-wc-ppp" method="POST">
+                                    {{-- <form class="form-techmarket-wc-ppp" method="POST">
                                         <select class="techmarket-wc-wppp-select c-select" onchange="this.form.submit()"
                                             name="ppp">
                                             <option value="20">Show 20</option>
@@ -156,9 +158,9 @@
                                         <input type="hidden" value="5" name="shop_columns">
                                         <input type="hidden" value="15" name="shop_per_page">
                                         <input type="hidden" value="right-sidebar" name="shop_layout">
-                                    </form>
+                                    </form> --}}
                                     <!-- .form-techmarket-wc-ppp -->
-                                    <form method="get" class="woocommerce-ordering">
+                                    {{-- <form method="get" class="woocommerce-ordering">
                                         <select class="orderby" name="orderby">
                                             <option value="popularity">Sort by popularity</option>
                                             <option value="rating">Sort by average rating</option>
@@ -169,14 +171,14 @@
                                         <input type="hidden" value="5" name="shop_columns">
                                         <input type="hidden" value="15" name="shop_per_page">
                                         <input type="hidden" value="right-sidebar" name="shop_layout">
-                                    </form>
+                                    </form> --}}
                                     <!-- .woocommerce-ordering -->
-                                    <nav class="techmarket-advanced-pagination">
+                                    {{-- <nav class="techmarket-advanced-pagination">
                                         <form class="form-adv-pagination" method="post">
                                             <input type="number" value="1" class="form-control" step="1"
                                                 max="5" min="1" size="2" id="goto-page">
                                         </form> of 5<a href="#" class="next page-numbers">→</a>
-                                    </nav>
+                                    </nav> --}}
                                     <!-- .techmarket-advanced-pagination -->
                                 </div>
                                 <!-- .shop-control-bar -->
@@ -196,7 +198,7 @@
                                                             <a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
                                                                 href="{{ route('users.products.show', $product->id) }}">
                                                                 @if ($product->image)
-                                                                    <img width="224" height="197"
+                                                                    <img style="height: 212px; object-fit: contain;"
                                                                         src="{{ Storage::url($product->image) }}"
                                                                         class="wp-post-image" alt="$product->name">
                                                                 @else
@@ -2325,7 +2327,7 @@
                                 </div>
                                 <!-- .tab-content -->
                                 <div class="shop-control-bar-bottom">
-                                    <form class="form-techmarket-wc-ppp" method="POST">
+                                    {{-- <form class="form-techmarket-wc-ppp" method="POST">
                                         <select class="techmarket-wc-wppp-select c-select" onchange="this.form.submit()"
                                             name="ppp">
                                             <option value="20">Show 20</option>
@@ -2335,13 +2337,13 @@
                                         <input type="hidden" value="5" name="shop_columns">
                                         <input type="hidden" value="15" name="shop_per_page">
                                         <input type="hidden" value="right-sidebar" name="shop_layout">
-                                    </form>
+                                    </form> --}}
                                     <!-- .form-techmarket-wc-ppp -->
-                                    <p class="woocommerce-result-count">
+                                    {{-- <p class="woocommerce-result-count">
                                         Showing 1&ndash;15 of 73 results
-                                    </p>
+                                    </p> --}}
                                     <!-- .woocommerce-result-count -->
-                                    <nav class="woocommerce-pagination">
+                                    {{-- <nav class="woocommerce-pagination">
                                         <ul class="page-numbers">
                                             <li>
                                                 <span class="page-numbers current">1</span>
@@ -2353,7 +2355,10 @@
                                             <li><a href="#" class="next page-numbers">→</a></li>
                                         </ul>
                                         <!-- .page-numbers -->
-                                    </nav>
+                                    </nav> --}}
+                                    <div>
+                                        {{ $products->links() }}
+                                    </div>
                                     <!-- .woocommerce-pagination -->
                                 </div>
                                 <!-- .shop-control-bar-bottom -->
@@ -2460,9 +2465,9 @@
                                         </ul>
                                     </div>
 
-                                    <button type="submit">Lọc</button>
-                                    <button type="reset">Reset</button>
-                                    <a href="{{ route('users.filter') }}"><button type="button">Xóa</button></a>
+                                    <button style="color: aliceblue"  type="submit">Lọc</button>
+                                    <button style="color: aliceblue"  type="reset">Reset</button>
+                                    <a href="{{ route('users.filter') }}"><button style="color: aliceblue"  type="button">Xóa</button></a>
 
                                 </form>
 

@@ -90,7 +90,7 @@
                                                                     <a href="{{ route('users.products.show', $product->id) }}"
                                                                         class="woocommerce-LoopProduct-link">
                                                                         @if ($product->image)
-                                                                            <img width="224" height="197"
+                                                                            <img style="height: 212px; object-fit: contain;"
                                                                                 src="{{ Storage::url($product->image) }}"
                                                                                 class="wp-post-image" alt="$product->name">
                                                                         @else
@@ -186,7 +186,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -255,7 +255,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -324,7 +324,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -783,7 +783,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -852,7 +852,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -921,7 +921,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -989,7 +989,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -1082,7 +1082,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">
@@ -1150,7 +1150,7 @@
                                                                                 <a href="{{ route('users.products.show', $product->id) }}"
                                                                                     class="woocommerce-LoopProduct-link">
                                                                                     @if ($product->image)
-                                                                                        <img width="224" height="197"
+                                                                                        <img style="height: 212px; object-fit: contain;"
                                                                                             src="{{ Storage::url($product->image) }}"
                                                                                             class="wp-post-image"
                                                                                             alt="$product->name">

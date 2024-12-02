@@ -9,20 +9,62 @@ use App\Models\OrderHistory;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\SubCategory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function Dashboard()
+    public function Dashboard(Request $request)
     {
-        $totalmoney = Order::sum('money_total');
+        // dd($request->all());
+        // $totalmoney = Order::sum('money_total');
+        //C1:
+        // if ($request->start_date && $request->end_date) {
+        //     $start_date = $request->start_date;
+        //     $end_date = $request->end_date;
+        // } else {
+        //     $start_date = date('Y-m-01');
+        //     // Lấy ngày cuối cùng của tháng hiện tại
+        //     $end_date = date('Y-m-t');
+        //     // $end_date = Carbon::parse($end_date)->endOfDay();
+        //     // $start_date = Carbon::parse($start_date)->startOfDay();
+        // }
+        //C2:
+        if ($request->start_date && $request->end_date) {
+            $start_date = Carbon::parse($request->start_date)->startOfDay(); // Đảm bảo format ngày
+            $end_date = Carbon::parse($request->end_date)->endOfDay();
+        } else {
+            // Gán giá trị mặc định khi không có ngày được truyền
+            $start_date = Carbon::now()->startOfMonth(); // Ngày đầu tháng
+            $end_date = Carbon::now()->endOfMonth(); // Ngày cuối tháng
+        }
+
+        //năm
+        if ($request->years) {
+            $years = $request->years;
+        } else {
+            $years = date('Y');
+        }
+        // dd($start_date,$end_date);
+
+        $totalmoney = OrderHistory::where('from_status', Order::DA_THANH_TOAN)
+            ->join('orders', 'order_histories.order_id', '=', 'orders.id')
+            ->whereBetween('orders.created_at', [$start_date, $end_date])
+            ->sum('orders.money_total');
 
         $totalBoughtProduct = OrderDetail::sum('quantity');
 
-        $donhangdahuy = OrderHistory::query()->where('to_status', Order::HUY_HANG)->count();
+        $donhangdahuy = OrderHistory::query()->where('to_status', Order::HUY_HANG)
+            ->join('orders', 'order_histories.order_id', '=', 'orders.id')
+            ->whereBetween('orders.created_at', [$start_date, $end_date])
+            ->count();
 
-        $donhangdangchoxuly = OrderHistory::query()->where('to_status', Order::CHO_XAC_NHA)->count();
+
+        $donhangdangchoxuly = OrderHistory::query()->where('to_status', Order::CHO_XAC_NHA)
+            ->join('orders', 'order_histories.order_id', '=', 'orders.id')
+            ->whereBetween('orders.created_at', [$start_date, $end_date])
+            ->count();
 
         $tongdonhang = OrderHistory::count();
 
@@ -30,32 +72,9 @@ class DashboardController extends Controller
 
         $phantramdangchoxuly = number_format(($donhangdangchoxuly / $tongdonhang) * 100, 2);
 
-        // echo "Phần trăm đơn hàng đã hủy: $phantramdahuy%";
-        // echo "Phần trăm đơn hàng đang chờ xử lý: $phantramdangchoxuly%";
-
-        // // dd($phantramdangchoxuly);
+        // dd($phantramdangchoxuly);
         $totalProduct = ProductVariant::sum('quantity');
         // dd($totalBoughtProduct);
-        // c1:
-        $top10Category = SubCategory::select('sub_categories.name', 'sub_categories.id', DB::raw('SUM(Order_details.quantity) as total'))
-            // từ bảng subcategory lấy name và id và thực hiện tổng sản phẩm gọi thành total 
-            ->join('products', 'sub_categories.id', '=', 'products.sub_category_id')
-            // ở đây là nối các bảng 
-            ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
-            // ở đây là nối các bảng 
-            ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
-            // ở đây là nối các bảng 
-            ->groupBy('sub_categories.name', 'sub_categories.id')
-            // nhóm nó theo name và id  
-            ->orderBy('total', 'desc')
-            // sắn xếp theo tổng nhiều nhất
-            ->limit(10)
-            // giời hạn là 10 
-            // ->toRawSql();
-            // để hiện sql ra check
-            ->get();
-        // dd($top10Category);
-        // đây là nối 4 bảng vào với nhau để có thể lấy được top 10 danh mục sản phẩm bán được nhiều nhất 
 
         $top5LastestComment = Review::query()
             ->orderBy('id', 'desc')
@@ -63,30 +82,45 @@ class DashboardController extends Controller
             ->get();
 
         $top5productbought = Product::with('variants.orderDetail')
-            // gọi thế này thì trong mảng product sẽ có cả productDetail và order (nếu không nhầm)
-            ->select('products.id', 'products.name', 'products.image')
-            // lấy những cái này
+            ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
+            ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->select('products.id', 'products.name', 'products.image', 'orders.created_at', 'order_details.quantity')
+            ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->get()
-            // map là để nó trả ra từng phần tử (thằng này giống foreach)
-            ->map(function ($product) {
-                // flatmap sau khi trả ra thì từ cái mảng map đó sẽ thêm dữ liệu total (cái mảng map sẽ thêm những dữ liệu mà flatmap tạo ra)
-                $total = $product->variants->flatMap(function ($productDetail) {
-                    // pluck là nó sẽ trả về 1 mảng tử order_detail xem có dữ liệu không (trả về 1 mảng gồm tất cả những trường đó)
-                    return $productDetail->orderDetail->pluck('quantity');
-                })->sum();
-                // tính tổng của sản phẩm trong chi tiết sản phẩm
-                $stock = $product->variants->sum('quantity');
-                // Trả về một mảng với thông tin sản phẩm và tổng số lượng
+            // ->toRawSql();
+            // dd($top5productbought);
+            ->groupBy('name') // Nhóm các sản phẩm theo tên. Điều này đảm bảo rằng mỗi sản phẩm chỉ xuất hiện một lần trong kết quả.
+            ->map(function ($group) {
+                // Tính tổng số lượng của tất cả các đơn đặt hàng cho mỗi sản phẩm, tránh việc tính nhiều lần nếu có nhiều biến thể hoặc đơn hàng.
+                $total = $group->sum('quantity');
+
+                // Tính tồn kho cho mỗi sản phẩm
+                // Kiểm tra xem productVariants có dữ liệu hay không
+                $firstProduct = $group->first();
+                $stock = 0; // Khởi tạo giá trị mặc định là 0
+
+                // Kiểm tra nếu có productVariants
+                if ($firstProduct && $firstProduct->variants) {
+                    // Tính tổng số lượng tồn kho của sản phẩm dựa trên biến thể của nó.
+                    $stock = $firstProduct->variants->sum('quantity');
+                }
+
+                // Lấy ngày mua hàng đầu tiên của sản phẩm
+                // $purchaseDate = Carbon::parse($group->first()->created_at)->locale('vi')->isoFormat('D MMM YYYY');
+
                 return [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'image' => $product->image,
+                    'name' => $group->first()->name,
+                    'image' => $group->first()->image,
                     'total' => $total,
                     'stock' => $stock,
+                    // 'purchaseDate' => $purchaseDate,
                 ];
             })
             ->sortByDesc('total')
             ->take(5); // Lấy 5 sản phẩm hàng đầu
+
+
         // dd($top5productbought);
 
         $top5Users = Order::select('orders.user_id', 'users.name', 'users.phone', 'users.address', 'users.email')
@@ -94,80 +128,96 @@ class DashboardController extends Controller
             ->selectRaw('COUNT(order_details.productvariant_id) as SoLanMua')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id') // Kết hợp bảng order_details
             ->join('users', 'users.id', '=', 'orders.user_id') // Kết hợp bảng users
-            ->whereMonth('orders.created_at', Carbon::now()->month)
+            // ->whereMonth('orders.created_at', Carbon::now()->month)
+            ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->groupBy('orders.user_id', 'users.name', 'users.phone', 'users.address', 'users.email') // Nhóm theo user_id và các trường của users
             ->orderBy('total', 'desc')
             ->take(5)
             ->get();
+        // ->toRawSql();
         // dd($top5Users);
 
         // thống kê theo năm 
         $currentYear = Carbon::now()->year;
-        $data = OrderDetail::selectRaw('MONTH(created_at) as month, SUM(quantity) as total_sales')
-            ->whereYear('created_at', $currentYear)
+        $years = $request->input('years', $currentYear); // Lấy giá trị năm từ form hoặc năm hiện tại
+
+        // Lấy dữ liệu doanh số hàng tháng trong năm được chọn
+        $monthlySales = OrderDetail::selectRaw('MONTH(order_histories.created_at) as month, SUM(order_details.quantity) as total_sales')
+            ->join('order_histories', 'order_histories.order_id', '=', 'order_details.order_id')
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->whereYear('order_histories.created_at', $years) // Lọc theo năm được chọn
             ->groupBy('month')
             ->orderBy('month', 'asc')
             ->get();
 
-        $monthlySales = array_fill(0, 12, 0);
-        // array_fill là tạo ra 1 mảng gồm 12 phần tử vs giá trị bằng 0
-        foreach ($data as $item) {
-            $monthlySales[$item->month - 1] = $item->total_sales;
+        // Khởi tạo mảng doanh số cho 12 tháng, mặc định là 0
+        $monthlySalesData = array_fill(0, 12, 0);
+
+        // Lưu doanh số vào mảng theo tháng
+        foreach ($monthlySales as $item) {
+            $monthlySalesData[$item->month - 1] = $item->total_sales; // Lưu doanh số vào mảng theo tháng
         }
-        $percentages = [];
-
-        // Lấy dữ liệu doanh số hàng năm
-        $dataYear = OrderDetail::selectRaw('YEAR(created_at) as year, SUM(quantity) as total_sales')
-            ->whereBetween('created_at', [now()->startOfYear()->subYears(4), now()->endOfYear()])
-            ->groupBy('year')
-            ->orderBy('year', 'asc')
-            ->get();
-
-        // Khởi tạo mảng doanh số cho các năm từ 2020 đến 2024
-        $YearSales = [
-            2020 => 0,
-            2021 => 0,
-            2022 => 0,
-            2023 => 0,
-            2024 => 0,
-        ];
-
-        // Lưu doanh số vào mảng YearSales dựa trên dữ liệu từ cơ sở dữ liệu
-        foreach ($dataYear as $dataYears) {
-            $YearSales[$dataYears->year] = $dataYears->total_sales;
-        }
-
-        // Chuyển mảng sang dạng mảng chỉ số để dùng cho biểu đồ
-        $YearSales = array_values($YearSales);
-        // dd($percentagesYear);
+        // dd($monthlySales);
 
         // Thống kê biểu đồ tròn theo danh mục sản phẩm đã bán 
-        // lấy dữ liệu từ cái trên xuống nhưng bỏ cái limit đi để không bị giowia hạn
+        // Thêm thời gian vào ngày kết thúc
         $PieChart = SubCategory::select('sub_categories.name', 'sub_categories.id', DB::raw('SUM(Order_details.quantity) as total'))
-            // từ bảng subcategory lấy name và id và thực hiện tổng sản phẩm gọi thành total 
             ->join('products', 'sub_categories.id', '=', 'products.sub_category_id')
-            // ở đây là nối các bảng 
             ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
-            // ở đây là nối các bảng 
             ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
-            // ở đây là nối các bảng 
+            ->join('order_histories', 'order_details.order_id', '=', 'order_histories.order_id') // Nối bảng order_histories
+            ->join('orders', 'orders.id', '=', 'order_details.order_id')
+            ->where('order_histories.from_status', Order::DA_THANH_TOAN) // Điều kiện trạng thái từ order_histories
+            ->whereBetween('orders.created_at', [$start_date, $end_date]) // Sử dụng thời gian đã điều chỉnh
             ->groupBy('sub_categories.name', 'sub_categories.id')
-            // nhóm nó theo name và id  
             ->orderBy('total', 'desc')
             ->get();
 
+        $percentages = [];
+
         foreach ($PieChart as $PieCharts) {
-            $percen =  ($PieCharts->total / $totalBoughtProduct) * 100;
+            if ($totalBoughtProduct > 0) {
+                $percen = ($PieCharts->total / $totalBoughtProduct) * 100;
+            } else {
+                $percen = 0; // Đề phòng chia cho 0
+            }
             $percentages[] = [
                 'name' => $PieCharts->name,
                 'total' => $PieCharts->total,
                 'percent' => $percen
             ];
         }
+
+        // Kiểm tra nếu $percentages không có dữ liệu
+        if (empty($percentages)) {
+            $percentages[] = [
+                'name' => 'No Data',
+                'total' => 0,
+                'percent' => 0
+            ];
+        }
         // dd($PieChart);
         // Lưu mảng tổng sản phẩm vào biến cho JavaScript
         $totalSales = array_column($percentages, 'percent'); // Lấy ra mảng tổng sản phẩm
         // dd($totalSales);
-        return view('admin.pages.dashboard', compact('totalmoney', 'totalBoughtProduct', 'donhangdahuy', 'donhangdangchoxuly', 'tongdonhang', 'phantramdahuy', 'phantramdangchoxuly', 'totalProduct', 'top10Category', 'top5LastestComment', 'top5productbought', 'top5Users', 'monthlySales', 'percentages', 'totalSales', 'YearSales'));
+        return view('admin.pages.dashboard', compact(
+            'totalmoney',
+            'totalBoughtProduct',
+            'donhangdahuy',
+            'donhangdangchoxuly',
+            'tongdonhang',
+            'phantramdahuy',
+            'phantramdangchoxuly',
+            'totalProduct',
+            'top5LastestComment',
+            'top5productbought',
+            'top5Users',
+            'currentYear',
+            'years',
+            'monthlySales',
+            'monthlySalesData',
+            'percentages',
+            'totalSales'
+        ));
     }
 }

@@ -54,15 +54,16 @@ class ReviewController extends Controller
         $user = auth()->user(); // Lấy thông tin người dùng
 
         // Kiểm tra nếu người dùng đã mua sản phẩm
-        // $hasPurchased = Order::where('user_id', Auth::id())
-        //     ->whereHas('orderDetails', function ($query) use ($product_id) {
-        //         $query->where('productvariant_id', $product_id);
-        //     })
-        //     ->exists();
-
-        // if (!$hasPurchased) {
-        //     return back()->with('error', 'Bạn phải mua sản phẩm này trước khi đánh giá.');
-        // }
+        $hasPurchased = Order::where('user_id', Auth::id())
+            ->whereHas('orderDetails', function ($query) use ($product_id) {
+                $query->whereHas('productVariant', function ($query) use ($product_id) {
+                    $query->where('product_id', $product_id);  // So sánh product_id của productvariant
+                });
+            })
+            ->exists();
+        if (!$hasPurchased) {
+            return redirect()->back()->withErrors(['error' => 'Bạn phải mua sản phẩm này trước khi đánh giá.']);
+        }
 
 
         // Kiểm tra dữ liệu đầu vào
@@ -79,7 +80,7 @@ class ReviewController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect()->back()->with('success', 'Cảm ơn bạn đã đánh giá sản phẩm!');
+        return redirect()->back()->withErrors('success', 'Cảm ơn bạn đã đánh giá sản phẩm!');
     }
 
 
@@ -87,10 +88,10 @@ class ReviewController extends Controller
     {
         // Kiểm tra quyền xóa bình luận (chỉ admin hoặc chính người tạo có thể xóa)
         if ($review->user_id !== auth()->id() && !auth()->user()->is_admin) {
-            return redirect()->back()->with('error', 'Bạn không có quyền xóa bình luận này');
+            return redirect()->back()->withErrors('error', 'Bạn không có quyền xóa bình luận này');
         }
 
         $review->delete();
-        return redirect()->back()->with('success', 'Bình luận đã được xóa');
-}
+        return redirect()->back()->withErrors('success', 'Bình luận đã được xóa');
+    }
 }

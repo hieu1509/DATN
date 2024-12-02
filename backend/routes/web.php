@@ -75,10 +75,10 @@ Route::get('/user/edit', [ProfileController::class, 'edit'])->name('user.edit_pr
 Route::put('/user/update', [ProfileController::class, 'update'])->name('user.update')->middleware('auth');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [UserController::class, 'index'])->name('index');
 // Danh sách người dùng
 Route::prefix('users')
     ->as('users.')
@@ -98,6 +98,7 @@ Route::prefix('admins')
     ->as('admins.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'Dashboard']);
+        Route::post('/fillterYear',[DashboardController::class,'Dashboard'])->name('fillterYear');
 
         Route::prefix('products')
             ->as('products.')
@@ -227,3 +228,4 @@ Route::prefix('tins')->as('tins.')->group(function () {
 });
 Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
 
+Route::get('/cart-header', [CartController::class, 'getCartHeader'])->name('cart.header');

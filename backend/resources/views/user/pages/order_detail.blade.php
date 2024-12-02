@@ -14,9 +14,9 @@
             <div class="col-full">
                 <div class="row">
                     <nav class="woocommerce-breadcrumb">
-                        <a href="home-v1.html">Home</a>
+                        <a href="{{ route('users.index') }}">Trang chủ</a>
                         <span class="delimiter"><i class="tm tm-breadcrumbs-arrow-right"></i></span>
-                        <a href="checkout.html">Đơn hàng</a>
+                        <a href="{{ route('cart.myorder')}}">Đơn hàng</a>
                         <span class="delimiter"><i class="tm tm-breadcrumbs-arrow-right"></i></span>Chi tiết đơn hàng
                     </nav>
                     <!-- .woocommerce-breadcrumb -->

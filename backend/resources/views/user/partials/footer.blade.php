@@ -196,14 +196,16 @@
                                 <h4 class="widget-title">Chăm sóc khách hàng</h4>
                                 <div class="menu-footer-menu-3-container">
                                     <ul id="menu-footer-menu-3" class="menu">
+                                        @if (Auth::check())
                                         <li class="menu-item">
-                                            <a href="login-and-register.html">Tài khoản của tôi</a>
+                                            <a href="{{ route('user.profile') }}">Tài khoản của tôi</a>
                                         </li>
+                                        @endif
                                         <li class="menu-item">
                                             <a href="track-your-order.html">Theo dõi đơn hàng</a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="shop.html">Cửa hàng</a>
+                                            <a href="{{ route('users.filter') }}">Cửa hàng</a>
                                         </li>
                                         <li class="menu-item">
                                             <a href="wishlist.html">Danh sách yêu thích</a>

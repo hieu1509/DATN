@@ -15,7 +15,7 @@
                 <div class="col-full">
                     <div class="row">
                         <nav class="woocommerce-breadcrumb">
-                            <a href="home-v1.html">Trang chủ</a>
+                            <a href="{{ route('users.index') }}">Trang chủ</a>
                             <span class="delimiter">
                                 <i class="tm tm-breadcrumbs-arrow-right"></i>
                             </span>
@@ -89,14 +89,14 @@
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <div class="quantity">
-                                                                            <button type="button"
+                                                                            <button style="color: aliceblue" type="button"
                                                                                 class="btn-minus">−</button>
                                                                             <input id="quantity-input-{{ $detail->id }}"
                                                                                 type="number" name="quantity"
                                                                                 value="{{ $detail->quantity }}"
                                                                                 title="Qty" class="input-text qty text"
                                                                                 size="4" min="1">
-                                                                            <button type="button"
+                                                                            <button style="color: aliceblue" type="button"
                                                                                 class="btn-plus">+</button>
                                                                         </div>
                                                                     </form>
@@ -112,7 +112,7 @@
                                                                         method="post">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <button type="submit" class="remove">Xóa</button>
+                                                                        <button style="color: aliceblue" type="submit" class="remove">Xóa</button>
                                                                     </form>
                                                                 </td>
                                                             </tr>
@@ -142,13 +142,13 @@
                                                         <div class="wc-proceed-to-checkout">
                                                             <form action="{{ route('checkout') }}" method="POST">
                                                                 @csrf
-                                                                <a class="checkout-button button alt wc-forward">
-                                                                    <button type="submit">Tiến
+                                                                
+                                                                    <button style="width: 100%"  class="checkout-button button alt wc-forward" type="submit">Tiến
                                                                         hành
-                                                                        thanh toán</button> </a>
+                                                                        thanh toán</button> 
                                                             </form>
 
-                                                            <a class="back-to-shopping" href="shop.html">Quay lại mua
+                                                            <a class="back-to-shopping" href="{{ route('users.filter') }}">Quay lại mua
                                                                 sắm</a>
                                                         </div>
                                                     </div>

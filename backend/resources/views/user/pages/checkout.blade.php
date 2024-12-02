@@ -13,7 +13,7 @@
                 <div class="col-full">
                     <div class="row">
                         <nav class="woocommerce-breadcrumb">
-                            <a href="home-v1.html">Trang chủ</a>
+                            <a href="{{ route('users.index') }}">Trang chủ</a>
                             <span class="delimiter">
                                 <i class="tm tm-breadcrumbs-arrow-right"></i>
                             </span>
@@ -45,10 +45,10 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            <input type="text" placeholder="Mã giảm giá"
+                                                            <input  type="text" placeholder="Mã giảm giá"
                                                                 name="promo_code" id="promo_code"
                                                                 value="{{ request('promo_code') }}">
-                                                            <button type="submit">Áp dụng</button>
+                                                            <button style="color: aliceblue"  type="submit">Áp dụng</button>
                                                         </div>
                                                     </td>
                                                 </form>
@@ -341,13 +341,13 @@
                                                                     <label for="payment_method_cod">Thanh toán khi nhận
                                                                         hàng</label>
                                                                 </li>
-                                                                <li class="wc_payment_method payment_method_momo">
+                                                                {{-- <li class="wc_payment_method payment_method_momo">
                                                                     <input type="radio" value="momo"
                                                                         name="payment_method" class="input-radio"
                                                                         id="payment_method_momo">
                                                                     <label for="payment_method_momo">Thanh toán qua
                                                                         Momo</label>
-                                                                </li>
+                                                                </li> --}}
                                                                 <li class="wc_payment_method payment_method_vnpay">
                                                                     <input type="radio" value="vnpay" name="payment_method" class="input-radio" id="payment_method_vnpay">
                                                                     <label for="payment_method_vnpay">Thanh toán qua VNPAY</label>
