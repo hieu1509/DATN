@@ -1,82 +1,88 @@
 @extends('user.layout')
 
 @section('content')
-<body class="woocommerce-active page-template-template-homepage-v4 can-uppercase">
-    <div id="page" class="hfeed site">
 
-        @include('user.partials.header')
+    <body class="woocommerce-active page-template-template-homepage-v4 can-uppercase">
+        <div id="page" class="hfeed site">
 
-        @include('user.partials.menu')
+            @include('user.partials.header')
 
-        <!-- .header-v2 -->
-        <!-- ============================================================= Header End ============================================================= -->
-        <div id="content" class="site-content">
-            <div class="col-full">
-                <div class="row">
-                    <nav class="woocommerce-breadcrumb">
-                        <a href="{{ route('users.index') }}">Trang chủ</a>
-                        <span class="delimiter">
-                            <i class="tm tm-breadcrumbs-arrow-right"></i>
-                        </span>
-                        Terms and Conditions
-                    </nav>
-                    <!-- .woocommerce-breadcrumb -->
-                    <div id="primary" class="content-area">
-                        <main id="main" class="site-main">
-                            <div class="type-page hentry">
-                                <header class="entry-header">
-                                    <div class="page-header-caption">
-                                        <h1 class="entry-title">Terms and Conditions</h1>
-                                        <p class="entry-subtitle">This Agreement was last modified on 18 February 2016.</p>
+            @include('user.partials.menu')
+
+            <!-- .header-v2 -->
+            <!-- ============================================================= Header End ============================================================= -->
+            <div id="content" class="site-content">
+                <div class="col-full">
+                    <div class="row">
+                        <nav class="woocommerce-breadcrumb">
+                            <a href="home-v1.html">Trang chủ</a>
+                            <span class="delimiter">
+                                <i class="tm tm-breadcrumbs-arrow-right"></i>
+                            </span>
+                            Chính sách bảo mật và điều khoản
+                        </nav>
+                        <!-- .woocommerce-breadcrumb -->
+                        <div id="primary" class="content-area">
+                            <main id="main" class="site-main">
+                                <div class="type-page hentry">
+                                    <header class="entry-header">
+                                        <div class="page-header-caption">
+                                            <h1 class="entry-title">Chính sách bảo mật và điều khoản</h1>
+                                        </div>
+                                    </header>
+                                    <div class="entry-content">
+                                        <section class="section terms-conditions">
+                                            <h2>1. Giới thiệu</h2>
+                                            <p>Chào mừng bạn đến với website của chúng tôi. Khi bạn sử dụng dịch vụ của
+                                                chúng tôi, bạn đồng ý tuân thủ các điều khoản và điều kiện dưới đây.</p>
+
+                                            <h2>2. Quyền và Nghĩa Vụ của Người Dùng</h2>
+                                            <p>Người dùng có trách nhiệm sử dụng dịch vụ một cách hợp pháp, tuân thủ các quy
+                                                định về bản quyền và không xâm phạm quyền lợi của các bên khác.</p>
+
+                                            <h2>3. Quyền Sở Hữu Trí Tuệ</h2>
+                                            <p>Tất cả các tài liệu, hình ảnh, logo, và nội dung trên website này thuộc quyền
+                                                sở hữu của chúng tôi hoặc các đối tác liên kết và được bảo vệ bởi luật bản
+                                                quyền.</p>
+
+                                            <h2>4. Giới Hạn Trách Nhiệm</h2>
+                                            <p>Chúng tôi không chịu trách nhiệm đối với bất kỳ thiệt hại nào phát sinh từ
+                                                việc sử dụng hoặc không thể sử dụng dịch vụ của chúng tôi.</p>
+
+                                            <h2>5. Thay Đổi Dịch Vụ</h2>
+                                            <p>Chúng tôi có quyền thay đổi hoặc ngừng cung cấp dịch vụ mà không cần thông
+                                                báo trước.</p>
+
+                                            <h2>6. Giải Quyết Tranh Chấp</h2>
+                                            <p>Mọi tranh chấp phát sinh sẽ được giải quyết theo pháp luật của Việt Nam và
+                                                tại Tòa án có thẩm quyền tại Hà Nội.</p>
+
+                                            <h2>7. Chính Sách Bảo Mật</h2>
+                                            <p>Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn và chỉ sử dụng chúng theo
+                                                chính sách bảo mật của chúng tôi.</p>
+                                        </section>
+                                        <!-- .terms-conditions -->
                                     </div>
-                                </header>
-                                <div class="entry-content">
-                                    <section class="section terms-conditions">
-                                        <h2>Intellectual Propertly</h2>
-                                        <ol>
-                                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis diam erat. Duis velit lectus, posuere a blandit sit amet, tempor at lorem. Donec ultricies, lorem sed ultrices interdum.</li>
-                                            <li>Leo metus luctus sem, vel vulputate diam ipsum sed lorem. Donec tempor arcu nisl, et molestie massa scelerisque ut. Nunc at rutrum leo. Mauris metus mauris, tristique quis sapien eu, rutrum vulputate enim.</li>
-                                            <li>Mauris tempus erat laoreet turpis lobortis, eu tincidunt erat fermentum.</li>
-                                            <li>Aliquam non tincidunt urna. Integer tincidunt nec nisl vitae ullamcorper. Proin sed ultrices erat. Praesent varius ultrices massa at faucibus.</li>
-                                            <li>Aenean dignissim, orci sed faucibus pharetra, dui mi dignissim tortor, sit amet condimentum mi ligula sit amet augue.</li>
-                                            <li>Pellentesque vitae eros eget enim mollis placerat.</li>
-                                        </ol>
-                                        <h2>Termination</h2>
-                                        <ol>
-                                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis diam erat. Duis velit lectus, posuere a blandit sit amet, tempor at lorem. Donec ultricies, lorem sed ultrices interdum.</li>
-                                            <li>Leo metus luctus sem, vel vulputate diam ipsum sed lorem. Donec tempor arcu nisl, et molestie massa scelerisque ut. Nunc at rutrum leo. Mauris metus mauris, tristique quis sapien eu, rutrum vulputate enim.</li>
-                                            <li>Mauris tempus erat laoreet turpis lobortis, eu tincidunt erat fermentum.</li>
-                                            <li>Aliquam non tincidunt urna. Integer tincidunt nec nisl vitae ullamcorper. Proin sed ultrices erat. Praesent varius ultrices massa at faucibus.</li>
-                                            <li>Aenean dignissim, orci sed faucibus pharetra, dui mi dignissim tortor, sit amet condimentum mi ligula sit amet augue.</li>
-                                            <li>Pellentesque vitae eros eget enim mollis placerat.</li>
-                                        </ol>
-                                        <h2>Changes To This Agreement</h2>
-                                        <p>We reserve the right, at our sole discretion, to modify or replace these Terms and Conditions by posting the updated terms on the Site.
-                                            <br>
-                                        </p>
-                                    </section>
-                                    <!-- .terms-conditions -->
+                                    <!-- .entry-content -->
                                 </div>
-                                <!-- .entry-content -->
-                            </div>
-                            <!-- .hentry -->
-                        </main>
-                        <!-- #main -->
+                                <!-- .hentry -->
+                            </main>
+                            <!-- #main -->
+                        </div>
+                        <!-- #primary -->
                     </div>
-                    <!-- #primary -->
+                    <!-- .row -->
                 </div>
-                <!-- .row -->
+                <!-- .col-full -->
             </div>
-            <!-- .col-full -->
-        </div>
-        <!-- #content -->
-    
-        @include('user.partials.footer')
+            <!-- #content -->
 
-        <!-- .site-footer -->
-    </div>
-    
-    @include('user.partials.js')
-    
-</body>
+            @include('user.partials.footer')
+
+            <!-- .site-footer -->
+        </div>
+
+        @include('user.partials.js')
+
+    </body>
 @endsection

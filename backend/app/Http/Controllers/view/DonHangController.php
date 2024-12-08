@@ -11,17 +11,36 @@ use Illuminate\Http\Request;
 class DonHangController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $listDonHang = OrderHistory::query()->with('order')->orderByDesc('id')->get();
-        // dd($listDonHang);
-        $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
-        foreach ($trangThaiDonHang as $key => $value) {
-            $key_trang_thai = $key;
-            $value_trang_thai = $value;
+        $query = OrderHistory::query()->with('order');
+    
+        // Lọc theo khoảng thời gian (từ ngày - đến ngày)
+        if ($request->has('from_date') && $request->has('to_date')) {
+            $query->whereBetween('created_at', [
+                $request->from_date,
+                $request->to_date,
+            ]);
         }
 
-        return view('admin.order.index', compact('listDonHang', 'trangThaiDonHang', 'key_trang_thai', 'value_trang_thai'));
+        // Lọc theo trạng thái đơn hàng
+        if ($request->has('filter_status') && $request->filter_status !== '' && $request->filter_status !== 'all') {
+            $query->where('to_status', $request->filter_status);
+        }
+    
+        // Tìm kiếm theo mã sản phẩm hoặc thông tin liên quan
+        if ($request->has('search') && $request->search !== '') {
+            $searchTerm = $request->search;
+            $query->whereHas('order', function ($query) use ($searchTerm) {
+                $query->where('code', 'LIKE', '%' . $searchTerm . '%')
+                      ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+    
+        $listDonHang = $query->orderByDesc('id')->get();
+        $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
+    
+        return view('admin.order.index', compact('listDonHang', 'trangThaiDonHang'));
     }
 
     /**
@@ -45,17 +64,35 @@ class DonHangController extends Controller
      */
     public function show(string $id)
     {
-        $donHang = Order::query()->findOrFail($id); 
-        $user_id  = $donHang->user_id;
-        $trangThaiDonHang = Order::TRANG_THAI_DON_HANG;
-        $trangThaiThanhToan = Order::TRANG_THAI_THANH_TOAN;
-        $productDetails_id = $donHang->orderDetails->pluck('productvariant_id')->toArray();// khóa 
-        $productDetails = ProductVariant::whereIn('id', $productDetails_id)->get();
-        // $orderDetails = $donHang->order->OrderDetail;
-        // dd($donHang);
+        // Lấy đơn hàng với các mối quan hệ cần thiết
+        $order = Order::with([
+            'orderDetails.productVariant.product',
+            'shipping',
+            'promotion',
+            'orderHistories'
+        ])->find($id);
 
-    
-        return view('admin.order.show', compact('donHang', 'trangThaiDonHang', 'trangThaiThanhToan', 'productDetails',));
+        // Kiểm tra nếu đơn hàng không tồn tại
+        if (!$order) {
+            return redirect()->route('orders.index')->with('error', 'Đơn hàng không tồn tại.');
+        }
+
+        // Lấy lịch sử đơn hàng chính xác theo id đơn hàng
+        $latestHistory = $order->orderHistories->where('order_id', $id)->first();
+
+        // Nếu không tìm thấy lịch sử đơn hàng
+        if (!$latestHistory) {
+            return redirect()->route('orders.index')->with('error', 'Lịch sử đơn hàng không tồn tại.');
+        }
+
+        // Trạng thái đơn hàng
+        $orderStatus = Order::TRANG_THAI_DON_HANG[$latestHistory->to_status] ?? 'Không xác định';
+
+        // Trạng thái thanh toán
+        $paymentStatus = Order::TRANG_THAI_THANH_TOAN[$latestHistory->from_status] ?? 'Không xác định';
+
+        // Trả về view với thông tin đơn hàng và chi tiết
+        return view('admin.order.show', compact('order', 'orderStatus', 'paymentStatus'));
     }
 
     /**

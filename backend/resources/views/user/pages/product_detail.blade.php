@@ -2,6 +2,21 @@
 
 @section('content')
 <style>
+    .single-product-header form {
+        display: inline;
+    }
+    .single-product-header form {
+        display: inline;
+    }
+    .single-product-header button.add-to-wishlist {
+        background-color: white; /* Nền trắng */
+        color: #333; /* Màu chữ */
+        border: none; /* Bỏ đường viền */
+        padding: 10px 20px; /* Điều chỉnh khoảng cách bên trong nút */
+        font-size: 14px; /* Kích thước chữ */
+        cursor: pointer; /* Con trỏ khi hover */
+        border-radius: 5px; /* Bo góc */
+    }
     .card-container {
         display: flex;
         /* Sử dụng Flexbox để hiển thị các card theo hàng ngang */
@@ -135,10 +150,10 @@
                             <div class="product product-type-simple">
                                 <div class="single-product-wrapper">
                                     <div class="product-images-wrapper thumb-count-4">
-                                        <span class="onsale">-
+                                        {{-- <span class="onsale">-
                                             <span class="woocommerce-Price-amount amount">
-                                                <span class="woocommerce-Price-currencySymbol">$</span>242.99</span>
-                                        </span>
+                                                <span class="woocommerce-Price-currencySymbol"></span>242.99</span>
+                                        </span> --}}
                                         <!-- .onsale -->
                                         <div id="techmarket-single-product-gallery"
                                             class="techmarket-single-product-gallery techmarket-single-product-gallery--with-images techmarket-single-product-gallery--columns-4 images"
@@ -212,9 +227,11 @@
                                     <!-- .product-images-wrapper -->
                                     <div class="summary entry-summary">
                                         <div class="single-product-header">
-                                            <h1 class="product_title entry-title">{{ $product->name }}
-                                            </h1>
-                                            <a class="add-to-wishlist" href="wishlist.html"> Yêu thích</a>
+                                            <h1 class="product_title entry-title">{{ $product->name }}</h1>
+                                            <form action="{{ route('wishlist.add', $product->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="add-to-wishlist">Yêu thích</button>
+                                            </form>
                                         </div>
                                         <!-- .single-product-header -->
                                         <div class="single-product-meta">
@@ -234,9 +251,9 @@
                                                     <a rel="tag"
                                                         href="product-category.html">{{ $product->subCategory->name }}</a>
                                                 </span>
-                                                <span class="sku_wrapper">SKU:
+                                                {{-- <span class="sku_wrapper">SKU:
                                                     <span class="sku">5487FB8/11</span>
-                                                </span>
+                                                </span> --}}
                                             </div>
                                             <div class="product-label">
                                                 <div class="ribbon label green-label">
@@ -386,7 +403,7 @@
                                         </li>
                                         <li class="nav-item reviews_tab">
                                             <a class="nav-link" data-toggle="tab" role="tab"
-                                                aria-controls="tab-reviews" href="#tab-reviews">Bình luận (1)</a>
+                                                aria-controls="tab-reviews" href="#tab-reviews">Bình luận</a>
                                         </li>
                                     </ul>
                                     <!-- /.ec-tabs -->

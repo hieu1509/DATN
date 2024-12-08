@@ -16,14 +16,6 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-
-    public function menu()
-    {
-        $categories = Category::with('subCategories')->get();;
-
-        return view('user.partials.menu', compact('categories'));
-    }
-
     public function index()
     {
         // Truy vấn chung để tránh lặp lại mã

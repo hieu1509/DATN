@@ -18,7 +18,7 @@
                         <span class="delimiter">
                             <i class="tm tm-breadcrumbs-arrow-right"></i>
                         </span>
-                        Contact V1
+                         Liên hệ
                     </nav>
                     <!-- .woocommerce-breadcrumb -->
                     <div id="primary" class="content-area">
@@ -32,11 +32,12 @@
                                     <div class="row contact-info">
                                         <div class="col-md-9 left-col">
                                             <div class="text-block">
-                                                <h2 class="contact-page-title">Leave us a Message</h2>
-                                                <p>Maecenas dolor elit, semper a sem sed, pulvinar molestie lacus. Aliquam dignissim, elit non mattis ultrices,
-                                                    <br> neque odio ultricies tellus, eu porttitor nisl ipsum eu massa.</p>
+                                                <h2 class="contact-page-title">Để lại lời nhắn</h2>
+                                                <p>Nếu bạn quan tâm hãy để lại lời nhắn.
+                                                    <br>Email: @gmail.com
+                                                <br>SĐT: 0123456789</p>
                                             </div>
-                                            <div class="contact-form">
+                                            {{-- <div class="contact-form">
                                                 <div role="form" class="wpcf7" id="wpcf7-f425-o1" lang="en-US" dir="ltr">
                                                     <div class="screen-reader-response"></div>
                                                     <form class="wpcf7-form" novalidate="novalidate">
@@ -97,51 +98,51 @@
                                                     <!-- .wpcf7-form -->
                                                 </div>
                                                 <!-- .wpcf7 -->
-                                            </div>
+                                            </div> --}}
                                             <!-- .contact-form7 -->
                                         </div>
                                         <!-- .col -->
                                         <div class="col-md-3 store-info">
                                             <div class="text-block">
-                                                <h2 class="contact-page-title">Our Store</h2>
+                                                <h2 class="contact-page-title">Địa chỉ</h2>
                                                 <address>
-                                                    17 Princess Road
-                                                    <br> London, Greater London
-                                                    <br> NW1 8JR, UK
+                                                    29 Trịnh Văn Bô
+                                                    <br> Hà Nội, VN
+                                                    <br> 
                                                 </address>
-                                                <h3>Hours of Operation</h3>
+                                                <h3>Thời Gian</h3>
                                                 <ul class="list-unstyled operation-hours inner-right-md">
                                                     <li class="clearfix">
-                                                        <span class="day">Monday:</span>
-                                                        <span class="pull-right flip hours">12-6 PM</span>
+                                                        <span class="day">T2:</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                     <li class="clearfix">
-                                                        <span class="day">Tuesday:</span>
-                                                        <span class="pull-right flip hours">12-6 PM</span>
+                                                        <span class="day">T3:</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                     <li class="clearfix">
-                                                        <span class="day">Wednesday:</span>
-                                                        <span class="pull-right flip hours">12-6 PM</span>
+                                                        <span class="day">T4:</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                     <li class="clearfix">
-                                                        <span class="day">Thursday:</span>
-                                                        <span class="pull-right flip hours">12-6 PM</span>
+                                                        <span class="day">T5:</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                     <li class="clearfix">
-                                                        <span class="day">Friday:</span>
-                                                        <span class="pull-right flip hours">12-6 PM</span>
+                                                        <span class="day">T6:</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                     <li class="clearfix">
-                                                        <span class="day">Saturday:</span>
-                                                        <span class="pull-right flip hours">12-6 PM</span>
+                                                        <span class="day">T7:</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                     <li class="clearfix">
-                                                        <span class="day">Sunday</span>
-                                                        <span class="pull-right flip hours">Closed</span>
+                                                        <span class="day">Cn</span>
+                                                        <span class="pull-right flip hours">6-21 PM</span>
                                                     </li>
                                                 </ul>
-                                                <h3>Careers</h3>
-                                                <p class="inner-right-md">If you’re interested in employment opportunities at Techmarket, please email us: <a href="mailto:contact@yourstore.com">contact@yourstore.com</a></p>
+                                                {{-- <h3>Careers</h3>
+                                                <p class="inner-right-md">If you’re interested in employment opportunities at Techmarket, please email us: <a href="mailto:contact@yourstore.com">contact@yourstore.com</a></p> --}}
                                             </div>
                                             <!-- .text-block -->
                                         </div>

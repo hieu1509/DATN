@@ -243,6 +243,7 @@ class OrderController extends Controller
             ? $totalPrice * ($promotion->discount / 100) 
             : $promotion->discount;
     
+        $promotion->decrement('usage_limit');
         // Đảm bảo giảm giá không vượt quá tổng giá trị đơn hàng
         return min($discount, $totalPrice);
     }    
@@ -279,8 +280,6 @@ class OrderController extends Controller
         // Trả về view với thông tin đơn hàng và chi tiết
         return view('user.pages.order_detail', compact('order', 'orderStatus', 'paymentStatus'));
     }
-    
-    
     
     public function logOrderHistory($order)
     {

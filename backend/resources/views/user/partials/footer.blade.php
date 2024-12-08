@@ -130,60 +130,21 @@
                 </div>
                 <!-- .footer-contact -->
                 <div class="footer-widgets">
+                    <div class="columns"></div>
                     <div class="columns">
                         <aside class="widget clearfix">
                             <div class="body">
                                 <h4 class="widget-title">Tìm kiếm nhanh</h4>
                                 <div class="menu-footer-menu-1-container">
                                     <ul id="menu-footer-menu-1" class="menu">
-                                        <li class="menu-item">
-                                            <a href="shop.html">Laptops</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html">Chuột </a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html">Bàn phím</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html">Loa</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html"></a>
-                                        </li>
+                                        @foreach ($categories as $category)
+                                            @foreach ($category->subCategories as $subCategory)
+                                                <li class="menu-item"><a href="{{ route('users.subcategories', $subCategory->id) }}">{{ $subCategory->name }}</a></li>
+                                            @endforeach
+                                        @endforeach
                                     </ul>
                                 </div>
                                 <!-- .menu-footer-menu-1-container -->
-                            </div>
-                            <!-- .body -->
-                        </aside>
-                        <!-- .widget -->
-                    </div>
-                    <!-- .columns -->
-                    <div class="columns">
-                        <aside class="widget clearfix">
-                            <div class="body">
-                                <h4 class="widget-title">&nbsp;</h4>
-                                <div class="menu-footer-menu-2-container">
-                                    <ul id="menu-footer-menu-1" class="menu">
-                                        <li class="menu-item">
-                                            <a href="shop.html">Laptops</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html">Chuột </a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html">Bàn phím</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html">Loa</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="shop.html"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- .menu-footer-menu-2-container -->
                             </div>
                             <!-- .body -->
                         </aside>
@@ -202,22 +163,16 @@
                                         </li>
                                         @endif
                                         <li class="menu-item">
-                                            <a href="track-your-order.html">Theo dõi đơn hàng</a>
+                                            <a href="{{ route('cart.myorder')}}">Lịch sử đơn hàng</a>
                                         </li>
                                         <li class="menu-item">
                                             <a href="{{ route('users.filter') }}">Cửa hàng</a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="wishlist.html">Danh sách yêu thích</a>
+                                            <a href="{{ route('wishlist.index') }}">Danh sách yêu thích</a>
                                         </li>
                                         <li class="menu-item">
-                                            <a href="about.html">Giới thiệu</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="terms-and-conditions.html">Đổi/Trả hàng</a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="faq.html">Câu hỏi thường gặp</a>
+                                            <a href="about">Giới thiệu</a>
                                         </li>
                                     </ul>
                                 </div>

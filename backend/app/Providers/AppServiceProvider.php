@@ -41,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
             $categories = Category::with('subCategories')->get();
             $view->with('categories', $categories);
         });
+        // Sử dụng View Composer để chia sẻ $categories với footer.blade.php
+        View::composer('user.partials.footer', function ($view) {
+            $categories = Category::with('subCategories')->get();
+            $view->with('categories', $categories);
+        });
 
 
         // Tạo các vai trò và phân quyền

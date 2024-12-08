@@ -149,8 +149,15 @@
                             <label>Số điện thoại:</label>
                             <div class="info-text">{{ $user->phone ?? 'chưa cập nhật' }}</div>
                         </div>
+                        <div class="info-item">
+                            <label>Vai trò:</label>
+                            <div class="info-text">{{ $user->role ?? 'chưa cập nhật' }}</div>
+                        </div>
                         <!-- Nút chỉnh sửa -->
                         <div class="text-right mt-4">
+                            @if($user->role === 'admin')
+                                <a href="{{ route('admins.') }}" class="btn btn-primary">Truy cập trang admin</a>
+                            @endif
                             <a href="{{ route('user.edit_profile', $user->id) }}" class="btn btn-primary">
                                 Chỉnh sửa thông tin
                             </a>

@@ -6752,7 +6752,7 @@
                                         data-slick="{&quot;slidesToShow&quot;:6,&quot;slidesToScroll&quot;:1,&quot;dots&quot;:false,&quot;arrows&quot;:true,&quot;responsive&quot;:[{&quot;breakpoint&quot;:400,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesToScroll&quot;:1}},{&quot;breakpoint&quot;:800,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesToScroll&quot;:3}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesToScroll&quot;:4}},{&quot;breakpoint&quot;:1400,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesToScroll&quot;:5}}]}">
                                         <div class="brands">
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6768,7 +6768,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6784,7 +6784,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6800,7 +6800,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6816,7 +6816,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6832,7 +6832,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6848,7 +6848,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6864,7 +6864,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6880,7 +6880,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6896,7 +6896,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6912,7 +6912,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">
@@ -6928,7 +6928,7 @@
                                             </div>
                                             <!-- .item -->
                                             <div class="item">
-                                                <a href="shop.html">
+                                                <a href="#">
                                                     <figure>
                                                         <figcaption class="text-overlay">
                                                             <div class="info">

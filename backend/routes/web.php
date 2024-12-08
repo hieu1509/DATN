@@ -22,13 +22,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\view\UseradminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\PromotionUserController;
 use App\Http\Controllers\ReviewController;
-
-use App\Models\ProductVariant;
-
 use App\Http\Controllers\UserNewsController;
-
+use App\Http\Controllers\WishlistItemController;
 
 
 /*
@@ -66,6 +63,10 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admin/users', [UseradminController::class, 'index'])->name('admin.users'); // Quản lý người dùng
 
+    Route::resource('promotions', PromotionController::class);
+
+    Route::resource('admin/pages/categories', CategoryController::class);
+    Route::resource('subcategories', SubcategoryController::class);
 });
 
 //Profile
@@ -89,12 +90,9 @@ Route::prefix('users')
         Route::get('/products/{id}', [UserController::class, 'show'])->name('products.show');
     });
 
-// Routes for Category and Subcategory (admin)
-Route::resource('admin/pages/categories', CategoryController::class);
-Route::resource('subcategories', SubcategoryController::class);
-
 // Admin routes for product and attribute management
 Route::prefix('admins')
+    ->middleware('admin') 
     ->as('admins.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'Dashboard']);
@@ -158,8 +156,8 @@ Route::prefix('admins')
             });
     });
 
-// Promotions resource (admin)
-Route::resource('promotions', PromotionController::class);
+
+
 
 // Cart routes (user)
 Route::prefix('cart')
@@ -178,18 +176,6 @@ Route::prefix('cart')
     });
 
 // Hiển thị trang checkout
-// Route::get('/checkout', function () {
-//     return view('user.pages.checkout'); // Đường dẫn đến view checkout của bạn
-// })->name('checkout');
-
-
-
-// user
-// Route để hiển thị trang thanh toán
-
-// Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
-
-// Route::post('/promo', [OrderController::class, 'checkout'])->name('promo');
 Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
@@ -229,3 +215,28 @@ Route::prefix('tins')->as('tins.')->group(function () {
 Route::get('/tins', [UserNewsController::class, 'index'])->name('tins.index');
 
 Route::get('/cart-header', [CartController::class, 'getCartHeader'])->name('cart.header');
+
+
+// sp yêu thích
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistItemController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/add/{productId}', [WishlistItemController::class, 'addToWishlist'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{productId}', [WishlistItemController::class, 'removeFromWishlist'])->name('wishlist.remove');
+});
+
+Route::get('/admin/orders', [DonHangController::class, 'index'])->middleware('admin')->name('admins.orders.index');
+
+
+// Giới thiệu
+Route::get('/about', function () {
+        return view('user.pages.about');
+});
+// Chính sách bảo mật và điều khoản
+Route::get('/terms', function () {
+    return view('user.pages.terms_condition');
+});
+Route::get('/contact', function () {
+    return view('user.pages.contact');
+});
+
+Route::get('/promotion', [PromotionUserController::class, 'index'])->name('promotion');

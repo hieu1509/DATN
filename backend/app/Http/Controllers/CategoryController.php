@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -22,7 +24,7 @@ class CategoryController extends Controller
     }
 
     // Lưu danh mục mới vào database
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     { 
         // Validate dữ liệu
         $request->validate([
@@ -42,7 +44,7 @@ class CategoryController extends Controller
     }
 
     // Cập nhật danh mục
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         // Validate dữ liệu
         $request->validate([

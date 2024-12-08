@@ -8,11 +8,18 @@
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Tên</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror">
+                @error('name')
+                <div class="invalid-feedback fs-6">
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                </div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Hình ảnh</label>
-                <input type="file" name="image" class="form-control">
+                <input type="file" name="image" class="form-control ">
             </div>
             <div class="mb-3">
                 <label for="status" class="form-label">Trạng thái</label>

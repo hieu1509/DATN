@@ -119,10 +119,10 @@
             <!-- .header-compare -->
             <ul class="header-wishlist nav navbar-nav">
                 <li class="nav-item">
-                    <a href="wishlist.html" class="nav-link">
+                    <a href="{{ route('wishlist.index') }}" class="nav-link">
                         <i class="tm tm-favorites"></i>
-                        <span id="top-cart-wishlist-count" class="value">3</span>
-                    </a>
+                        <span id="top-cart-wishlist-count" class="value"></span>
+                    </a>    
                 </li>
             </ul>
             <!-- .header-wishlist -->
@@ -144,7 +144,7 @@
                                     <p class="woocommerce-mini-cart__total total">
                                         <strong>Tổng cộng:</strong>
                                         <span class="woocommerce-Price-amount amount">
-                                            <span class="woocommerce-Price-currencySymbol"></span>0.00</span>VND
+                                            <span class="woocommerce-Price-currencySymbol"></span>0</span>VND
                                     </p>
                                     <p class="woocommerce-mini-cart__buttons buttons">
                                         <a href="{{ route('cart.index') }}" class="button wc-forward">Xem giỏ hàng</a>
@@ -393,19 +393,19 @@
                             <!-- .dropdown-menu -->
                         </li>
                         <li class="menu-item animate-dropdown">
-                            <a title="COMPUTERS &amp; LAPTOPS" href="product-category.html">Khuyến mãi</a>
+                            <a title="COMPUTERS &amp; LAPTOPS" href="{{ route('promotion') }}">Khuyến mãi</a>
                         </li>
                         <li class="menu-item animate-dropdown">
                             <a title="CAMERAS &amp; PHOTO" href="{{ route('tins.index') }}">Tin tức</a>
                         </li>
                         <li class="menu-item animate-dropdown">
-                            <a title="PHONES &amp; TABLETS" href="product-category.html">Liên hệ</a>
+                            <a title="PHONES &amp; TABLETS" href="contact">Liên hệ</a>
                         </li>
                         <li class="menu-item animate-dropdown">
-                            <a title="GAMES &amp; CONSOLES" href="product-category.html">Giới thiệu</a>
+                            <a title="GAMES &amp; CONSOLES" href="about">Giới thiệu</a>
                         </li>
                         <li class="menu-item animate-dropdown">
-                            <a title="ACCESORIES" href="product-category.html">Chính sách bảo mật &#038; Điều
+                            <a title="ACCESORIES" href="terms">Chính sách bảo mật &#038; Điều
                                 khoản</a>
                         </li>
                         {{-- <li class="menu-item animate-dropdown">
@@ -1124,7 +1124,7 @@
 
                         cartList.innerHTML = "";
                         cartCount.textContent = data.cartItems.length;
-                        cartTotal.innerHTML = `<span class="woocommerce-Price-currencySymbol"></span>${data.total.toFixed(2)}`;
+                        cartTotal.innerHTML = `<span class="woocommerce-Price-currencySymbol"></span>${new Intl.NumberFormat('vi-VN').format(data.total)}`;
 
                         data.cartItems.forEach(item => {
                             cartList.innerHTML += `
@@ -1136,7 +1136,7 @@
                                     </a>
                                     <span class="quantity">${item.quantity} ×
                                         <span class="woocommerce-Price-amount amount">
-                                            <span class="woocommerce-Price-currencySymbol"></span>${item.price.toFixed(2)}
+                                            <span class="woocommerce-Price-currencySymbol"></span>${number_format(item.price, 0, ',', '.') }
                                         </span>
                                     </span>
                                 </li>
