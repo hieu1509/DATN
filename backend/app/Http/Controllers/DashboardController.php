@@ -32,12 +32,11 @@ class DashboardController extends Controller
         // }
         //C2:
         if ($request->start_date && $request->end_date) {
-            $start_date = Carbon::parse($request->start_date)->startOfDay(); // Đảm bảo format ngày
+            $start_date = Carbon::parse($request->start_date)->startOfDay();
             $end_date = Carbon::parse($request->end_date)->endOfDay();
         } else {
-            // Gán giá trị mặc định khi không có ngày được truyền
-            $start_date = Carbon::now()->startOfMonth(); // Ngày đầu tháng
-            $end_date = Carbon::now()->endOfMonth(); // Ngày cuối tháng
+            $start_date = Carbon::now()->startOfMonth();
+            $end_date = Carbon::now()->endOfMonth();
         }
 
         //năm
@@ -80,6 +79,7 @@ class DashboardController extends Controller
             ->orderBy('id', 'desc')
             ->limit(5)
             ->get();
+        // dd($top5LastestComment);
 
         $top5productbought = Product::with('variants.orderDetail')
             ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
@@ -201,6 +201,8 @@ class DashboardController extends Controller
         $totalSales = array_column($percentages, 'percent'); // Lấy ra mảng tổng sản phẩm
         // dd($totalSales);
         return view('admin.pages.dashboard', compact(
+            'start_date',
+            'end_date',
             'totalmoney',
             'totalBoughtProduct',
             'donhangdahuy',

@@ -4,21 +4,27 @@
 <div class="page-content">
     <div class="container-fluid">
         <div class="row">
-            <form method="POST" action="{{route('admins.fillterYear')}}" class="mb-4">
+            <form method="POST" action="{{ route('admins.fillterDate') }}" class="mb-4">
                 @csrf
                 <div class="row d-flex align-items-center">
                     <div class="col-md-2">
-                        <label for="start-date" class="me-2">Chọn năm:</label>
-                        <input type="year" id="years" name="years" class="form-control">
-                    </div>
-                    <div class="col-md-2">
                         <label for="start-date" class="me-2">Ngày bắt đầu:</label>
-                        <input type="date" id="start-date" name="start_date" class="form-control">
+                        <input
+                            type="date"
+                            id="start-date"
+                            name="start_date"
+                            class="form-control"
+                            value="{{ isset($start_date) ? $start_date->toDateString() : '' }}">
                     </div>
 
                     <div class="col-md-2">
                         <label for="end-date" class="me-2">Ngày kết thúc:</label>
-                        <input type="date" id="end-date" name="end_date" class="form-control">
+                        <input
+                            type="date"
+                            id="end-date"
+                            name="end_date"
+                            class="form-control"
+                            value="{{ isset($end_date) ? $end_date->toDateString() : '' }}">
                     </div>
 
                     <div class="col-md-2">
@@ -103,7 +109,7 @@
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                            <i class="bx bx-x-circle text-warning"></i>
+                                                <i class="bx bx-x-circle text-warning"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -114,10 +120,26 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <div class="card">
-                                <div class="card-header border-0 align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">
-                                        Thống kê doanh số - năm {{ $years }}
+                                <div class="card-header border-0 align-items-center d-flex flex-column flex-md-row justify-content-between">
+                                    <h4 class="card-title mb-3 mb-md-0">
+                                        Thống kê doanh số
                                     </h4>
+                                    <form method="POST" action="{{route('admins.fillterYear')}}" class="d-flex align-items-end gap-3">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="years" class="form-label me-2">Chọn năm:</label>
+                                            <select id="years" name="years" class="form-select">
+                                                @for ($i = date('Y'); $i >= 2020; $i--) <!-- Bắt đầu vòng lặp từ năm hiện tại và giảm dần đến 2020 -->
+                                                <!-- Tạo ra một thẻ <option> cho mỗi năm trong khoảng từ năm hiện tại đến 2020 -->
+                                                <option value="{{ $i }}"
+                                                    {{ $years == $i ? 'selected' : '' }}> <!-- Kiểm tra xem năm hiện tại có bằng năm trong vòng lặp không; nếu có, thêm thuộc tính 'selected' -->
+                                                    {{ $i }} <!-- Hiển thị giá trị năm trong thẻ option -->
+                                                </option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Lọc</button>
+                                    </form>
                                 </div>
 
                                 <div class="card-body p-0 pb-2">
@@ -295,11 +317,11 @@
                                                     </p>
                                                     <div class="fs-11 align-middle text-warning">
                                                         @for ($i = 0; $i < 5; $i++)
-                                                            <i class="ri-star-fill" style="color: {{ $i < $top5LastestComments->rating ? 'gold' : 'gray' }}"></i>
+                                                            <i class="ri-star-fill" style="color: {{ $i < ($top5LastestComments->rating ?? 0) ? 'gold' : 'gray' }}"></i>
                                                             @endfor
                                                     </div>
                                                     <div class="text-end mb-0 text-muted">
-                                                        - by <cite title="Source Title">{{ $top5LastestComments->user->name }}</cite>
+                                                        - by <cite title="Source Title">{{ $top5LastestComments->user->name ?? 'Guest' }}</cite>
                                                     </div>
                                                 </div>
                                             </div>

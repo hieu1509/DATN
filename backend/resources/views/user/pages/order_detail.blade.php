@@ -97,6 +97,7 @@
                                                         <tr>
                                                             <th class="woocommerce-table__product-name product-name">Sản phẩm</th>
                                                             <th class="woocommerce-table__product-table product-total">Giá</th>
+                                                            <th class="woocommerce-table__product-table product-total"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -111,6 +112,14 @@
                                                                         {{ number_format($detail->sale_price * $detail->quantity, 0, ',', '.') }}
                                                                         <span class="woocommerce-Price-currencySymbol">₫</span>
                                                                     </span>
+                                                                </td>
+                                                                <td>
+                                                                    <a 
+                                                                        style="color: aliceblue; text-align: center; padding: 5px 10px;text-decoration: none;" 
+                                                                        class="button" 
+                                                                        href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
+                                                                        Mua lại
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach

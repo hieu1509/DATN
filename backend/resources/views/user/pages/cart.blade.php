@@ -49,7 +49,7 @@
                                                             <tr>
                                                                 <td class="product-image">
                                                                     <a
-                                                                        href="">
+                                                                        href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
                                                                         <img width="150" height="150"
                                                                             alt="{{ $detail->productVariant->product->name }}"
                                                                             class="wp-post-image"
@@ -58,7 +58,7 @@
                                                                 </td>
                                                                 <td data-title="Product" class="product-name">
                                                                     <a
-                                                                        href="">
+                                                                        href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
                                                                         {{ $detail->productVariant->product->name }}
                                                                     </a>
                                                                     <div>

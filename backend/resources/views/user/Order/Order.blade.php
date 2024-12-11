@@ -119,19 +119,7 @@
                                                                             Hủy hàng
                                                                         </button>
                                                                     @elseif($items->to_status === $typeDaXacNhan)
-                                                                        <input type="hidden" name="to_status" value="da_nhan_hang">
-                                                                        <button 
-                                                                            style="color: aliceblue; padding: 5px 10px; border: none; cursor: pointer;" 
-                                                                            type="submit">
-                                                                            Đã nhận hàng
-                                                                        </button>
                                                                     @elseif($items->to_status === $typeDangChuanBi)
-                                                                        <input type="hidden" name="to_status" value="da_nhan_hang">
-                                                                        <button 
-                                                                            style="color: aliceblue; padding: 5px 10px; border: none; cursor: pointer;" 
-                                                                            type="submit">
-                                                                            Đã nhận hàng
-                                                                        </button>
                                                                     @elseif($items->to_status === $typeDangVanChuyen)
                                                                         <input type="hidden" name="to_status" value="da_nhan_hang">
                                                                         <button 
@@ -139,6 +127,13 @@
                                                                             type="submit">
                                                                             Đã nhận hàng
                                                                         </button>
+                                                                    @elseif($items->to_status === $typeDaNhanHang)
+                                                                        <a 
+                                                                        style="color: aliceblue; text-align: center; padding: 5px 10px;text-decoration: none;" 
+                                                                        class="button" 
+                                                                        href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
+                                                                        Đánh giá
+                                                                    </a>
                                                                     @endif
                                                                 </form>
                                                             </td>
