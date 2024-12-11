@@ -85,7 +85,7 @@
                                                 <div class="container-fluid">
                                                     <div class="woocommerce columns-1">
                                                         <div class="products">
-                                                            @foreach ($hotProducts as $product)
+                                                            @foreach ($viewProducts as $product)
                                                                 <div class="product product-featured">
                                                                     <a href="{{ route('users.products.show', $product->id) }}"
                                                                         class="woocommerce-LoopProduct-link">

@@ -46,6 +46,7 @@ class UserController extends Controller
             ->take(12); 
     
         $latestProducts = $commonQuery()->get();
+        $viewProducts = $commonQuery()->orderBy('view', 'desc')->get();
         $hotProducts = $commonQuery()->where('is_hot', 1)->get();
         $saleProducts = $commonQuery()->where('is_sale', 1)->get();
         $randomProducts = $commonQuery()->inRandomOrder()->take(5)->get();
@@ -59,7 +60,7 @@ class UserController extends Controller
     
         return view('user.pages.home', compact(
             'latestProducts', 'hotProducts', 'saleProducts', 'randomProducts', 'highRatedProducts',
-            'laptopProducts', 'banphimProducts', 'chuotProducts', 'loaProducts', 'taingheProducts'
+            'laptopProducts', 'banphimProducts', 'chuotProducts', 'loaProducts', 'taingheProducts', 'viewProducts'
         ));
     }
 
@@ -190,6 +191,8 @@ class UserController extends Controller
     public function show($id)
     {
         $product = Product::with(['variants', 'subCategory', 'productImages'])->findOrFail($id);
+
+        $product->increment('view');
 
         $categories = Category::with('subCategories')->get();
 
