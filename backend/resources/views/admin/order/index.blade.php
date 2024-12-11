@@ -162,11 +162,11 @@
                                                             onchange="confirmSubmit(this)"
                                                             data-default-value="{{ $item->order_status }}">
                                                             @foreach ($trangThaiDonHang as $key => $value)
-                                                                <option value="{{ $key }}"
-                                                                    {{ $item->to_status == $key ? 'selected' : '' }}
-                                                                    {{ $key == 'huy_hang' ? 'disabled' : '' }}>
-                                                                    {{ $value }}
-                                                                </option>
+                                                            <option value="{{ $key }}"
+                                                                {{ $item->to_status == $key ? 'selected' : '' }}
+                                                                {{ $key == 'huy_hang' ? 'disabled' : '' }}>
+                                                                {{ $key == 'da_nhan_hang' ? 'Đã giao hàng' : $value }}
+                                                            </option>                                                        
                                                             @endforeach
                                                         </select>
                                                     </form>

@@ -32,7 +32,7 @@
                                     </header>
                                     <!-- .entry-header -->
                                     <div class="entry-content">
-                                        <form class="woocommerce" method="post" action="#">
+                                       
                                             <table class="shop_table cart wishlist_table">
                                                 <thead>
                                                     <tr>
@@ -162,7 +162,7 @@
                                                 </tfoot>
                                             </table>
                                             <!-- .wishlist_table -->
-                                        </form>
+                                       
                                         <!-- .woocommerce -->
                                     </div>
                                     <!-- .entry-content -->

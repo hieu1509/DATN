@@ -124,8 +124,7 @@
                                                                             </del>
                                                                         </span>
                                                                         <!-- /.price -->
-                                                                        <h2 class="woocommerce-loop-product__title">4K
-                                                                            Action Cam with Wi-Fi & GPS</h2>
+                                                                        <h2 class="woocommerce-loop-product__title"> {{ $product->name }}</h2>
                                                                     </a>
                                                                     <div class="techmarket-product-rating">
                                                                         <div title="Rated {{ number_format($product->reviews->avg('rating'), 1) }} out of 5" class="star-rating">

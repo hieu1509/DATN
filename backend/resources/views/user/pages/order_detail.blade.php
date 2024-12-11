@@ -118,7 +118,7 @@
                                                                         style="color: aliceblue; text-align: center; padding: 5px 10px;text-decoration: none;" 
                                                                         class="button" 
                                                                         href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
-                                                                        Mua lại
+                                                                        Đánh giá
                                                                     </a>
                                                                 </td>
                                                             </tr>
