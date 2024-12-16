@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <div class="d-flex">
                 <!-- LOGO -->
-                <div class="navbar-brand-box horizontal-logo">
+                {{-- <div class="navbar-brand-box horizontal-logo">
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
                             <img src="assets/images/logo-sm.png" alt="" height="22">
@@ -124,11 +124,11 @@
                                 Results <i class="ri-arrow-right-line ms-1"></i></a>
                         </div>
                     </div>
-                </form>
+                </form> --}}
             </div>
 
             <div class="d-flex align-items-center">
-
+{{-- 
                 <div class="dropdown d-md-none topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -285,7 +285,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="ms-1 header-item d-none d-sm-flex">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -301,7 +301,7 @@
                     </button>
                 </div>
 
-                <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
+                {{-- <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
                         data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
@@ -621,7 +621,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
                     <div class="row align-items-center">
@@ -663,30 +663,10 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Welcome!</h6>
-                        <a class="dropdown-item" href="pages-profile.html"><i
+                        <h6 class="dropdown-header">Xin chào!</h6>
+                        <a class="dropdown-item" href="{{ route('profile.show') }}"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Profile</span></a>
-                        <a class="dropdown-item" href="apps-chat.html"><i
-                                class="mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i>
-                            <span class="align-middle">Messages</span></a>
-                        <a class="dropdown-item" href="apps-tasks-kanban.html"><i
-                                class="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1"></i>
-                            <span class="align-middle">Taskboard</span></a>
-                        <a class="dropdown-item" href="pages-faqs.html"><i
-                                class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Help</span></a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="pages-profile.html"><i
-                                class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Balance : <b>$5971.67</b></span></a>
-                        <a class="dropdown-item" href="pages-profile-settings.html"><span
-                                class="badge bg-success-subtle text-success mt-1 float-end">New</span><i
-                                class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Settings</span></a>
-                        <a class="dropdown-item" href="auth-lockscreen-basic.html"><i
-                                class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Lock screen</span></a>
+                                class="align-middle">Hồ sơ</span></a>
                         <!-- Form đăng xuất cho Admin -->
                         <form id="logout-admin-form" action="{{ route('logout') }}" method="POST"
                             style="display: none;">

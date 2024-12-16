@@ -5,12 +5,12 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Dashboard | Velzon - Admin & Dashboard</title>
+    <title>TechShop - Admin & Thống kê</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('velzon/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('template2/assets/images/fav-icon.png') }}">
 
     <!-- jsvectormap css -->
     <link href="{{ asset('velzon/assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -127,7 +127,7 @@
     <script src="{{ asset('velzon/assets/js/plugins.js') }}"></script>
 
     <!-- apexcharts -->
-    <script src="{{ asset('velzon/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <!-- <script src="{{ asset('velzon/assets/libs/apexcharts/apexcharts.min.js') }}"></script> -->
 
     <!-- Vector map-->
     <script src="{{ asset('velzon/assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
@@ -148,7 +148,9 @@
     <script src="{{ asset('velzon/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
 
     <!-- App js -->
+    @yield('js')
     <script src="{{ asset('velzon/assets/js/app.js') }}"></script>
+  
 </body>
 
 </html>

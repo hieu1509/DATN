@@ -15,7 +15,7 @@
                 <div class="col-full">
                     <div class="row">
                         <nav class="woocommerce-breadcrumb">
-                            <a href="home-v1.html">Trang chủ</a>
+                            <a href="{{ route('users.index') }}">Trang chủ</a>
                             <span class="delimiter">
                                 <i class="tm tm-breadcrumbs-arrow-right"></i>
                             </span>
@@ -42,11 +42,15 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @error('quantity')
+                                                            <span class="error-message" style="color: red;">{{ $message }}</span>
+                                                        @enderror
                                                         @foreach ($cartDetail as $detail)
                                                             <tr>
                                                                 <td class="product-image">
-                                                                    <a href="single-product-fullwidth.html">
-                                                                        <img width="180" height="180"
+                                                                    <a
+                                                                        href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
+                                                                        <img width="150" height="150"
                                                                             alt="{{ $detail->productVariant->product->name }}"
                                                                             class="wp-post-image"
                                                                             src="{{ Storage::url($detail->productVariant->product->image) }}">
@@ -54,41 +58,61 @@
                                                                 </td>
                                                                 <td data-title="Product" class="product-name">
                                                                     <a
-                                                                        href="single-product-fullwidth.html">{{ $detail->productVariant->product->name }}</a>
+                                                                        href="{{ route('users.products.show', $detail->productVariant->product->id) }}">
+                                                                        {{ $detail->productVariant->product->name }}
+                                                                    </a>
+                                                                    <div>
+                                                                        @if ($detail->productVariant->chip->name !== 'Không áp dụng')
+                                                                            <strong>Chip:</strong>
+                                                                            {{ $detail->productVariant->chip->name }} <br>
+                                                                        @endif
+
+                                                                        @if ($detail->productVariant->ram->name !== 'Không áp dụng')
+                                                                            <strong>RAM:</strong>
+                                                                            {{ $detail->productVariant->ram->name }} <br>
+                                                                        @endif
+
+                                                                        @if ($detail->productVariant->storage->name !== 'Không áp dụng')
+                                                                            <strong>Storage:</strong>
+                                                                            {{ $detail->productVariant->storage->name }}
+                                                                        @endif
+                                                                    </div>
                                                                 </td>
                                                                 <td data-title="Price" class="product-price">
-                                                                    {{ $detail->productVariant->listed_price }}
+                                                                    {{ number_format($detail->productVariant->sale_price ?? $detail->productVariant->listed_price, 0, ',', '.') }}
+                                                                    đ
                                                                 </td>
-                                                                <td class="product-quantity" data-title="Quantity">
+                                                                <td class="product-quantity text-center"
+                                                                    data-title="Quantity">
                                                                     <form action="{{ route('cart.update', $detail->id) }}"
                                                                         method="post" class="quantity-form">
                                                                         @csrf
                                                                         @method('PUT')
-                                                                        <div class="aquantity">
-                                                                            <button type="button"
+                                                                        <div class="quantity">
+                                                                            <button style="color: aliceblue" type="button"
                                                                                 class="btn-minus">−</button>
                                                                             <input id="quantity-input-{{ $detail->id }}"
                                                                                 type="number" name="quantity"
                                                                                 value="{{ $detail->quantity }}"
                                                                                 title="Qty" class="input-text qty text"
                                                                                 size="4" min="1">
-                                                                            <button type="button"
+                                                                            <button style="color: aliceblue" type="button"
                                                                                 class="btn-plus">+</button>
                                                                         </div>
                                                                     </form>
                                                                 </td>
                                                                 <td data-title="Total" class="product-subtotal">
                                                                     <span class="woocommerce-Price-amount amount">
-                                                                        <span
-                                                                            class="woocommerce-Price-currencySymbol">£</span>{{ $detail->productVariant->listed_price * $detail->quantity }}
+                                                                        {{ number_format(($detail->productVariant->sale_price ?? $detail->productVariant->listed_price) * $detail->quantity, 0, ',', '.') }}
+                                                                        đ
                                                                     </span>
                                                                 </td>
-                                                                <td class="product-delete">
+                                                                <td class="product-delete text-center">
                                                                     <form action="{{ route('cart.destroy', $detail->id) }}"
                                                                         method="post">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <button type="submit" class="remove">Xóa</button>
+                                                                        <button style="color: aliceblue" type="submit" class="remove">Xóa</button>
                                                                     </form>
                                                                 </td>
                                                             </tr>
@@ -98,100 +122,33 @@
 
                                                 <div class="cart-collaterals">
                                                     <div class="cart_totals">
-                                                        <table class="shop_table woocommerce-checkout-review-order-table">
-                                                            <thead>
-                                                                <tr>
-
-                                                                    <th class="product-total">Tổng Tiền</th>
-                                                                </tr>
-                                                            </thead>
+                                                        <h2>Tổng tiền giỏ hàng</h2>
+                                                        <table class=" woocommerce-checkout-review-order-table">
                                                             <tbody>
-                                                                {{-- @foreach ($cartDetail as $detail)
-                                                                    <tr class="cart_item">
-                                                                        <td class="product-name">
-                                                                            {{ $detail->productVariant->product->name }}
-                                                                            ({{ $detail->productVariant->chip->name }},
-                                                                            {{ $detail->productVariant->ram->name }},
-                                                                            {{ $detail->productVariant->storage->name }})
-                                                                        </td>
-                                                                        <td class="product-total">
-                                                                            {{ number_format($detail->productVariant->listed_price * $detail->quantity, 0, ',', '.') }}
-                                                                            VND</td>
-                                                                    </tr>
-                                                                @endforeach --}}
-                                                            </tbody>
-                                                            <tfoot>
                                                                 <tr class="order-total">
-
-                                                                    <td>{{ number_format($total, 0, ',', '.') }} VND</td>
+                                                                    <th>Tổng cộng</th>
+                                                                    <td data-title="Total">
+                                                                        <strong>
+                                                                            <span class="woocommerce-Price-amount amount">
+                                                                                <span
+                                                                                    class="woocommerce-Price-currencySymbol"></span>{{ number_format($total, 0, ',', '.') }}
+                                                                                VND</span>
+                                                                        </strong>
+                                                                    </td>
                                                                 </tr>
-                                                            </tfoot>
+                                                            </tbody>
                                                         </table>
+
                                                         <div class="wc-proceed-to-checkout">
-                                                            <form class="woocommerce-shipping-calculator" method="post"
-                                                                action="#">
-                                                                <p>
-                                                                    <a class="shipping-calculator-button"
-                                                                        data-toggle="collapse" href="#shipping-form"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="shipping-form">Tính phí vận
-                                                                        chuyển</a>
-                                                                </p>
-                                                                <div class="collapse" id="shipping-form">
-                                                                    <div class="shipping-calculator-form">
-                                                                        <p id="calc_shipping_country_field"
-                                                                            class="form-row form-row-wide">
-                                                                            <select rel="calc_shipping_state"
-                                                                                class="country_to_state"
-                                                                                id="calc_shipping_country"
-                                                                                name="calc_shipping_country">
-                                                                                <option value="">Chọn quốc gia…
-                                                                                </option>
-                                                                                <option value="AX">Đảo Åland</option>
-                                                                            </select>
-                                                                        </p>
-                                                                        <p id="calc_shipping_state_field"
-                                                                            class="form-row form-row-wide validate-required">
-                                                                            <span>
-                                                                                <select id="calc_shipping_state"
-                                                                                    name="calc_shipping_state">
-                                                                                    <option value="">Chọn một tùy
-                                                                                        chọn…</option>
-                                                                                    <option value="AP">Andhra Pradesh
-                                                                                    </option>
-                                                                                    <option value="AR">Arunachal
-                                                                                        Pradesh</option>
-                                                                                    <option value="PY">Pondicherry
-                                                                                        (Puducherry)</option>
-                                                                                </select>
-                                                                            </span>
-                                                                        </p>
-                                                                        <p id="calc_shipping_postcode_field"
-                                                                            class="form-row form-row-wide validate-required">
-                                                                            <input type="text"
-                                                                                id="calc_shipping_postcode"
-                                                                                name="calc_shipping_postcode"
-                                                                                placeholder="Mã bưu điện / ZIP"
-                                                                                value="" class="input-text">
-                                                                        </p>
-                                                                        <p>
-                                                                            <button class="button" value="1"
-                                                                                name="calc_shipping" type="submit">Cập
-                                                                                nhật tổng</button>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                            <form action="{{ route('cart.checkout') }}" method="POST">
+                                                            <form action="{{ route('checkout') }}" method="POST">
                                                                 @csrf
-                                                                <a class="checkout-button button alt wc-forward">
-                                                                    <button type="submit"
-                                                                        >Tiến
+                                                                
+                                                                    <button style="width: 100%"  class="checkout-button button alt wc-forward" type="submit">Tiến
                                                                         hành
-                                                                        thanh toán</button> </a>
+                                                                        thanh toán</button> 
                                                             </form>
 
-                                                            <a class="back-to-shopping" href="shop.html">Quay lại mua
+                                                            <a class="back-to-shopping" href="{{ route('users.filter') }}">Quay lại mua
                                                                 sắm</a>
                                                         </div>
                                                     </div>

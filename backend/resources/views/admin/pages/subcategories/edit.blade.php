@@ -9,7 +9,14 @@
             @method('PUT')
             <div class="mb-3">
                 <label for="name" class="form-label">Tên</label>
-                <input type="text" name="name" class="form-control" value="{{ $subcategory->name }}" required>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $subcategory->name }}">
+                @error('name')
+                <div class="invalid-feedback fs-6">
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                </div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Hình ảnh</label>

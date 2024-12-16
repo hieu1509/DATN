@@ -26,7 +26,7 @@
                                     <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="20">
                                 </a>
                             </div>
-                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                            <p class="mt-3 fs-15 fw-medium">Chào mừng đến với TechShop!!!</p>
                         </div>
                     </div>
                 </div>
@@ -95,6 +95,9 @@
 
                         <div class="mt-4 text-center">
                             <p class="mb-0">Bạn chưa có tài khoản ? <a href="{{ route('register') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng ký </a> </p>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <p class="mb-0">Truy cập website không cần tài khoản <a href="{{ route('users.index') }}" class="fw-semibold text-primary text-decoration-underline"> Truy cập </a> </p>
                         </div>
 
                     </div>

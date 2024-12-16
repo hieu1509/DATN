@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreReviewRequest;
 use App\Models\Review;
 use App\Models\Order;
 use App\Models\Product;
@@ -10,50 +11,101 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    public function create($orderId, $productId)
+    public function index()
     {
-        $order = $this->getOrderIfProductPurchased($orderId, $productId);
+        $reviews = Review::all();
+        return view('admin.pages.reviews.index', compact('reviews'));
+    }
 
-        if (!$order) {
-            return redirect()->route('products.show', $productId)
-                ->withErrors('Bạn chưa mua sản phẩm này.');
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+
+        // Lấy danh sách review của sản phẩm
+        $reviews = Review::where('product_id', $id)->where('status', 'visible')->get();
+
+        // Tính toán số lượng đánh giá cho mỗi sao
+        $ratingHistogram = [];
+        foreach (range(1, 5) as $i) {
+            $ratingHistogram[$i] = $reviews->where('rating', $i)->count();
         }
 
+        // Tính điểm trung bình rating
+        $averageRating = $reviews->avg('rating') ?: 0;
+
+        return view('product_detail', compact('reviews', 'product', 'averageRating', 'ratingHistogram'));
+    }
+
+    public function create($productId)
+    {
         $product = Product::findOrFail($productId);
-        return view('reviews.create', compact('product', 'orderId'));
+        return view('reviews.create', compact('product'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $product_id)
     {
-        $request->validate([
-            'comment' => 'required|string',
-            'rating' => 'required|integer|min:1|max:5',
-            'product_id' => 'required|exists:products,id',
-            'order_id' => 'required|exists:orders,id',
-        ]);
-
-        if (!$this->getOrderIfProductPurchased($request->order_id, $request->product_id)) {
-            return redirect()->back()->withErrors('Bạn không thể đánh giá sản phẩm chưa mua.');
+        // Kiểm tra xem người dùng có đăng nhập chưa
+        if (auth()->guest()) {
+            return redirect()->route('login');
         }
 
-        Review::create([
-            'user_id' => Auth::id(),
-            'product_id' => $request->product_id,
-            'order_id' => $request->order_id,
-            'comment' => $request->comment,
-            'rating' => $request->rating,
+        $user = auth()->user(); // Lấy thông tin người dùng
+
+        // Kiểm tra nếu người dùng đã mua sản phẩm
+        $hasPurchased = Order::where('user_id', Auth::id())
+            ->whereHas('orderDetails', function ($query) use ($product_id) {
+                $query->whereHas('productVariant', function ($query) use ($product_id) {
+                    $query->where('product_id', $product_id);  // So sánh product_id của productvariant
+                });
+            })
+            ->exists();
+        if (!$hasPurchased) {
+            return redirect()->back()->withErrors(['error' => 'Bạn phải mua sản phẩm này trước khi đánh giá.']);
+        }
+
+
+        // Kiểm tra dữ liệu đầu vào
+        $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'comment' => 'nullable|string',
         ]);
 
-        return redirect()->route('products.show', $request->product_id)
-            ->with('success', 'Đánh giá của bạn đã được gửi.');
+        // Tạo mới bình luận và đánh giá
+        Review::create([
+            'user_id' => auth()->id(),
+            'product_id' => $product_id,
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+        ]);
+
+        return redirect()->back()->withErrors('success', 'Cảm ơn bạn đã đánh giá sản phẩm!');
     }
 
-    private function getOrderIfProductPurchased($orderId, $productId)
+
+    public function destroy(Review $review)
     {
-        return Order::where('id', $orderId)
-            ->where('user_id', Auth::id())
-            ->whereHas('products', function ($query) use ($productId) {
-                $query->where('product_id', $productId);
-            })->first();
+        // Kiểm tra quyền xóa bình luận (chỉ admin hoặc chính người tạo có thể xóa)
+        if ($review->user_id !== auth()->id() && !auth()->user()->is_admin) {
+            return redirect()->back()->withErrors('error', 'Bạn không có quyền xóa bình luận này');
+        }
+
+        $review->delete();
+        return redirect()->back()->withErrors('success', 'Bình luận đã được xóa');
+    }
+
+    public function toggleVisibility($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->status = $review->status === 'visible' ? 'hidden' : 'visible';
+        $review->save();
+
+        return back()->with('success', 'Thay đổi trạng thái thành công.');
+    }
+
+
+    public function showComments()
+    {
+        $reviews = Review::where('status', 'visible')->get();
+        return view('reviews.index', compact('reviews'));
     }
 }

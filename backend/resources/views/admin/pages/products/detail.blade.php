@@ -106,7 +106,7 @@
                                                 <span class="mdi mdi-star text-warning"></span>
                                                 <span class="mdi mdi-star text-warning"></span>
                                             </div>
-                                            <div class="text-muted">( 5.50k Customer Review )</div>
+                                            {{-- <div class="text-muted">( 5.50k Customer Review )</div> --}}
                                         </div>
 
                                         <div class="row mt-4">
@@ -343,7 +343,7 @@
                                         </div>
                                         <!-- product-content -->
 
-                                        <div class="mt-5">
+                                        {{-- <div class="mt-5">
                                             <div>
                                                 <h5 class="fs-14 mb-3">Ratings & Reviews</h5>
                                             </div>
@@ -653,7 +653,7 @@
                                                 <!-- end col -->
                                             </div>
                                             <!-- end Ratings & Reviews -->
-                                        </div>
+                                        </div> --}}
                                         <!-- end card body -->
                                     </div>
                                 </div>

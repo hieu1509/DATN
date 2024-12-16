@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSubcategoryRequest;
+use App\Http\Requests\UpdateSubcategoryRequest;
 use App\Models\Subcategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -21,7 +23,7 @@ class SubcategoryController extends Controller
         return view('admin.pages.subcategories.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(StoreSubcategoryRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -46,7 +48,7 @@ class SubcategoryController extends Controller
         return view('admin.pages.subcategories.edit', compact('subcategory', 'categories'));
     }
 
-    public function update(Request $request, Subcategory $subcategory)
+    public function update(UpdateSubcategoryRequest $request, Subcategory $subcategory)
     {
         $request->validate([
             'name' => 'required|string|max:255',
