@@ -11,14 +11,25 @@ use Illuminate\Support\Facades\Auth;
 class DonHangController extends Controller
 {
   //
-  public function index()
+  public function index(Request $request)
   {
     $user = Auth::user();
     if (!$user) {
-      return redirect()->route('login'); // Chuyển hướng người dùng đến trang đăng nhập nếu chưa đăng nhập
+      return redirect()->route('login'); // Chuyển hướng nếu người dùng chưa đăng nhập
     }
 
-    $donhang = $user->orderhistory()->with('order')->orderBy('id', 'desc')->paginate(5);
+    // Truy vấn đơn hàng của người dùng
+    $query = $user->order(); // Lấy tất cả đơn hàng của người dùng
+
+    // Lọc theo trạng thái nếu có
+    if ($request->has('filter_status') && $request->filter_status !== '' && $request->filter_status !== 'all') {
+      $query->where('status', $request->filter_status); // Kiểm tra lại tên cột 'status'
+    }
+
+    // Sắp xếp theo ID và phân trang kết quả
+    $donhang = $query->orderBy('id', 'desc')->paginate(5);
+
+    // Trạng thái đơn hàng
     $TrangThaiDonHang = Order::TRANG_THAI_DON_HANG;
     $TrangThaiThanhToan = Order::TRANG_THAI_THANH_TOAN;
     $typeChoXacNha = Order::CHO_XAC_NHA;
@@ -27,29 +38,38 @@ class DonHangController extends Controller
     $typeDangVanChuyen = Order::DANG_VAN_CHUYEN;
     $typeDaNhanHang = Order::DA_NHAN_HANG;
 
-    return view('user.order.Order', compact('donhang', 'TrangThaiDonHang', 'typeChoXacNha', 'typeDaXacNhan', 'typeDangChuanBi', 'typeDangVanChuyen', 'typeDaNhanHang', 'TrangThaiThanhToan'));
+    return view('user.order.Order', compact(
+      'donhang',
+      'TrangThaiDonHang',
+      'TrangThaiThanhToan',
+      'typeChoXacNha',
+      'typeDaXacNhan',
+      'typeDangChuanBi',
+      'typeDangVanChuyen',
+      'typeDaNhanHang'
+    ));
   }
+
 
   public function editOrder(Request $request, $id)
   {
-    $TrangThaiDonHang = Order::TRANG_THAI_DON_HANG;
-    $typeDangVanChuyen = Order::DA_XAC_NHA;
-
-    $orderHistory = OrderHistory::findOrFail($id);
-
-    $param = $request->all();
-
-    if ($request->to_status == "huy_hang") {
-      if ($orderHistory->to_status == $typeDangVanChuyen) {
-        return redirect()->back()->with('error', 'Không thể hủy khi đơn hàng đang vận chuyển');
+      $user = Auth::user();
+      $order = $user->order()->find($id);
+  
+      if (!$order) {
+          return redirect()->route('cart.myorder')->with('error', 'Đơn hàng không tồn tại.');
       }
-      $orderHistory->update($param);
-      return redirect()->back()->with('success', 'Đơn hàng đã bị hủy thành công');
-    }
-
-    $orderHistory->update($param);
-    return redirect()->back()->with('success', 'Cập nhật trạng thái đơn hàng thành công');
-  }
+  
+      // Kiểm tra trạng thái và cập nhật
+      $newStatus = $request->input('status');
+      if ($newStatus) {
+          $order->update(['status' => $newStatus]);
+  
+          return redirect()->route('cart.myorder')->with('success', 'Hủy đơn hàng thành công.');
+      }
+  
+      return redirect()->route('cart.myorder')->with('error', 'Không thể hủy đơn hàng.');
+  }  
 
   public function myordetail(string $id) {}
 }

@@ -17,20 +17,6 @@ class DashboardController extends Controller
 {
     public function Dashboard(Request $request)
     {
-        // dd($request->all());
-        // $totalmoney = Order::sum('money_total');
-        //C1:
-        // if ($request->start_date && $request->end_date) {
-        //     $start_date = $request->start_date;
-        //     $end_date = $request->end_date;
-        // } else {
-        //     $start_date = date('Y-m-01');
-        //     // Lấy ngày cuối cùng của tháng hiện tại
-        //     $end_date = date('Y-m-t');
-        //     // $end_date = Carbon::parse($end_date)->endOfDay();
-        //     // $start_date = Carbon::parse($start_date)->startOfDay();
-        // }
-        //C2:
         if ($request->start_date && $request->end_date) {
             $start_date = Carbon::parse($request->start_date)->startOfDay();
             $end_date = Carbon::parse($request->end_date)->endOfDay();
@@ -47,25 +33,22 @@ class DashboardController extends Controller
         }
         // dd($start_date,$end_date);
 
-        $totalmoney = OrderHistory::where('from_status', Order::DA_THANH_TOAN)
-            ->join('orders', 'order_histories.order_id', '=', 'orders.id')
+        $totalmoney = Order::where('payment_status', Order::DA_THANH_TOAN)
             ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->sum('orders.money_total');
 
         $totalBoughtProduct = OrderDetail::sum('quantity');
 
-        $donhangdahuy = OrderHistory::query()->where('to_status', Order::HUY_HANG)
-            ->join('orders', 'order_histories.order_id', '=', 'orders.id')
+        $donhangdahuy = Order::query()->where('status', Order::HUY_HANG)
             ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->count();
 
 
-        $donhangdangchoxuly = OrderHistory::query()->where('to_status', Order::CHO_XAC_NHA)
-            ->join('orders', 'order_histories.order_id', '=', 'orders.id')
+        $donhangdangchoxuly = Order::query()->where('status', Order::CHO_XAC_NHA)
             ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->count();
 
-        $tongdonhang = OrderHistory::count();
+        $tongdonhang = Order::count();
 
         $phantramdahuy = number_format(($donhangdahuy / $tongdonhang) * 100, 2);
 
@@ -86,6 +69,7 @@ class DashboardController extends Controller
             ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->select('products.id', 'products.name', 'products.image', 'orders.created_at', 'order_details.quantity')
+            ->where('orders.payment_status', Order::DA_THANH_TOAN)
             ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->get()
             // ->toRawSql();
@@ -128,7 +112,7 @@ class DashboardController extends Controller
             ->selectRaw('COUNT(order_details.productvariant_id) as SoLanMua')
             ->join('order_details', 'orders.id', '=', 'order_details.order_id') // Kết hợp bảng order_details
             ->join('users', 'users.id', '=', 'orders.user_id') // Kết hợp bảng users
-            // ->whereMonth('orders.created_at', Carbon::now()->month)
+            ->where('orders.payment_status', Order::DA_THANH_TOAN)
             ->whereBetween('orders.created_at', [$start_date, $end_date])
             ->groupBy('orders.user_id', 'users.name', 'users.phone', 'users.address', 'users.email') // Nhóm theo user_id và các trường của users
             ->orderBy('total', 'desc')
@@ -142,10 +126,10 @@ class DashboardController extends Controller
         $years = $request->input('years', $currentYear); // Lấy giá trị năm từ form hoặc năm hiện tại
 
         // Lấy dữ liệu doanh số hàng tháng trong năm được chọn
-        $monthlySales = OrderDetail::selectRaw('MONTH(order_histories.created_at) as month, SUM(order_details.quantity) as total_sales')
-            ->join('order_histories', 'order_histories.order_id', '=', 'order_details.order_id')
+        $monthlySales = OrderDetail::selectRaw('MONTH(orders.created_at) as month, SUM(order_details.quantity) as total_sales')
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
-            ->whereYear('order_histories.created_at', $years) // Lọc theo năm được chọn
+            ->where('orders.payment_status', Order::DA_THANH_TOAN)
+            ->whereYear('orders.created_at', $years) // Lọc theo năm được chọn
             ->groupBy('month')
             ->orderBy('month', 'asc')
             ->get();
@@ -165,9 +149,8 @@ class DashboardController extends Controller
             ->join('products', 'sub_categories.id', '=', 'products.sub_category_id')
             ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
             ->join('order_details', 'product_variants.id', '=', 'order_details.productvariant_id')
-            ->join('order_histories', 'order_details.order_id', '=', 'order_histories.order_id') // Nối bảng order_histories
             ->join('orders', 'orders.id', '=', 'order_details.order_id')
-            ->where('order_histories.from_status', Order::DA_THANH_TOAN) // Điều kiện trạng thái từ order_histories
+            ->where('orders.payment_status', Order::DA_THANH_TOAN) // Điều kiện trạng thái từ order_histories
             ->whereBetween('orders.created_at', [$start_date, $end_date]) // Sử dụng thời gian đã điều chỉnh
             ->groupBy('sub_categories.name', 'sub_categories.id')
             ->orderBy('total', 'desc')
