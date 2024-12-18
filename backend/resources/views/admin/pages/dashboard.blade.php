@@ -4,34 +4,38 @@
 <div class="page-content">
     <div class="container-fluid">
         <div class="row">
-            <form method="POST" action="{{ route('admins.fillterDate') }}" class="mb-4">
-                @csrf
-                <div class="row d-flex align-items-center">
-                    <div class="col-md-2">
-                        <label for="start-date" class="me-2">Ngày bắt đầu:</label>
-                        <input
-                            type="date"
-                            id="start-date"
-                            name="start_date"
-                            class="form-control"
-                            value="{{ isset($start_date) ? $start_date->toDateString() : '' }}">
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admins.fillterDate') }}" class="mb-4">
+                        @csrf
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-2">
+                                <label for="start-date" class="me-2">Ngày bắt đầu:</label>
+                                <input
+                                    type="date"
+                                    id="start-date"
+                                    name="start_date"
+                                    class="form-control"
+                                    value="{{ isset($start_date) ? $start_date->toDateString() : '' }}">
+                            </div>
 
-                    <div class="col-md-2">
-                        <label for="end-date" class="me-2">Ngày kết thúc:</label>
-                        <input
-                            type="date"
-                            id="end-date"
-                            name="end_date"
-                            class="form-control"
-                            value="{{ isset($end_date) ? $end_date->toDateString() : '' }}">
-                    </div>
+                            <div class="col-md-2">
+                                <label for="end-date" class="me-2">Ngày kết thúc:</label>
+                                <input
+                                    type="date"
+                                    id="end-date"
+                                    name="end_date"
+                                    class="form-control"
+                                    value="{{ isset($end_date) ? $end_date->toDateString() : '' }}">
+                            </div>
 
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-10 mt-4">Lọc</button>
-                    </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-10 mt-4">Lọc</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
         <!-- Kết thúc bộ lọc -->
 

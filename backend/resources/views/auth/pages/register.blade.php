@@ -32,7 +32,7 @@
                                             Vui lòng nhập tên người dùng
                                         </div>
                                         @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -43,7 +43,7 @@
                                             Vui lòng nhập email
                                         </div>
                                         @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -59,7 +59,7 @@
                                             </div>
                                         </div>
                                         @error('password')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -75,7 +75,7 @@
                                         <label for="address" class="form-label">Địa chỉ</label>
                                         <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ" value="{{ old('address') }}">
                                         @error('address')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -83,23 +83,22 @@
                                         <label for="phone" class="form-label">Số điện thoại</label>
                                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" value="{{ old('phone') }}">
                                         @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
                                     <div class="mb-3">
-                                        <input type="hidden" name="role" value="user"> 
+                                        <input type="hidden" name="role" value="user">
                                     </div>
 
                                     <div class="mt-4">
                                         <button class="btn btn-success w-100" type="submit">Đăng ký</button>
                                     </div>
                                 </form>
+                                <div class="mt-4 text-center">
+                                    <p class="mb-0">Bạn đã có tài khoản? <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng nhập </a></p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="mt-4 text-center">
-                            <p class="mb-0">Bạn đã có tài khoản? <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline"> Đăng nhập </a></p>
                         </div>
                     </div>
                 </div>
@@ -124,4 +123,4 @@
             }
         </script>
     </div>
-@endsection
+    @endsection
