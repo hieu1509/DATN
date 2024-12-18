@@ -33,12 +33,10 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Product ID</th>
-                                        <th>Order ID</th>
                                         <th>User ID</th>
                                         <th>Rating</th>
                                         <th>Đánh giá</th>
                                         <th>Ngày tạo</th>
-                                        <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,16 +44,26 @@
                                         <tr>
                                             <td>{{ $review->id }}</td>
                                             <td>{{ $review->product_id }}</td>
-                                            <td>{{ $review->order_id }}</td>
                                             <td>{{ $review->user_id }}</td>
                                             <td>{{ $review->rating }}</td>
                                             <td>{{ $review->comment }}</td>
                                             <td>{{ $review->created_at->format('d/m/Y H:i') }}</td>
                                             <td>
-                                                <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?')">
+                                                @if ($review->status === 'visible')
+                                                    <span class="badge bg-success">Hiện</span>
+                                                @else
+                                                    <span class="badge bg-danger">Ẩn</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('admin.reviews.toggleVisibility', $review->id) }}"
+                                                    method="POST" style="display:inline;">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Xóa</button>
+                                                    @method('PATCH')
+                                                    <button type="submit"
+                                                        class="btn btn-sm {{ $review->status === 'visible' ? 'btn-danger' : 'btn-success' }}">
+                                                        {{ $review->status === 'visible' ? 'Ẩn' : 'Hiện' }}
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>

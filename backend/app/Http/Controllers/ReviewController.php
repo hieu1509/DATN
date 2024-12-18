@@ -13,7 +13,7 @@ class ReviewController extends Controller
 {
     public function index()
     {
-        $reviews = Review::with(['user', 'product', 'order'])->paginate(10);
+        $reviews = Review::all();
         return view('admin.pages.reviews.index', compact('reviews'));
     }
 
@@ -22,8 +22,7 @@ class ReviewController extends Controller
         $product = Product::findOrFail($id);
 
         // Lấy danh sách review của sản phẩm
-        $reviews = Review::where('product_id', $id)->get();
-
+        $reviews = Review::where('product_id', $id)->where('status', 'visible')->get();
         // Tính toán số lượng đánh giá cho mỗi sao
         $ratingHistogram = [];
         foreach (range(1, 5) as $i) {
@@ -35,8 +34,6 @@ class ReviewController extends Controller
 
         return view('product_detail', compact('reviews', 'product', 'averageRating', 'ratingHistogram'));
     }
-
-
 
     public function create($productId)
     {
@@ -93,5 +90,21 @@ class ReviewController extends Controller
 
         $review->delete();
         return redirect()->back()->withErrors('success', 'Bình luận đã được xóa');
+    }
+
+    public function toggleVisibility($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->status = $review->status === 'visible' ? 'hidden' : 'visible';
+        $review->save();
+
+        return back()->with('success', 'Thay đổi trạng thái thành công.');
+    }
+
+
+    public function showComments()
+    {
+        $reviews = Review::where('status', 'visible')->get();
+        return view('reviews.index', compact('reviews'));
     }
 }

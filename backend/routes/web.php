@@ -182,6 +182,7 @@ Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout')
 Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
+
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
 Route::get('/vnpay_return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');
@@ -197,15 +198,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Route quản lý review trong admin
     Route::get('/reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+    Route::patch('admin/reviews/{id}/toggle', [ReviewController::class, 'toggleVisibility'])->name('admin.reviews.toggleVisibility');
 });
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-
-/*Route::middleware('auth')->group(function () {
-    Route::get('reviews/create/{orderId}/{productId}', [ReviewController::class, 'create'])->name('reviews.create');
-    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
-});*/
 
 //Tin tức
 Route::resource('news', NewsController::class);
