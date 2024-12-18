@@ -151,7 +151,18 @@
                         </div>
                         <div class="info-item">
                             <label>Vai trò:</label>
-                            <div class="info-text">{{ $user->role ?? 'chưa cập nhật' }}</div>
+                            <div class="info-text">
+                                @if($user->role == 'user')
+                                    Người dùng
+                                @elseif($user->role == 'employee')
+                                    Nhân viên
+                                @elseif($user->role == 'admin')
+                                    Admin
+                                @else
+                                    Chưa cập nhật
+                                @endif
+                            </div>
+                            
                         </div>
                         <!-- Nút chỉnh sửa -->
                         <div class="text-right mt-4">

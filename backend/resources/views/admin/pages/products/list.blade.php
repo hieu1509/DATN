@@ -30,6 +30,11 @@
                     {{ session('danger') }}
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="row">
                 <form method="GET" action="" class="mb-4">
@@ -118,14 +123,19 @@
                             <label for="price_range">Lọc theo giá:</label>
                             <select name="price_range" id="price_range" class="form-control">
                                 <option value="">Chọn khoảng giá</option>
-                                <option value="under_1m" {{ request('price_range') == 'under_1m' ? 'selected' : '' }}>Dưới 1 triệu</option>
-                                <option value="1m_5m" {{ request('price_range') == '1m_5m' ? 'selected' : '' }}>1 - 5 triệu</option>
-                                <option value="5m_15m" {{ request('price_range') == '5m_15m' ? 'selected' : '' }}>5 - 15 triệu</option>
-                                <option value="15m_25m" {{ request('price_range') == '15m_25m' ? 'selected' : '' }}>15 - 25 triệu</option>
-                                <option value="above_25m" {{ request('price_range') == 'above_25m' ? 'selected' : '' }}>Trên 25 triệu</option>
+                                <option value="under_1m" {{ request('price_range') == 'under_1m' ? 'selected' : '' }}>Dưới
+                                    1 triệu</option>
+                                <option value="1m_5m" {{ request('price_range') == '1m_5m' ? 'selected' : '' }}>1 - 5
+                                    triệu</option>
+                                <option value="5m_15m" {{ request('price_range') == '5m_15m' ? 'selected' : '' }}>5 - 15
+                                    triệu</option>
+                                <option value="15m_25m" {{ request('price_range') == '15m_25m' ? 'selected' : '' }}>15 - 25
+                                    triệu</option>
+                                <option value="above_25m" {{ request('price_range') == 'above_25m' ? 'selected' : '' }}>
+                                    Trên 25 triệu</option>
                             </select>
                         </div>
-                        
+
                         <div class="col-md-3 mt-4">
                             <button type="submit" class="btn btn-primary w-100">Lọc</button>
                         </div>

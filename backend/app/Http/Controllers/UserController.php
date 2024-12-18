@@ -170,7 +170,14 @@ class UserController extends Controller
         }
 
         // Nếu không có lọc, lấy tất cả sản phẩm
-        $products = $isFiltered ? $query->where('is_show_home', 1)->paginate(20) : Product::with(['subCategory', 'variants'])->where('is_show_home', 1)->paginate(20);
+        $products = $isFiltered 
+        ? $query->where('is_show_home', 1)->orderBy('created_at', 'desc')->paginate(20) 
+        : Product::with(['subCategory', 'variants'])
+                 ->where('name', 'like', '%laptop%')
+                 ->where('is_show_home', 1)
+                 ->orderBy('created_at', 'desc')  // Thêm orderBy ở đây
+                 ->paginate(20);
+    
         $latestProducts = Product::with(['subCategory', 'variants'])
             ->where('is_show_home', 1)
             ->latest('created_at')

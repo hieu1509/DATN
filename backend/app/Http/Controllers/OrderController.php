@@ -181,12 +181,18 @@ class OrderController extends Controller
                     }
 
                 case 'vnpay':
+                    // Trước tiên, lưu đơn hàng để lấy ID của đơn hàng
+                    $order->save();
+
                     // Gọi phương thức thanh toán VNPAY
                     $paymentResponse = $this->vnpay_payment($request, $order);
 
-                    // Kiểm tra phản hồi
+                    // Kiểm tra phản hồi thanh toán
                     if ($paymentResponse['success']) {
+                        // Cập nhật trạng thái thanh toán
+                        $order->payment_status = 'da_thanh_toan';
                         $order->save();
+
                         // Tạo chi tiết đơn hàng
                         foreach ($cartDetails as $detail) {
                             $productVariant = $detail->productVariant;
@@ -202,20 +208,30 @@ class OrderController extends Controller
                             ]);
                             $orderDetail->save();
                         }
+
                         // Kiểm tra nếu người dùng có email và gửi hóa đơn
                         if (Auth::check() && Auth::user()->email) {
                             Mail::to(Auth::user()->email)->send(new OrderInvoice($order));
                         }
+
+                        // Cập nhật kho
                         $this->updateStock($cartDetails);
+
+                        // Commit giao dịch
                         DB::commit();
+
                         // Xóa giỏ hàng và chi tiết giỏ hàng
                         $cart->cartDetails()->delete();
                         $cart->delete();
+
+                        // Chuyển hướng đến URL thanh toán VNPAY
                         return redirect($paymentResponse['payUrl']);
                     } else {
+                        // Rollback giao dịch nếu có lỗi
                         DB::rollBack();
                         return redirect()->back()->with('error', 'Có lỗi xảy ra khi thanh toán VNPAY: ' . $paymentResponse['message']);
                     }
+
 
                 default:
                     DB::rollBack();
@@ -397,7 +413,7 @@ class OrderController extends Controller
         $vnp_TmnCode = "7E31XY46";
         $vnp_HashSecret = "JO04I54AIVQB65LX3BDM4SQ95Y6JEZFH";
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = route('order.detail', $order->id);
+        $vnp_Returnurl = route('order.detail', ['id' => $order->id]);
         $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 

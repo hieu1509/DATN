@@ -31,7 +31,7 @@ class DonHangController extends Controller
         // Tìm kiếm theo mã sản phẩm hoặc thông tin liên quan
         if ($request->has('search') && $request->search !== '') {
             $searchTerm = $request->search;
-            $query->whereHas('order', function ($query) use ($searchTerm) {
+            $query->whereHas('orderDetails', function ($query) use ($searchTerm) {
                 $query->where('code', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
             });
@@ -87,21 +87,26 @@ class DonHangController extends Controller
         $currentTrangThai = $donHang->status; // Trạng thái hiện tại của đơn hàng
         $newTrangThai = $request->input('order_status'); // Trạng thái mới từ form
         $trangThais = array_keys(Order::TRANG_THAI_DON_HANG); // Mảng các trạng thái có thể có
-
+    
         // Kiểm tra nếu đơn hàng đã bị hủy thì không được thay đổi trạng thái nữa
         if ($currentTrangThai == Order::HUY_HANG) {
             return redirect()->route('admins.orders.index')->with('error', 'Đơn hàng đã bị hủy, không thể thay đổi trạng thái.');
         }
-
+    
         // Kiểm tra nếu trạng thái mới không được nằm sau trạng thái hiện tại
         if (array_search($newTrangThai, $trangThais) < array_search($currentTrangThai, $trangThais)) {
             return redirect()->route('admins.orders.index')->with('error', 'Không thể cập nhật ngược lại trạng thái.');
         }
-
+    
+        // Kiểm tra nếu trạng thái mới là "đã giao hàng", thì cập nhật trạng thái thanh toán thành "đã thanh toán"
+        if ($newTrangThai == Order::DA_GIAO_HANG) {
+            $donHang->payment_status = Order::DA_THANH_TOAN;  // Cập nhật trạng thái thanh toán
+        }
+    
         // Cập nhật trạng thái đơn hàng
         $donHang->status = $newTrangThai;
         $donHang->save();
-
+    
         // Thêm lịch sử thay đổi trạng thái vào bảng order_histories
         OrderHistory::create([
             'order_id' => $donHang->id,
@@ -111,9 +116,10 @@ class DonHangController extends Controller
             'note' => $request->input('note', ''), // Ghi chú (nếu có)
             'datetime' => now(), // Thời gian thực hiện
         ]);
-
+    
         return redirect()->route('admins.orders.index')->with('success', 'Cập nhật trạng thái thành công: ' . $donHang->code);
     }
+    
 
     public function generateInvoice($orderId)
     {
