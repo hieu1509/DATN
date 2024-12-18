@@ -179,7 +179,7 @@
                                             <th data-ordering="false">Danh mục</th>
                                             <th data-ordering="false">Giá</th>
                                             <th data-ordering="false">Giá KM</th>
-                                            <th>Lượt xem</th>
+                                            <th>Số lượng</th>
                                             <th>Ngày tạo</th>
                                             <th>Trạng thái</th>
                                             <th>Chức năng</th>
@@ -236,7 +236,20 @@
                                                         }
                                                     @endphp
                                                 </td>
-                                                <td>{{ $item->view }}</td>
+                                                <td>
+                                                    @php
+                                                        // Lấy tất cả số lượng của biến thể sản phẩm
+                                                        $totalQuantity = $item->variants->sum('quantity'); // Tính tổng số lượng
+                                                    @endphp
+
+                                                    @if ($totalQuantity == 0)
+                                                        <span class="text-danger">Hết hàng</span>
+                                                        <!-- Hiển thị chữ màu đỏ nếu số lượng = 0 -->
+                                                    @else
+                                                        <span>{{ $totalQuantity }}</span>
+                                                        <!-- Hiển thị số lượng nếu có sản phẩm -->
+                                                    @endif
+                                                </td>
                                                 <td>{{ $item->created_at->format('d/m/Y') }}</td>
                                                 <td> <!-- Hiển thị trạng thái -->
                                                     @if ($item->is_show_home == 1)

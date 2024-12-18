@@ -22,7 +22,6 @@ class UserController extends Controller
         $commonQuery = function ($categoryName = null) {
             $query = Product::with(['subCategory', 'variants'])
                 ->where('is_show_home', 1)
-                ->latest('created_at')
                 ->take(12);
     
             if ($categoryName) {
@@ -45,18 +44,18 @@ class UserController extends Controller
             })
             ->take(12); 
     
-        $latestProducts = $commonQuery()->get();
+        $latestProducts = $commonQuery()->latest('created_at')->get();
         $viewProducts = $commonQuery()->orderBy('view', 'desc')->get();
-        $hotProducts = $commonQuery()->where('is_hot', 1)->get();
-        $saleProducts = $commonQuery()->where('is_sale', 1)->get();
+        $hotProducts = $commonQuery()->where('is_hot', 1)->latest('created_at')->get();
+        $saleProducts = $commonQuery()->where('is_sale', 1)->latest('created_at')->get();
         $randomProducts = $commonQuery()->inRandomOrder()->take(5)->get();
     
         // Sản phẩm theo danh mục
-        $laptopProducts = $commonQuery('laptop')->get();
-        $banphimProducts = $commonQuery('bàn phím')->get();
-        $chuotProducts = $commonQuery('chuột')->get();
-        $loaProducts = $commonQuery('loa')->get();
-        $taingheProducts = $commonQuery('tai nghe')->get();
+        $laptopProducts = $commonQuery('laptop')->latest('created_at')->get();
+        $banphimProducts = $commonQuery('bàn phím')->latest('created_at')->get();
+        $chuotProducts = $commonQuery('chuột')->latest('created_at')->get();
+        $loaProducts = $commonQuery('loa')->latest('created_at')->get();
+        $taingheProducts = $commonQuery('tai nghe')->latest('created_at')->get();
     
         return view('user.pages.home', compact(
             'latestProducts', 'hotProducts', 'saleProducts', 'randomProducts', 'highRatedProducts',
