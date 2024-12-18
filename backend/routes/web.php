@@ -59,6 +59,7 @@ Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
 Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
+    Route::post('users/update', [UseradminController::class, 'update'])->name('users.update');
 
 
     Route::get('admin/users', [UseradminController::class, 'index'])->name('admin.users'); // Quản lý người dùng
@@ -68,6 +69,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::resource('admin/pages/categories', CategoryController::class);
     Route::resource('subcategories', SubcategoryController::class);
 });
+
 
 //Profile
 Route::get('/admin/pages/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -91,9 +93,9 @@ Route::prefix('users')
     });
 
 // Admin routes for product and attribute management
-Route::prefix('admins')
-    ->middleware('admin') 
-    ->as('admins.')
+    Route::prefix('admins')
+    ->middleware(['auth','admin'])
+     ->as('admins.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'Dashboard']);
         Route::post('/fillterDate',[DashboardController::class,'Dashboard'])->name('fillterDate');
@@ -156,6 +158,72 @@ Route::prefix('admins')
                 Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
             });
     });
+
+// Route::prefix('admins')
+//     ->middleware('admin')  
+//     ->as('admins.')
+//     ->group(function () {
+//         Route::get('/', [DashboardController::class, 'Dashboard']);
+//         Route::post('/fillterDate',[DashboardController::class,'Dashboard'])->name('fillterDate');
+//         Route::post('/fillterYear',[DashboardController::class,'Dashboard'])->name('fillterYear');
+
+//         Route::prefix('products')
+//             ->as('products.')
+//             ->group(function () {
+//                 Route::get('/', [ProductController::class, 'index'])->name('index');
+//                 Route::get('/create', [ProductController::class, 'create'])->name('create');
+//                 Route::post('/store', [ProductController::class, 'store'])->name('store');
+//                 Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
+//                 Route::put('/{id}/update', [ProductController::class, 'update'])->name('update');
+//                 Route::delete('/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
+//                 Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+//             });
+
+//         Route::prefix('chips')
+//             ->as('chips.')
+//             ->group(function () {
+//                 Route::get('/', [ChipController::class, 'index'])->name('index');
+//                 Route::get('/create', [ChipController::class, 'create'])->name('create');
+//                 Route::post('/store', [ChipController::class, 'store'])->name('store');
+//                 Route::get('/{id}/edit', [ChipController::class, 'edit'])->name('edit');
+//                 Route::put('/{id}/update', [ChipController::class, 'update'])->name('update');
+//                 Route::delete('/{id}/destroy', [ChipController::class, 'destroy'])->name('destroy');
+//             });
+
+//         Route::prefix('rams')
+//             ->as('rams.')
+//             ->group(function () {
+//                 Route::get('/', [RamController::class, 'index'])->name('index');
+//                 Route::get('/create', [RamController::class, 'create'])->name('create');
+//                 Route::post('/store', [RamController::class, 'store'])->name('store');
+//                 Route::get('/{id}/edit', [RamController::class, 'edit'])->name('edit');
+//                 Route::put('/{id}/update', [RamController::class, 'update'])->name('update');
+//                 Route::delete('/{id}/destroy', [RamController::class, 'destroy'])->name('destroy');
+//             });
+
+//         Route::prefix('storages')
+//             ->as('storages.')
+//             ->group(function () {
+//                 Route::get('/', [StorageController::class, 'index'])->name('index');
+//                 Route::get('/create', [StorageController::class, 'create'])->name('create');
+//                 Route::post('/store', [StorageController::class, 'store'])->name('store');
+//                 Route::get('/{id}/edit', [StorageController::class, 'edit'])->name('edit');
+//                 Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
+//                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
+//             });
+
+//             Route::prefix('orders')
+//             ->as('orders.')
+//             ->group(function () {
+//                 Route::get('/', [DonHangController::class, 'index'])->name('index');
+//                 Route::get('/create', [DonHangController::class, 'create'])->name('create');
+//                 Route::post('/store', [DonHangController::class, 'store'])->name('store');
+//                 Route::get('/show/{id}', [DonHangController::class, 'show'])->name('show');
+//                 Route::get('/{id}/edit', [DonHangController::class, 'edit'])->name('edit');
+//                 Route::put('/{id}/update', [DonHangController::class, 'update'])->name('update');
+//                 Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
+//             });
+//     });
 
 
 

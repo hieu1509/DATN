@@ -40,7 +40,7 @@
 
                 </li> <!-- end Dashboard Menu -->
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
@@ -61,7 +61,7 @@
                 </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApp" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApp">
@@ -82,7 +82,7 @@
                 </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
@@ -103,7 +103,7 @@
                 </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admins.chips.index') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
@@ -112,7 +112,7 @@
                 </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarForms">
@@ -144,7 +144,7 @@
                     </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.reviews.index')}}" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">
@@ -153,7 +153,7 @@
                 </li>
                 @endif
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('admins.orders.index')}}" role="button" aria-expanded="false"
                         aria-controls="sidebarAuth">
@@ -171,7 +171,7 @@
                 </li>
                 @endif --}}
 
-                @if (Auth::check() && Auth::user()->role === 'admin')
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'employee')
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApp2" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApp2">
