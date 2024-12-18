@@ -25,20 +25,20 @@ class SubcategoryController extends Controller
 
     public function store(StoreSubcategoryRequest $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status' => 'required|boolean',
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        // Xử lý upload hình ảnh nếu có
+        // Xử lý upload hình ảnh
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('subcategories', 'public');
-            $request->merge(['image' => $imagePath]);
+            $validated['image'] = $request->file('image')->store('subcategories', 'public');
         }
 
-        Subcategory::create($request->all());
+        Subcategory::create($validated);
+
         return redirect()->route('subcategories.index')->with('success', 'Thêm danh mục con thành công.');
     }
 
@@ -50,41 +50,45 @@ class SubcategoryController extends Controller
 
     public function update(UpdateSubcategoryRequest $request, Subcategory $subcategory)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'status' => 'required|boolean',
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        // Xử lý upload hình ảnh nếu có
+        // Xử lý upload hình ảnh
         if ($request->hasFile('image')) {
-            // Xóa hình ảnh cũ nếu cần
+            // Xóa hình ảnh cũ
             if ($subcategory->image) {
-                Storage::disk('public')->delete($subcategory->image); // Sửa 'Storeage' thành 'Storage'
+                Storage::disk('public')->delete($subcategory->image);
             }
-            $imagePath = $request->file('image')->store('subcategories', 'public');
-            $request->merge(['image' => $imagePath]);
+            $validated['image'] = $request->file('image')->store('subcategories', 'public');
         }
 
-        $subcategory->update($request->all());
+        $subcategory->update($validated);
+
         return redirect()->route('subcategories.index')->with('success', 'Cập nhật danh mục con thành công.');
     }
 
     public function destroy(Subcategory $subcategory)
     {
-        // Xóa hình ảnh nếu có
-        if ($subcategory->image) {
-            Storage::disk('public')->delete($subcategory->image);
-        }
-
-        if ($subcategory->products()->count() > 0) {
+        // Kiểm tra xem danh mục con có sản phẩm hay không
+        if ($subcategory->products()->exists()) {
             return redirect()->back()->with('error', 'Không thể xóa danh mục này vì vẫn còn sản phẩm tồn tại.');
         }
 
+        // Xóa hình ảnh nếu tồn tại
+        if ($subcategory->image) {
+            try {
+                Storage::disk('public')->delete($subcategory->image);
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Lỗi khi xóa hình ảnh: ' . $e->getMessage());
+            }
+        }
+
         $subcategory->delete();
+
         return redirect()->route('subcategories.index')->with('success', 'Xóa danh mục con thành công.');
     }
 }
-
-

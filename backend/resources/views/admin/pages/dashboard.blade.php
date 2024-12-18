@@ -277,63 +277,6 @@
             </div> <!-- end col -->
 
             <!-- Bình luận -->
-            <div class="position-relative">
-                <!-- Nút mũi tên -->
-                <button class="btn btn-primary toggle-arrow"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#recentCommentsPanel"
-                    aria-controls="recentCommentsPanel"
-                    style="position: fixed; top: 12%; right: 0; transform: translateY(-50%); z-index: 1050; border-radius: 0.375rem 0 0 0.375rem; padding: 10px;">
-                    <i class="ri-arrow-left-s-line"></i>
-                </button>
-
-                <!-- Bảng Offcanvas -->
-                <div class="offcanvas offcanvas-end"
-                    tabindex="-1"
-                    id="recentCommentsPanel"
-                    aria-labelledby="recentCommentsPanelLabel"
-                    style="width: 300px;">
-                    <div class="offcanvas-header">
-                        <h5 id="recentCommentsPanelLabel" class="text-uppercase fw-semibold">Các bình luận gần đây</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <div class="swiper vertical-swiper" style="height: 250px;">
-                            <div class="swiper-wrapper">
-                                @foreach ($top5LastestComment as $top5LastestComments)
-                                <div class="swiper-slide">
-                                    <div class="card border border-dashed shadow-none">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 avatar-sm">
-                                                    <div class="avatar-title bg-light rounded">
-                                                        <img src="assets/images/companies/img-1.png" alt="" height="30">
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <p class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                        {{ $top5LastestComments->comment }}
-                                                    </p>
-                                                    <div class="fs-11 align-middle text-warning">
-                                                        @for ($i = 0; $i < 5; $i++)
-                                                            <i class="ri-star-fill" style="color: {{ $i < ($top5LastestComments->rating ?? 0) ? 'gold' : 'gray' }}"></i>
-                                                            @endfor
-                                                    </div>
-                                                    <div class="text-end mb-0 text-muted">
-                                                        - by <cite title="Source Title">{{ $top5LastestComments->user->name ?? 'Guest' }}</cite>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

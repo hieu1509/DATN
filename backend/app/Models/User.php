@@ -24,6 +24,7 @@ class User extends Authenticatable
         'address',
         'phone',
         'role',
+        'status',
     ];
 
     /**
@@ -51,6 +52,10 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+    public function isEmployee()
+    {
+        return $this->role === 'employee';
+    }
 
     public function isUser()
     {
@@ -63,7 +68,7 @@ class User extends Authenticatable
     }
 
 
-    public function ordermyorder(){
+    public function order(){
         return $this->hasMany(Order::class);
     }
 

@@ -18,7 +18,7 @@
         <!-- .nav -->
         <ul id="menu-top-bar-right" class="nav menu-top-bar-right">
             <li class="hidden-sm-down menu-item animate-dropdown">
-                <a title="Track Your Order" href="{{ route('cart.myorder')}}">
+                <a title="Track Your Order" href="{{ route('cart.myorder', ['status' => 'all'])}}">
                     <i class="tm tm-order-tracking"></i>Lịch sử đơn hàng</a>
             </li>
             <li class="menu-item">

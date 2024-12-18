@@ -155,13 +155,14 @@
                         </div>
                         <!-- Nút chỉnh sửa -->
                         <div class="text-right mt-4">
-                            @if($user->role === 'admin')
+                            @if($user->role === 'admin' || $user->role === 'employee')
                                 <a href="{{ route('admins.') }}" class="btn btn-primary">Truy cập trang admin</a>
                             @endif
                             <a href="{{ route('user.edit_profile', $user->id) }}" class="btn btn-primary">
                                 Chỉnh sửa thông tin
                             </a>
                         </div>
+                        
                     </div>
                 </div>
             </div>
