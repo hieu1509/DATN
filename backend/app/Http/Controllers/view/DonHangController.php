@@ -16,8 +16,7 @@ class DonHangController extends Controller
         $query = Order::query();
 
         // Lọc theo khoảng thời gian (từ ngày - đến ngày)
-        if ($request->has('from_date') && $request->has('to_date')) {
-            $query->whereBetween('created_at', [
+        if ($request->has('from_date') && $request->has('to_date') && $request->from_date && $request->to_date) {            $query->whereBetween('created_at', [
                 $request->from_date,
                 $request->to_date,
             ]);

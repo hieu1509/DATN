@@ -204,39 +204,6 @@
                                                                 @else
                                                                     <span>Không có ảnh</span>
                                                                 @endif
-                                                                {{-- <span class="price">
-                                                                    <span class="woocommerce-Price-amount amount">
-                                                                        <span
-                                                                            class="woocommerce-Price-currencySymbol"></span>
-                                                                        @php
-                                                                            // Lấy tất cả các giá của biến thể sản phẩm
-                                                                            $prices = $product->variants
-                                                                                ->pluck('listed_price')
-                                                                                ->toArray();
-
-                                                                            // Nếu có biến thể thì tính khoảng giá
-                                                                            if (!empty($prices)) {
-                                                                                $minPrice = min($prices); // Lấy giá thấp nhất
-                                                                                $maxPrice = max($prices); // Lấy giá cao nhất
-                                                                                echo number_format(
-                                                                                    $minPrice,
-                                                                                    0,
-                                                                                    ',',
-                                                                                    '.',
-                                                                                ) .
-                                                                                    'đ - ' .
-                                                                                    number_format(
-                                                                                        $maxPrice,
-                                                                                        0,
-                                                                                        ',',
-                                                                                        '.',
-                                                                                    ) .
-                                                                                    'đ';
-                                                                            } else {
-                                                                                echo 'Chưa có giá';
-                                                                            }
-                                                                        @endphp</span> 
-                                                                </span> --}}
                                                                 <span class="price">
                                                                     <ins>
                                                                         <span
@@ -2407,7 +2374,7 @@
                                     <div class="widget woocommerce widget_layered_nav maxlist-more">
                                         <span class="gamma widget-title">Danh mục</span>
                                         <select class="select" name="sub_category_id" id="sub_category_id">
-                                            <option value="">-- Tất cả danh mục --</option>
+                                            <option value="">-- Laptop --</option>
                                             @foreach ($sub_category as $key => $item)
                                                 <option value="{{ $key }}"
                                                     {{ request('sub_category_id') == $key ? 'selected' : '' }}>

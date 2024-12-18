@@ -313,14 +313,14 @@
                                                 placeholder="Số lượng" value="{{ $variant->quantity }}">
                                         </div>
                                     </div>
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <button type="button" class="btn btn-danger remove-variant">Xóa</button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 @endforeach
 
                             </div>
-                            <button type="button" id="add-variant" class="btn btn-primary">Thêm biến thể
+                            {{-- <button type="button" id="add-variant" class="btn btn-primary">Thêm biến thể
                                 mới</button>
                             <script>
                                 document.getElementById('add-variant').addEventListener('click', function() {
@@ -353,7 +353,7 @@
                                         }
                                     }
                                 });
-                            </script>
+                            </script> --}}
                         </div>
                     </div>
                     <div class="text-end mb-3">

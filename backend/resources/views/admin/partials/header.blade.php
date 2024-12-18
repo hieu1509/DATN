@@ -2,7 +2,7 @@
     <div class="layout-width">
         <div class="navbar-header">
             <div class="d-flex">
-     
+
             </div>
 
             <div class="d-flex align-items-center">
@@ -47,6 +47,9 @@
                         <a class="dropdown-item" href="{{ route('profile.show') }}"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Hồ sơ</span></a>
+                        <a class="dropdown-item" href="{{ route('index') }}"><i
+                                class="mdi mdi-home-circle text-muted fs-16 align-middle me-1"></i> <span
+                                class="align-middle">Về trang User</span></a>
                         <!-- Form đăng xuất cho Admin -->
                         <form id="logout-admin-form" action="{{ route('logout') }}" method="POST"
                             style="display: none;">
@@ -56,7 +59,7 @@
                         <!-- Liên Kết Đăng Xuất cho Admin -->
                         <a class="dropdown-item" href="#"
                             onclick="event.preventDefault(); document.getElementById('logout-admin-form').submit();">
-<i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                            <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Đăng xuất</span>
                         </a>
                     </div>
