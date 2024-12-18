@@ -56,7 +56,7 @@
                         <!-- Liên Kết Đăng Xuất cho Admin -->
                         <a class="dropdown-item" href="#"
                             onclick="event.preventDefault(); document.getElementById('logout-admin-form').submit();">
-                            <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+<i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Đăng xuất</span>
                         </a>
                     </div>
@@ -64,4 +64,5 @@
             </div>
         </div>
     </div>
+
 </header>
