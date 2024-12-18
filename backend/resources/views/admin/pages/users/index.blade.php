@@ -17,6 +17,12 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
 
             <div class="row">
                 <div class="card">
@@ -51,16 +57,23 @@
 
                                                 <td>
                                                     <select name="role" class="form-select">
-                                                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                                                        <option value="employee" {{ $user->role === 'employee' ? 'selected' : '' }}>Nhân viên</option>
-                                                        <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>Người dùng</option>
+                                                        <option value="admin"
+                                                            {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                                        <option value="employee"
+                                                            {{ $user->role === 'employee' ? 'selected' : '' }}>Nhân viên
+                                                        </option>
+                                                        <option value="user"
+                                                            {{ $user->role === 'user' ? 'selected' : '' }}>Người dùng
+                                                        </option>
                                                     </select>
                                                 </td>
 
                                                 <td>
                                                     <select name="status" class="form-select">
-                                                        <option value="1" {{ $user->status ? 'selected' : '' }}>Hoạt động</option>
-                                                        <option value="0" {{ !$user->status ? 'selected' : '' }}>Dừng</option>
+                                                        <option value="1" {{ $user->status ? 'selected' : '' }}>Hoạt
+                                                            động</option>
+                                                        <option value="0" {{ !$user->status ? 'selected' : '' }}>Dừng
+                                                        </option>
                                                     </select>
                                                 </td>
 
