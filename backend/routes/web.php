@@ -13,7 +13,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\view\DonHangController ;
+use App\Http\Controllers\view\DonHangController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
@@ -54,7 +54,7 @@ Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkE
 // Hiển thị form đặt lại mật khẩu
 Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 // Xử lý đặt lại mật khẩu
-Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 // Các route yêu cầu quyền admin
 Route::group(['middleware' => ['admin']], function () {
 
@@ -93,13 +93,13 @@ Route::prefix('users')
     });
 
 // Admin routes for product and attribute management
-    Route::prefix('admins')
-    ->middleware(['auth','admin'])
-     ->as('admins.')
+Route::prefix('admins')
+    ->middleware(['auth', 'admin'])
+    ->as('admins.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'Dashboard']);
-        Route::post('/fillterDate',[DashboardController::class,'Dashboard'])->name('fillterDate');
-        Route::post('/fillterYear',[DashboardController::class,'Dashboard'])->name('fillterYear');
+        Route::post('/fillterDate', [DashboardController::class, 'Dashboard'])->name('fillterDate');
+        Route::post('/fillterYear', [DashboardController::class, 'Dashboard'])->name('fillterYear');
 
         Route::prefix('products')
             ->as('products.')
@@ -146,7 +146,7 @@ Route::prefix('users')
                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
             });
 
-            Route::prefix('orders')
+        Route::prefix('orders')
             ->as('orders.')
             ->group(function () {
                 Route::get('/', [DonHangController::class, 'index'])->name('index');
@@ -158,75 +158,6 @@ Route::prefix('users')
                 Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
             });
     });
-
-// Route::prefix('admins')
-//     ->middleware('admin')  
-//     ->as('admins.')
-//     ->group(function () {
-//         Route::get('/', [DashboardController::class, 'Dashboard']);
-//         Route::post('/fillterDate',[DashboardController::class,'Dashboard'])->name('fillterDate');
-//         Route::post('/fillterYear',[DashboardController::class,'Dashboard'])->name('fillterYear');
-
-//         Route::prefix('products')
-//             ->as('products.')
-//             ->group(function () {
-//                 Route::get('/', [ProductController::class, 'index'])->name('index');
-//                 Route::get('/create', [ProductController::class, 'create'])->name('create');
-//                 Route::post('/store', [ProductController::class, 'store'])->name('store');
-//                 Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('edit');
-//                 Route::put('/{id}/update', [ProductController::class, 'update'])->name('update');
-//                 Route::delete('/{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
-//                 Route::get('/{id}', [ProductController::class, 'show'])->name('show');
-//             });
-
-//         Route::prefix('chips')
-//             ->as('chips.')
-//             ->group(function () {
-//                 Route::get('/', [ChipController::class, 'index'])->name('index');
-//                 Route::get('/create', [ChipController::class, 'create'])->name('create');
-//                 Route::post('/store', [ChipController::class, 'store'])->name('store');
-//                 Route::get('/{id}/edit', [ChipController::class, 'edit'])->name('edit');
-//                 Route::put('/{id}/update', [ChipController::class, 'update'])->name('update');
-//                 Route::delete('/{id}/destroy', [ChipController::class, 'destroy'])->name('destroy');
-//             });
-
-//         Route::prefix('rams')
-//             ->as('rams.')
-//             ->group(function () {
-//                 Route::get('/', [RamController::class, 'index'])->name('index');
-//                 Route::get('/create', [RamController::class, 'create'])->name('create');
-//                 Route::post('/store', [RamController::class, 'store'])->name('store');
-//                 Route::get('/{id}/edit', [RamController::class, 'edit'])->name('edit');
-//                 Route::put('/{id}/update', [RamController::class, 'update'])->name('update');
-//                 Route::delete('/{id}/destroy', [RamController::class, 'destroy'])->name('destroy');
-//             });
-
-//         Route::prefix('storages')
-//             ->as('storages.')
-//             ->group(function () {
-//                 Route::get('/', [StorageController::class, 'index'])->name('index');
-//                 Route::get('/create', [StorageController::class, 'create'])->name('create');
-//                 Route::post('/store', [StorageController::class, 'store'])->name('store');
-//                 Route::get('/{id}/edit', [StorageController::class, 'edit'])->name('edit');
-//                 Route::put('/{id}/update', [StorageController::class, 'update'])->name('update');
-//                 Route::delete('/{id}/destroy', [StorageController::class, 'destroy'])->name('destroy');
-//             });
-
-//             Route::prefix('orders')
-//             ->as('orders.')
-//             ->group(function () {
-//                 Route::get('/', [DonHangController::class, 'index'])->name('index');
-//                 Route::get('/create', [DonHangController::class, 'create'])->name('create');
-//                 Route::post('/store', [DonHangController::class, 'store'])->name('store');
-//                 Route::get('/show/{id}', [DonHangController::class, 'show'])->name('show');
-//                 Route::get('/{id}/edit', [DonHangController::class, 'edit'])->name('edit');
-//                 Route::put('/{id}/update', [DonHangController::class, 'update'])->name('update');
-//                 Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
-//             });
-//     });
-
-
-
 
 // Cart routes (user)
 Route::prefix('cart')
@@ -241,7 +172,6 @@ Route::prefix('cart')
         Route::get('/myorder', [DonHangController2::class, 'index'])->name('myorder');
         Route::put('/editOrder/{id}', [DonHangController2::class, 'editOrder'])->name('editOrder');
         Route::get('/myordetail/{id}', [DonHangController2::class, 'myordetail'])->name('myordetail');
-
     });
 
 // Hiển thị trang checkout
@@ -294,7 +224,7 @@ Route::get('/admin/orders', [DonHangController::class, 'index'])->middleware('ad
 
 // Giới thiệu
 Route::get('/about', function () {
-        return view('user.pages.about');
+    return view('user.pages.about');
 });
 // Chính sách bảo mật và điều khoản
 Route::get('/terms', function () {

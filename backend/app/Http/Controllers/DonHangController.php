@@ -63,13 +63,28 @@ class DonHangController extends Controller
       // Kiểm tra trạng thái và cập nhật
       $newStatus = $request->input('status');
       if ($newStatus) {
-          $order->update(['status' => $newStatus]);
+          // Nếu trạng thái mới là "hủy hàng", hủy đơn hàng
+          if ($newStatus === 'huy_hang') {
+              $order->update(['status' => 'huy_hang']);
+              return redirect()->route('cart.myorder')->with('success', 'Hủy đơn hàng thành công.');
+          }
   
-          return redirect()->route('cart.myorder')->with('success', 'Hủy đơn hàng thành công.');
+          // Nếu trạng thái mới là "đã nhận hàng", cập nhật trạng thái đơn hàng
+          if ($newStatus === 'da_nhan_hang') {
+              $order->update(['status' => 'da_nhan_hang']);
+              return redirect()->route('cart.myorder')->with('success', 'Cập nhật trạng thái thành công.');
+          }
+  
+          // Nếu trạng thái mới là "đã giao hàng", cập nhật trạng thái đơn hàng và thanh toán
+          if ($newStatus === 'da_giao_hang') {
+              $order->update(['status' => 'da_giao_hang', 'payment_status' => 'da_thanh_toan']);
+              return redirect()->route('cart.myorder')->with('success', 'Cập nhật trạng thái giao hàng thành công.');
+          }
       }
   
-      return redirect()->route('cart.myorder')->with('error', 'Không thể hủy đơn hàng.');
-  }  
+      return redirect()->route('cart.myorder')->with('error', 'Không thể thay đổi trạng thái đơn hàng.');
+  }
+  
 
   public function myordetail(string $id) {}
 }

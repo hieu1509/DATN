@@ -85,7 +85,7 @@
                         dir="ltr" value="" name="name" placeholder="Tìm kiếm" />
                     <div class="input-group-addon search-categories popover-header">
                         <select name='sub_category_id' id='sub_category_id' class='postform resizeselect'>
-                            <option value='' selected='selected'>Tất cả danh mục</option>
+                            <option value='' selected='selected'>Laptop</option>
                             @foreach ($categories as $category)
                                 @foreach ($category->subCategories as $subCategory)
                                     <option class="level-0" value="{{ $subCategory->id }}"

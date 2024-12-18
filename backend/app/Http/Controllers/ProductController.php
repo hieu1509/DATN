@@ -24,7 +24,7 @@ class ProductController extends Controller
     {
         // Khởi tạo query
         $query = Product::query()->with(['subCategory', 'variants']);
-    
+
         // Lọc theo giá
         if ($request->has('price_range') && $request->price_range !== null) {
             switch ($request->price_range) {
@@ -59,28 +59,28 @@ class ProductController extends Controller
         if ($request->has('sub_category_id') && $request->sub_category_id) {
             $query->where('sub_category_id', $request->sub_category_id);
         }
-    
+
         // Lọc theo chip
         if ($request->has('chip_id') && $request->chip_id) {
             $query->whereHas('variants', function ($variantQuery) use ($request) {
                 $variantQuery->where('chip_id', $request->chip_id);
             });
         }
-    
+
         // Lọc theo RAM
         if ($request->has('ram_id') && $request->ram_id) {
             $query->whereHas('variants', function ($variantQuery) use ($request) {
                 $variantQuery->where('ram_id', $request->ram_id);
             });
         }
-    
+
         // Lọc theo bộ nhớ (Storage)
         if ($request->has('storage_id') && $request->storage_id) {
             $query->whereHas('variants', function ($variantQuery) use ($request) {
                 $variantQuery->where('storage_id', $request->storage_id);
             });
         }
-    
+
         // Lọc theo trạng thái (is_hot, is_sale, is_show_home)
         if ($request->has('is_hot') && $request->is_hot !== null) {
             $query->where('is_hot', $request->is_hot);
@@ -91,16 +91,16 @@ class ProductController extends Controller
         if ($request->has('is_show_home') && $request->is_show_home !== null) {
             $query->where('is_show_home', $request->is_show_home);
         }
-    
+
         // Phân trang
         $data = $query->latest('id')->paginate(6);
-    
+
         // Truyền thêm dữ liệu cho bộ lọc
         $subCategories = SubCategory::pluck('name', 'id')->all();
         $chips = Chip::pluck('name', 'id')->all();
         $rams = Ram::pluck('name', 'id')->all();
         $storages = Storage::pluck('name', 'id')->all();
-    
+
         return view('admin.pages.products.list', compact('data', 'subCategories', 'chips', 'rams', 'storages'));
     }
 
@@ -130,7 +130,7 @@ class ProductController extends Controller
                 'sub_category_id' => $request->sub_category_id,
                 'name' => $request->name,
                 'description' => $request->description,
-                'content' => $request->getContent(),
+                'content' => $request->input('content'),
                 'view' => 0,
                 'is_hot' => $request->is_hot,
                 'is_sale' => $request->is_sale,
@@ -151,8 +151,6 @@ class ProductController extends Controller
                         'product_id' => $product->id,
                         'image_url' => $imagePath,
                         'alt_text' => 'Hình ảnh sản phẩm ' . ($index + 1),
-                        'is_primary' => $index == 0,
-                        'sort_order' => $index + 1,
                     ]);
                 }
             }
@@ -233,13 +231,11 @@ class ProductController extends Controller
                         'product_id' => $product->id,
                         'image_url' => $imagePath,
                         'alt_text' => 'Hình ảnh sản phẩm ' . ($index + 1),
-                        'is_primary' => $index == 0,
-                        'sort_order' => $index + 1,
                     ]);
                 }
             }
 
-           // Lấy danh sách các variant hiện tại
+            // Lấy danh sách các variant hiện tại
             $currentVariants = ProductVariant::where('product_id', $product->id)->get();
 
             // Duyệt qua các biến thể gửi từ request
@@ -294,33 +290,51 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
 
+            // Kiểm tra nếu sản phẩm có liên quan đến đơn hàng chưa thanh toán
+            $orderRelated = $product->orderDetails()->whereHas('order', function ($query) {
+                $query->where('payment_status', 'chua_thanh_toan'); // Trạng thái thanh toán chưa thanh toán
+            })->exists();
+
+            // Kiểm tra nếu sản phẩm có liên quan đến giỏ hàng chưa thanh toán
+            $cartRelated = $product->cartDetails()->whereHas('cart', function ($query) {
+                $query->where('status', 'chua_thanh_toan'); // Trạng thái giỏ hàng chưa thanh toán
+            })->exists();
+
+            // Nếu sản phẩm có liên quan đến đơn hàng hoặc giỏ hàng chưa thanh toán, không cho phép xóa
+            if ($orderRelated || $cartRelated) {
+                DB::rollBack();
+                return back()->withErrors(['error' => 'Không thể xóa sản phẩm này vì nó đang có trong giỏ hàng hoặc đơn hàng chưa thanh toán!']);
+            }
+
+            // Xóa ảnh sản phẩm
             if ($product->image) {
-                $imagePath = public_path('storage/' . $product->image); 
+                $imagePath = public_path('storage/' . $product->image);
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
             }
 
+            // Xóa ảnh chi tiết sản phẩm
             $productImages = ProductImage::where('product_id', $product->id)->get();
             foreach ($productImages as $productImage) {
                 $imagePath = public_path('storage/' . $productImage->image_url);
                 if (file_exists($imagePath)) {
-                    unlink($imagePath); 
+                    unlink($imagePath);
                 }
             }
 
+            // Xóa thông tin chi tiết ảnh và biến thể sản phẩm
             ProductImage::where('product_id', $product->id)->delete();
-
             ProductVariant::where('product_id', $product->id)->delete();
 
+            // Xóa sản phẩm
             $product->delete();
 
             DB::commit();
             return redirect()->route('admins.products.index')->with('danger', 'Xóa sản phẩm thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Không thể xóa sản phẩm!']);
+            return back()->with(['error' => 'Không thể xóa sản phẩm!']);
         }
     }
 }
-

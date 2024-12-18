@@ -138,7 +138,6 @@
                                                             @method('PUT')
                                                             
                                                             <div class="mb-3">
-                                                                <label for="order_status" class="form-label">Trạng thái đơn hàng:</label>
                                                                 <select name="order_status" class="form-select w-50" onchange="confirmSubmit(this)"
                                                                 data-default-value="{{ $item->order_status }}">">
                                                                     @foreach ($trangThaiDonHang as $key => $value)
