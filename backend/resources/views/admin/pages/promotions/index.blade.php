@@ -47,7 +47,6 @@
                                         <th>Thời gian bắt đầu</th>
                                         <th>Thời gian kết thúc</th>
                                         <th>Giới hạn sử dụng</th>
-                                        <th>Số lần đã sử dụng</th>
                                         <th>Trạng thái</th>
                                         <th>Hành động</th>
                                     </tr>
@@ -63,7 +62,6 @@
                                             <td>{{ $promotion->start_date }}</td>
                                             <td>{{ $promotion->end_date }}</td>
                                             <td>{{ $promotion->usage_limit ?? 'Không giới hạn' }}</td>
-                                            <td>{{ $promotion->used_count ?? 0 }}</td>
                                             <td>{{ $promotion->status ? 'Kích hoạt' : 'Không kích hoạt' }}</td>
                                             <td>
                                                 <a href="{{ route('promotions.edit', $promotion->id) }}"

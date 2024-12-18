@@ -2,32 +2,6 @@
     <div class="col-full">
         <div class="before-footer-wrap">
             <div class="col-full">
-                <div class="footer-newsletter">
-                    <div class="media">
-                        <i class="footer-newsletter-icon tm tm-newsletter"></i>
-                        <div class="media-body">
-                            <div class="clearfix">
-                                <div class="newsletter-header">
-                                    <h5 class="newsletter-title">Đăng ký để nhận khuyến mãi</h5>
-                                    <span class="newsletter-marketing-text">...và nhận
-                                        <strong> phiếu giảm giá 20 đô la cho lần mua sắm đầu tiên</strong>
-                                    </span>
-                                </div>
-                                <!-- .newsletter-header -->
-                                <div class="newsletter-body">
-                                    <form class="newsletter-form">
-                                        <input type="text" placeholder="Nhập địa chỉ email của bạn">
-                                        <button class="button" type="button">Đăng ký</button>
-                                    </form>
-                                </div>
-                                <!-- .newsletter body -->
-                            </div>
-                            <!-- .clearfix -->
-                        </div>
-                        <!-- .media-body -->
-                    </div>
-                    <!-- .media -->
-                </div>
                 <!-- .footer-newsletter -->
                 <div class="footer-social-icons">
                     <ul class="social-icons nav">

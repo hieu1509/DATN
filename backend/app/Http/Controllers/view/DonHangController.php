@@ -99,7 +99,7 @@ class DonHangController extends Controller
         }
     
         // Kiểm tra nếu trạng thái mới là "đã giao hàng", thì cập nhật trạng thái thanh toán thành "đã thanh toán"
-        if ($newTrangThai == Order::DA_GIAO_HANG) {
+        if ($newTrangThai == Order::DA_NHAN_HANG) {
             $donHang->payment_status = Order::DA_THANH_TOAN;  // Cập nhật trạng thái thanh toán
         }
     
