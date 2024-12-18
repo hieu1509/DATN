@@ -163,7 +163,7 @@
                                         </li>
                                         @endif
                                         <li class="menu-item">
-                                            <a href="{{ route('cart.myorder')}}">Lịch sử đơn hàng</a>
+                                            <a href="{{ route('cart.myorder', ['status' => 'all'])}}">Lịch sử đơn hàng</a>
                                         </li>
                                         <li class="menu-item">
                                             <a href="{{ route('users.filter') }}">Cửa hàng</a>

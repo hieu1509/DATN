@@ -32,7 +32,9 @@ class Order extends Model
     const DA_THANH_TOAN = 'da_thanh_toan';
     protected $fillable = [
           'code',
+          'status',
           'payment_type',
+          'payment_status',
           'total_price',
           'user_id',
           'promotion_id',
