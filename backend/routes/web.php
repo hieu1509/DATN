@@ -182,6 +182,7 @@ Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout')
 Route::post('/checkout/place', [OrderController::class, 'placeOrder'])->name('checkout.place');
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
+
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
 Route::get('/vnpay_return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
 Route::post('/momo/ipn', [OrderController::class, 'ipn'])->name('order.ipn');

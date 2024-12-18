@@ -23,7 +23,6 @@ class ReviewController extends Controller
 
         // Lấy danh sách review của sản phẩm
         $reviews = Review::where('product_id', $id)->where('status', 'visible')->get();
-
         // Tính toán số lượng đánh giá cho mỗi sao
         $ratingHistogram = [];
         foreach (range(1, 5) as $i) {
